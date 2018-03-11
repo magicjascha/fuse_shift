@@ -1,0 +1,52 @@
+// Place all the styles related to the Registrations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+h1 {
+  text-align: center;
+}
+
+h1 ~ p {
+  text-align: center;
+}
+
+
+.reg-form {
+  display:block;
+  margin: 0 auto;
+  max-width: 1000px;
+  label {
+    display: block;
+    float: left;
+    width: 45%;
+  }
+  input[type="text"] {
+    display: block;
+    margin-bottom: 5px;
+    width: 45%;
+  }
+  .checkDiv {
+    display: block;
+    margin-bottom: 5px;
+    width: 100%;
+    min-height: 30px;
+    overflow: hidden;
+  }
+  input[type="checkbox"]{
+    width: auto;
+    margin: auto, auto;
+  }
+  input[type="submit"]{
+    display: block;
+    width: 60%;
+    color: blue;
+    margin: auto;
+    margin-top: 20px;
+  }
+}
