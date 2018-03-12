@@ -7,9 +7,8 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
     if @registration.valid?
-      @registration[:created_at] = Time.now
-      @registration.to_csv
-      render html: Time.now.strftime("Done. Look in file #{@registration[:created_at].strftime('%Y-%m-%dT%H%M%S')}")
+      @registration.save
+      render html: "Done."
     else
       render html: "Nope"
     end
