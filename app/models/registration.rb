@@ -13,6 +13,8 @@ class Registration < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   #  Active Record uniqueness validation does not guarantee uniqueness at the database level!
   # How important is uniqueness of E-Mail?
+
+  # TODO: Add regular expression that prevents submitting of letters (+,/ needs to be allowed)!
   validates :phonenumber, presence: true, length: { maximum: 20 }
 
   def to_csv
@@ -22,11 +24,11 @@ class Registration < ApplicationRecord
     end
   end
 
-  def name=(name)
-    puts "name is: #{name} in Registration"
-    key = "c35237aa3793ac9c22c60eb32291291f8da40b02fae9f0519085a33765f23729cb00be6804097724ddc0a7b30e924cf0bed51c35b1a306857519294cd2ab053b"
-    name = Travis::Encrypt::Encryptor.new(name, key: key).apply
-    puts name
-    super(name)
-  end
+  # def name=(name)
+  #   puts "name is: #{name} in Registration"
+  #   key = "c35237aa3793ac9c22c60eb32291291f8da40b02fae9f0519085a33765f23729cb00be6804097724ddc0a7b30e924cf0bed51c35b1a306857519294cd2ab053b"
+  #   name = Travis::Encrypt::Encryptor.new(name, key: key).apply
+  #   puts name
+  #   super(name)
+  # end
 end

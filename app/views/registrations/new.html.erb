@@ -2,14 +2,16 @@
 <p>...your availability for shifts on the festival</p>
 <div class="reg-form">
   <%= form_for(@registration) do |f| %>
+    <%= render 'shared/error_messages' %>
+
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: 'form-control' %>
     
     <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, class: 'form-control' %>
     
     <%= f.label "cellphone" %>
-    <%= f.text_field :phonenumber %>
+    <%= f.text_field :phonenumber, class: 'form-control' %>
     
     <%= f.label :city %>
     <%= f.text_field :city %>

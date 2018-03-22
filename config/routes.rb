@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'registrations/new'
+  get '/new', to: 'registrations#new'
   root 'registrations#new'
   resources :registrations
 
