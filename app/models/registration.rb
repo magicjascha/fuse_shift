@@ -24,6 +24,16 @@ class Registration < ApplicationRecord
     end
   end
 
+  before_save do 
+    attributes = self.attribute_names - ["id", "created_at", "updated_at", "is_member"]
+    attributes.each do |attribute|
+      value = self[attribute]
+      key = "c35237aa3793ac9c22c60eb32291291f8da40b02fae9f0519085a33765f23729cb00be6804097724ddc0a7b30e924cf0bed51c35b1a306857519294cd2ab053b"
+      value = Travis::Encrypt::Encryptor.new(value, key: key).apply
+      self[attribute] = value 
+    end
+  end
+
   # def name=(name)
   #   puts "name is: #{name} in Registration"
   #   key = "c35237aa3793ac9c22c60eb32291291f8da40b02fae9f0519085a33765f23729cb00be6804097724ddc0a7b30e924cf0bed51c35b1a306857519294cd2ab053b"
