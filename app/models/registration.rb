@@ -1,32 +1,27 @@
 require 'encrypt/encryptor'
+require 'digest'
 
 class Registration < ApplicationRecord
-  # sets the user’s email address to lower-case, as some database adapters use case-sensitive indices
-  before_save { self.email = email.downcase }
+  
+  before_validation do
+    self.email = email.downcase
+    self.hashedEmail = Digest::SHA2.hexdigest(email)
+  end
+  
+  validates :hashedEmail, uniqueness: { case_sensitive: false }   #  Active Record uniqueness validation does not guarantee uniqueness at the database level!
   validates :name, presence: true, length: { maximum: 50 }
   # regex = regular expression, language for matching patterns in strings
   # used to match valid email addresses while not matching invalid ones
   # TODO FIX: the following regex allows invalid addresses that contain consecutive dots, such as foo@bar..com.
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
-  #  Active Record uniqueness validation does not guarantee uniqueness at the database level!
-  # How important is uniqueness of E-Mail?
-
+                    format: { with: VALID_EMAIL_REGEX }
   # TODO: Add regular expression that prevents submitting of letters (+,/ needs to be allowed)!
   validates :phonenumber, presence: true, length: { maximum: 20 }
   # TODO: regular expression that validates digits and dashes
-
-  def to_csv
-    CSV.open("#{Rails.root}/public/registration_#{self.created_at.strftime('%Y-%m-%dT%H%M%S')}.csv", "wb") do |csv|
-      csv << self.attributes.keys
-      csv << self.attributes.values
-    end
-  end
   
-  before_save do 
-    attributes = self.attribute_names - ["id", "created_at", "updated_at", "is_member"]
+  before_save do
+    attributes = self.attribute_names - ["id", "created_at", "updated_at", "is_member", "hashedEmail"]
     attributes.each do |attribute|
       value = self[attribute]
       key = File.read('config/keys/public.dev.pem')
