@@ -6,8 +6,11 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
     if @registration.save
-      render html: "Done."
-      # TODO - create 'registration-sucess' view - stating to check mail and confirm registration 
+      registration_params.each do |key, value|
+#         flash[key] = value
+        session[key] = value
+      end      
+      redirect_to success_path     
     else 
       render 'new'
     end

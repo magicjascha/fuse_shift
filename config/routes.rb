@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get '/new', to: 'registrations#new'
+  get '/success', to: 'registrations#success'
   root 'registrations#new'
   resources :registrations
 

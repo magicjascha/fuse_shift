@@ -1,0 +1,26 @@
+<h1> You're <strong>almost</strong> done with registering for the festival..."</h1>
+
+<div class="alert alert-success">
+  <p>
+    Please check your Email-Account for an Email we sent you. You have to klick the link in the Email to confirm your registration. If you don't do that you are not registered.
+  </p>
+  <p>
+    You registered with the data:
+    <%# flash.each do |key, value| %>
+    <% session.each do |key, value| %> 
+    </p><p><%="#{key}: #{value}" unless key=="session_id" or key=="_csrf_token"%>
+    <% end %>
+  </p>
+    To change something go to <a href="http://www.example.com">update</a>.
+  </p>
+  </p>
+    To register another person repeat the <%= link_to("registration-process", root_path) %>.
+  </p>
+</div>
+<div class="alert alert-danger">
+  <p>
+    If you didn't get an email most probably you made a typo in the email-adress. Hit the backwards-button of the browser to correct your input and submit again or just repeat the <%= link_to("registration-process", root_path) %> completely.
+    
+    If the email-address is definitely right, write an email to ...
+  </p>
+</div>
