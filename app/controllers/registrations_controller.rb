@@ -1,3 +1,5 @@
+require 'json'
+
 class RegistrationsController < ApplicationController
   def new
     @registration = Registration.new
@@ -6,14 +8,20 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
     if @registration.save
-      registration_params.each do |key, value|
-#         flash[key] = value
-        session[key] = value
-      end      
+#       session[:data]=JSON.dump(registration_params)
+      session[:data]=registration_params
       redirect_to success_path     
     else 
       render 'new'
     end
+  end
+  
+  def success
+    p session[:data]
+#     @data = JSON.parse(session[:data])
+    @data = session[:data] || {}
+    render "success"
+    reset_session
   end
   
   private
