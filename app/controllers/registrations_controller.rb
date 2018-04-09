@@ -1,6 +1,7 @@
 require 'json'
 
 class RegistrationsController < ApplicationController
+  before_action :protect, :only => :success
   def new
     @registration = Registration.new
   end
@@ -25,8 +26,10 @@ class RegistrationsController < ApplicationController
   end
   
   private
-
     def registration_params
       params.require(:registration).permit(:name, :email, :phonenumber, :city, :is_member, :contact_person)
+    end
+    def protect
+      redirect_to root_path unless session[:data]
     end
 end
