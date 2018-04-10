@@ -31,3 +31,22 @@
 
 en:
   hello: "Hello world"
+  
+  name_label: "Name"
+  name_help: "The name of the person, you want to register"
+  
+  email_label: "Email"
+  email_help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."
+  
+  phonenumber_label: "Cellphone-Number"
+  phonenumber_help: ""
+
+  is_member_label: "Are you a member?"
+  is_member_help: ""
+  
+  contact_person_label: "Contact Person"
+  contact_person_help: "This has to be a member of the group"
+  
+  city_label: "City"
+  city_help: "The city you live in"
+  

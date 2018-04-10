@@ -1,24 +1,34 @@
-<h1> You're <strong>almost</strong> done with registering for the festival..."</h1>
-
-<div class="alert alert-success">
-  <p>
-    Please check your Email-Account for an Email we sent you. You have to klick the link in the Email to confirm your registration. If you don't do that you are not registered.
-  </p>
-  <p>You registered with the data:</p>
-    <% @data.each do |key, value| %> 
-    <p><%="#{key}: #{value}"%></p>
-    <% end %>
-  <p>
-    To change something go to <a href="http://www.example.com">update</a>.
-  </p>
-  </p>
-    To register another person repeat the <%= link_to("registration-process", root_path) %>.
-  </p>
-</div>
-<div class="alert alert-danger">
-  <p>
-    If you didn't get an email most probably you made a typo in the email-adress. Hit the backwards-button of the browser to correct your input and submit again or just repeat the <%= link_to("registration-process", root_path) %> completely.
-    
-    If the email-address is definitely right, write an email to ...
-  </p>
-</div>
+<div class="container registration-container">
+  <div class="well">
+  <h1> You're <strong>almost</strong> done <br> 
+  <small>with registering for the festival...</small></h1>
+    <div class="alert alert-success">
+      <p>
+        Please check your Email-Account for an Email we sent you. <strong>You have to klick the link in the Email to confirm your registration. </strong>If you don't do that you are not registered.
+      </p>
+      <p> Afterwards you will be registered with the data:<br>
+        <table class="table">
+        <% @data.each do |key, value| %>
+          <tr>
+            <th><%=key%></th>
+            <td><%=value%></td>
+          </tr>
+        <% end %>
+        </table>
+      </p>
+      <p>
+        To change something go to <a href="http://www.example.com">update</a>.
+      </p>
+      <p>
+        To register another person repeat the <%= link_to("registration-process", root_path) %>.
+      </p>
+    </div>
+    <div class="alert alert-danger">
+      <p>
+        <strong>If you didn't get an email</strong> most probably you made a typo in the email-adress. Hit the backwards-button of the browser to correct your input and submit again or just repeat the <%= link_to("registration-process", root_path) %> completely.
+        
+        If the email-address is definitely right, write an email to ...
+      </p>
+    </div>
+  </div>
+<div>
