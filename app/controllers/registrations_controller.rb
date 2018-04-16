@@ -16,8 +16,7 @@ class RegistrationsController < ApplicationController
   end
   
   def edit
-    email = "bla@bla.bla" #replace with handed over Email/Email-hash
-    @registration = Registration.where(hashedEmail: Registration.tokenize(email)).take
+    @registration = Registration.find_by(hashedEmail: params[:hashed_email])
     ##don't display the encrypted stuff in the edit-view or delete @registration and update/save only when field is not empty.
   end
   

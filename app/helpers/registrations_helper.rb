@@ -5,8 +5,8 @@ module RegistrationsHelper
     "/registrations"
   end
   
-  def registration_path(foobar)
-    "/registrations"#this is just because it works for rendering the form. probably this needs to be corrected for the update-post.
+  def registration_path(registration)
+    "/registrations/#{registration.hashed_email}"
   end
 
 end

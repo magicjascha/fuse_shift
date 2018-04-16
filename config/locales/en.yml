@@ -51,3 +51,8 @@ en:
   city_label: "City"
   city_help: "The city you live in"
   
+  submit:
+    new: "Submit Registration"
+    create: "Submit Registration"
+    edit: "Update Registration"
+    update: "Update Registration"

@@ -2,14 +2,11 @@ require 'encrypt/encryptor'
 require 'digest'
 
 class Registration < ApplicationRecord
-  def self.tokenize(email) #define method with self as class method so it can be used without instance, call with Registration.tokenize
-    Digest::SHA2.hexdigest(email)
-  end
-
+  include Hasher
   
   before_validation do
     self.email = email.downcase
-    self.hashedEmail = Registration.tokenize(email)
+    self.hashedEmail = digest(email)
   end
   
   validates :hashedEmail, uniqueness: { case_sensitive: false }   #  Active Record uniqueness validation does not guarantee uniqueness at the database level!
