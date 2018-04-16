@@ -16,7 +16,8 @@ class RegistrationsController < ApplicationController
   end
   
   def edit
-    @registration = Registration.find_by(hashedEmail: params[:hashed_email])
+    id = Registration.find_by(hashedEmail: params[:hashed_email]).id
+    @registration = Registration.new(id: id, hashedEmail: params[:hashed_email])
     ##don't display the encrypted stuff in the edit-view or delete @registration and update/save only when field is not empty.
   end
   

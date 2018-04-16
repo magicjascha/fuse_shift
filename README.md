@@ -12,9 +12,9 @@ IN REGISTRATIONS:
   * Instead of hitting the backwards button to correct the email-address, the input-data should be handed over to a complete new registration, cause otherwise there might be confusing outdated error-messages about the input.
   * link to the update view and hand over data
 * edit-view: 
-  * take handed over email (is at the moment a stub in the edit-action)
-  * make encrypted data invisible/delete @registration?
-  * check where update will post to (at the moment there is a hack for registration_path in the registrations-helper)
+  * make encrypted data invisible/delete @registration? (create a new record instance)
+  * move the form_for call back into the views and pass f to the partial
+  * in the edit-view force form_for to use put as a method and the registration_path as action
 * update-action and view
 * attributes shifts and languages
 * some validations
