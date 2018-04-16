@@ -6,7 +6,7 @@ module RegistrationsHelper
   end
   
   def registration_path(registration)
-    "/registrations/#{registration.hashed_email}"
+    "/registrations/#{registration.hashedEmail}"
   end
 
 end
