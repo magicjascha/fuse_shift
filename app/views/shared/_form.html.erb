@@ -2,10 +2,10 @@
   <%= render 'shared/error_messages' %>
 
   <div class="form-group">
-    <%= f.label :name, t(:name_label), class:"control-label col-sm-4"%>
+    <%= f.label :name, t(:"name.label"), class:"control-label col-sm-4"%>
     <div class="col-sm-8">
       <%= f.text_field :name, class: 'form-control' %>
-      <small id="nameHelp" class="form-text text-muted"><%=t(:name_help)%></small>
+      <small id="nameHelp" class="form-text text-muted"><%=t(:"name.help")%></small>
     </div>
   </div>
 
