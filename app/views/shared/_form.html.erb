@@ -1,0 +1,66 @@
+<%= form_for(@registration, html: {class: 'form-horizontal'}) do |f| %>
+  <%= render 'shared/error_messages' %>
+
+  <div class="form-group">
+    <%= f.label :name, t(:name_label), class:"control-label col-sm-4"%>
+    <div class="col-sm-8">
+      <%= f.text_field :name, class: 'form-control' %>
+      <small id="nameHelp" class="form-text text-muted"><%=t(:name_help)%></small>
+    </div>
+  </div>
+
+  <% if action_name == "new" or action_name == "create" %>
+    <div class="form-group">
+      <%= f.label :email, t(:email_label),class:"control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :email, class: 'form-control' %>
+        <small id="emailHelp" class="form-text text-muted"><%=t(:email_help)%></small>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :phonennumber, t(:phonenumber_label), class:"control-label col-sm-4" %>
+    <div class="col-sm-8">
+      <%= f.text_field :phonenumber, class: 'form-control' %>
+      <small id="phonenumberHelp" class="form-text text-muted"><%=t(:phonenumber_help)%></small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="checkDiv">
+      <%= f.label :is_member, t(:is_member_label), class:"control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.check_box :is_member%>
+        <small id="isMemberHelp" class="form-text text-muted"><%=t(:is_member_help)%></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :contact_person, t(:contact_person_label), class:"control-label col-sm-4" %>
+    <div class="col-sm-8">
+      <%= f.text_field :contact_person, class: 'form-control'  %>
+      <small id="contactPersonHelp" class="form-text text-muted"><%=t(:contact_person_help)%></small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :city, t(:city_label), class:"control-label col-sm-4" %>
+    <div class="col-sm-8">
+      <%= f.text_field :city, class: 'form-control'  %>
+      <small id="cityHelp" class="form-text text-muted"><%=t(:city_help)%></small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <% if action_name == "new" or action_name == "create"%>    
+        <%= f.submit "Submit registration" %>
+      <% elsif action_name == "edit" %>
+        <%= f.submit "Update registration" %>
+      <% end %>  
+    </div>
+  </div>
+  
+<% end %>

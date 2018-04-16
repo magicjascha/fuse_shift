@@ -11,7 +11,7 @@ module Encrypt
     def apply
       apply? ? encrypt : string
     end
-
+    
     private
 
       def encrypt

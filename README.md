@@ -9,14 +9,15 @@ IN REGISTRATIONS:
   * email-field should be red, when invalid
   * "email has already been taken" instead of "Hashedemail has already been taken".
 * Success-view improvements:
-  * is session or flash the right approach (security?) or is this nonsense? Should the error-messages and the success-view be replaced by a flashs?
   * Instead of hitting the backwards button to correct the email-address, the input-data should be handed over to a complete new registration, cause otherwise there might be confusing outdated error-messages about the input.
   * link to the update view and hand over data
-
-* update-view
+* edit-view: 
+  * take handed over email (is at the moment a stub in the edit-action)
+  * make encrypted data invisible/delete @registration?
+  * check where update will post to (at the moment there is a hack for registration_path in the registrations-helper)
+* update-action and view
 * attributes shifts and languages
 * some validations
-* (bootstrap?) styling the views
 * tests
 
 OTHER TASKS
@@ -33,13 +34,16 @@ LATER:
 * adjusting labels and helptext for the input-fields
 
 
+2. Evalutation App
+....
+
 DONE:
 * registration
 * encrpytion
 * hashed email for id
+* edit-view
 
-2. Evalutation App
-....
+
 
 
 Things you may want to cover:
