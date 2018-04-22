@@ -2,8 +2,9 @@
   <div class="well">
     <h1>Register</h1>
     <p>...your availability for shifts on the festival</p>      
-    <%= render 'shared/form' %>
-          
+    <%= form_for(@registration, html: {class: 'form-horizontal'}) do |f| %>
+      <%= render 'shared/form', :f => f %>
+    <% end %>          
   <div>
 </div>
   

@@ -6,7 +6,10 @@ class Registration < ApplicationRecord
   
   before_validation do
     self.email = email.downcase
-    self.hashedEmail = digest(email)
+    #how to pass action into model?
+    if params[:action] == :create #fix: model doesn't know controller action
+      self.hashedEmail = digest(email)
+    end
   end
   
   validates :hashedEmail, uniqueness: { case_sensitive: false }   #  Active Record uniqueness validation does not guarantee uniqueness at the database level!

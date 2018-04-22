@@ -6,6 +6,10 @@ class RegistrationsController < ApplicationController
   end
   
   def create
+    print "print action   "
+    puts params[:action]
+    print "print registration_params   "
+    p registration_params
     @registration = Registration.new(registration_params)
     if @registration.save
       @data = registration_params
@@ -22,7 +26,14 @@ class RegistrationsController < ApplicationController
   end
   
   def update
-    #post to edit    
+    print "print action   "
+    puts params[:action]
+    @registration = Registration.find_by(hashedEmail: params[:hashed_email])
+    @registration.update(registration_params)
+    print "print @registration   "
+    p @registration
+    @registration.save #fix: Empty Fields should not be saved
+    render registration_path(@registration)
   end
   
   private
