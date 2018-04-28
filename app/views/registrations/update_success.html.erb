@@ -1,0 +1,24 @@
+<div class="container registration-container">
+  <div class="well">
+  <h1> You successfully updated a registration</h1>
+    <div class="alert alert-success">
+      <p>
+        ...with the data:<br>
+        <table class="table">
+        <% @data.each do |key, value| %>
+          <tr>
+            <th><%=key%></th>
+            <td><%=value%></td>
+          </tr>
+        <% end %>
+        </table>
+      </p>
+      <p>
+        The rest of data stays as before. To change something go to <%= link_to("Edit", registration_path(@registration)) %>.
+      </p>
+      <p>
+        To register another person repeat the <%= link_to("registration-process", root_path) %>.
+      </p>
+    </div>
+  </div>
+<div>

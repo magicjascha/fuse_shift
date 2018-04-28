@@ -30,7 +30,8 @@ class RegistrationsController < ApplicationController
       @registration = Registration.find_by(hashedEmail: params[:hashed_email])
       @registration.assign_attributes(params_encrypt(present_attributes))
       @registration.save(validate: false)
-      render html:'successful update' #build update_success-view and render it here
+      @data = present_attributes #contains params that should be displayed in success
+      render:'update_success'
     else 
       render 'edit'
     end
