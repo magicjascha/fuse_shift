@@ -1,3 +1,6 @@
+#todo:
+#test form method and action
+# put in methods
 require 'test_helper'
 
 class RegistrationProcessTest < ActionDispatch::IntegrationTest
@@ -10,14 +13,14 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
   
   test "valid registration and edit" do
     get root_path
-    assert_template 'registrations/new'
+#     assert_template 'registrations/new'
     assert_select "form input[type=text]", count: 5 #check for 5 empty text-input fields.
     assert_select "form input[type=text][value]", false
     assert_difference 'Registration.count', 1 do
       post registrations_path, params: { registration: {name: @registration.name,
                                                         email: @registration.email, phonenumber: @registration.phonenumber}}
     end
-    assert_template 'registrations/success'
+#     assert_template 'registrations/success'
     assert_equal registrations_path, path
     assert_select "td", @registration.name
     assert_select "td", @registration.email
