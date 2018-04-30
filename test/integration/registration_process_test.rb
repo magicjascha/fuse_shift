@@ -84,11 +84,4 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select "div.field_with_errors"
   end
   
-  test "email-adress must be unique" do
-    #fixtures don't act as if it's already in the database? -> have to add it first, can't do it in model-test, doesn't know post
-    post registrations_path, params: { registration: {name: "bla",
-                                                      email: @registration.email, phonenumber: "84839"}}
-    assert_not @registration.valid?
-    assert_not @registration.errors[:hashedEmail].empty?
-  end
 end

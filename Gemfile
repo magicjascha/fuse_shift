@@ -49,6 +49,7 @@ group :test do
   gem 'minitest-reporters'
   gem 'guard'
   gem 'guard-minitest'
+  gem "factory_bot_rails"
 end
 
 group :development do

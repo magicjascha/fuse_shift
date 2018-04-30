@@ -10,7 +10,8 @@ class ActiveSupport::TestCase
   include ApplicationHelper
   include RegistrationsHelper
   include Hasher
-  fixtures :all
+  include FactoryBot::Syntax::Methods
+#   fixtures :all
 
 
   # Add more helper methods to be used by all tests here...

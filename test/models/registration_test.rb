@@ -23,4 +23,17 @@ class RegistrationTest < ActiveSupport::TestCase
     end
   end
   
+  test "hashedEmail should be unique" do
+    create :registration
+    registration = build(:registration)
+    assert_not registration.valid?
+  end
+
+  #for educational purposes
+  test "hashedEmail should be unique (second version)" do
+    @registration.save!
+    setup#assign a new record to @registration
+    assert_not @registration.valid?
+  end
+  
 end
