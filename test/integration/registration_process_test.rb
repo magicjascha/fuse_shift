@@ -13,7 +13,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     #assert empty registration form
     assert_select 'form[action="/registrations"]'
     assert_select 'form[method="post"]'
-    assert 'form input[type=hidden][name="_method"]', false
+    assert_select 'form input[type=hidden][name="_method"]', false
     assert_select "form input[type=text]", count: 5 #check for 5 empty text-input fields.
     assert_select "form input[type=text][value]", false
     #submit data to database 
@@ -27,10 +27,15 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select "td", @input[:phonenumber]
     assert_select "td", @input[:city]
     assert_select "a[href=?]", registration_path(@registration), text: "Edit"
+    #go to edit page
     get registration_path(@registration)
     #assert empty edit form
-    assert_select "form input[type=text]", count: 4 #check for 4 empty text-input fields.
+    assert_equal registration_path(@registration), path
+    assert_select %{form[action="#{registration_path(@registration)}"]}
+    assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
+    assert_select "form input[type=text]", count: 4
     assert_select "form input[type=text][value]", false
+    #submit data
     put registration_path(@registration), params: { registration: {name: "Another One", phonenumber: ""}}
     #assert update-success-page with data
     assert_equal registration_path(@registration), path
@@ -74,7 +79,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_equal "/registrations", path
     assert_select 'form[action="/registrations"]'
     assert_select 'form[method="post"]'
-    assert 'form input[type=hidden][name="_method"]', false
+    assert_select 'form input[type=hidden][name="_method"]', false
     assert_select  '#registration_name[value=?]', error_input[:name]
     assert_select  '#registration_email[value=?]', error_input[:email]
     assert_select  '#registration_phonenumber[value=?]', error_input[:phonenumber]
