@@ -33,6 +33,7 @@ class RegistrationsController < ApplicationController
       @data = present_attributes #contains params that should be displayed in success
       render:'update_success'
     else 
+      @registration.hashedEmail = params[:hashed_email]
       render 'edit'
     end
   end
@@ -40,7 +41,7 @@ class RegistrationsController < ApplicationController
   private
     def registration_params
       r = params.require(:registration).permit(:name, :email, :phonenumber, :city, :is_member, :contact_person)
-      r[:email] = r[:email].downcase if r[:email]
+      r[:email].downcase! if r[:email]
       r
     end
     

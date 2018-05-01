@@ -15,7 +15,6 @@ module Encrypt
     private
 
       def encrypt
-        # public_key_file = 'public.pem';
         encode(rsa.public_encrypt(string))
       end
   end

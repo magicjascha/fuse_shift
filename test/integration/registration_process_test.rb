@@ -3,85 +3,114 @@ require 'test_helper'
 class RegistrationProcessTest < ActionDispatch::IntegrationTest
   
   def setup
-    @registration = Registration.new(name: "Example Name", email: "eXample@Example.de", phonenumber: "1234")
-    @registration.email.downcase!
-    @registration.hashedEmail = digest(@registration.email)
+    @input = {name: "Example Name", email: "eXample@Example.de", phonenumber: "1234", city: "Salzburg"}
+    @registration = Registration.new({hashedEmail: digest(@input[:email].downcase)})
   end
   
   test "valid registration and edit" do
+    #go to registration page
     get root_path
-    assert_template 'registrations/new'
+    #assert empty registration form
+    assert_select 'form[action="/registrations"]'
+    assert_select 'form[method="post"]'
+    assert 'form input[type=hidden][name="_method"]', false
     assert_select "form input[type=text]", count: 5 #check for 5 empty text-input fields.
     assert_select "form input[type=text][value]", false
+    #submit data to database 
     assert_difference 'Registration.count', 1 do
-      post registrations_path, params: { registration: {name: @registration.name,
-                                                        email: @registration.email, phonenumber: @registration.phonenumber}}
+      post registrations_path, params: { registration: @input}
     end
-    assert_template 'registrations/success'
+    #assert success-create-page with data
     assert_equal registrations_path, path
-    assert_select "td", @registration.name
-    assert_select "td", @registration.email
-    assert_select "td", @registration.phonenumber
+    assert_select "td", @input[:name]
+    assert_select "td", @input[:email].downcase
+    assert_select "td", @input[:phonenumber]
+    assert_select "td", @input[:city]
     assert_select "a[href=?]", registration_path(@registration), text: "Edit"
     get registration_path(@registration)
-    assert_template "edit"
+    #assert empty edit form
     assert_select "form input[type=text]", count: 4 #check for 4 empty text-input fields.
     assert_select "form input[type=text][value]", false
     put registration_path(@registration), params: { registration: {name: "Another One", phonenumber: ""}}
-    assert_template "registrations/update_success"
+    #assert update-success-page with data
     assert_equal registration_path(@registration), path
     assert_select "td", "Another One"
+    #assert database record updated
+    saved_reg = Registration.find_by(hashedEmail: @registration.hashedEmail)
+    assert_equal "Another One", decrypt(saved_reg.name)
+    assert_equal @input[:email].downcase, decrypt(saved_reg.email)
+    assert_equal @input[:phonenumber], decrypt(saved_reg.phonenumber)
+    assert_equal @input[:city], decrypt(saved_reg.city)
   end
   
   test "encrypt registration right" do
+    #setup test record in database
     assert_difference 'Registration.count', 1 do
-      post registrations_path, params: { registration: {name: @registration.name,
-                                                        email: @registration.email, phonenumber: @registration.phonenumber}}
+      post registrations_path, params: { registration: @input}
     end
+    #Load record from database
     saved_reg = Registration.last
-    assert_not_equal(@registration.name, saved_reg.name)
-    assert_not_equal(@registration.email, saved_reg.email)
-    assert_not_equal(@registration.phonenumber, saved_reg.phonenumber)
-    rsa_private_key = OpenSSL::PKey::RSA.new(File.read('config/keys/private.dev.pem'), "ruby")
-    decrypted_name = rsa_private_key.private_decrypt(Base64.strict_decode64(saved_reg.name))
-    decrypted_email = rsa_private_key.private_decrypt(Base64.strict_decode64(saved_reg.email))
-    decrypted_phonenumber = rsa_private_key.private_decrypt(Base64.strict_decode64(saved_reg.phonenumber))
-    assert_equal(@registration.name, decrypted_name)
-    assert_equal(@registration.email, decrypted_email)
-    assert_equal(@registration.phonenumber, decrypted_phonenumber)
+    #assert data is not the raw input
+    assert_not_equal(@input[:name], saved_reg.name)
+    assert_not_equal(@input[:email].downcase, saved_reg.email)
+    assert_not_equal(@input[:phonenumber], saved_reg.phonenumber)
+    assert_not_equal(@input[:city], saved_reg.city)
+    #assert data is decryptable
+    assert_equal(@input[:name], decrypt(saved_reg.name))
+    assert_equal(@input[:email].downcase, decrypt(saved_reg.email))
+    assert_equal(@input[:phonenumber], decrypt(saved_reg.phonenumber))
+    assert_equal(@input[:city], decrypt(saved_reg.city))
   end
   
   test "invalid registration" do
+    error_input = @input.merge(email: "blabla")
+    #go to registration page
     get root_path
+    #submit data
     assert_no_difference 'Registration.count' do
-      post registrations_path, params: { registration: {name: @registration.name,
-                                                        email: "blabla", phonenumber: @registration.phonenumber}}
+      post registrations_path, params: { registration: error_input}
     end
-    assert_template 'registrations/new'
-    assert_select  '#registration_name[value=?]', @registration.name
-    assert_select  '#registration_email[value=?]', "blabla"
-    assert_select  '#registration_phonenumber[value=?]', @registration.phonenumber
+    #assert filled registration-form with errors
+    assert_equal "/registrations", path
+    assert_select 'form[action="/registrations"]'
+    assert_select 'form[method="post"]'
+    assert 'form input[type=hidden][name="_method"]', false
+    assert_select  '#registration_name[value=?]', error_input[:name]
+    assert_select  '#registration_email[value=?]', error_input[:email]
+    assert_select  '#registration_phonenumber[value=?]', error_input[:phonenumber]
     assert_select "div#error_explanation"
     assert_select "div.field_with_errors"
     assert_select 'form[action="/registrations"]'
-    assert_equal "/registrations", path
   end
   
   test "invalid edit" do
-    post registrations_path, params: { registration: {name: @registration.name,
-                                                      email: @registration.email, phonenumber: @registration.phonenumber, city: "Salzburg"}}
+    error_input = {phonenumber: "0"*21, city: "Bochum"}
+    #setup test record in database
+    post registrations_path, params: { registration: @input}
+    #go to edit-path of that registration
     get registration_path(@registration)
-    assert_template 'edit'
-    assert_select "form input[type=text]", count: 4 #check for 4 empty text-input fields.
+    #assert empty edit form
+    assert_select %{form[action="#{registration_path(@registration)}"]}
+    assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
+    assert_select "form input[type=text]", count: 4
     assert_select "form input[type=text][value]", false
-    put registration_path(@registration), params: { registration: {phonenumber: "0"*21, city: "Bochum"}}
-    assert_template 'edit'
+    #submit new data
+    put registration_path(@registration), params: { registration: error_input}
+    #assert filled edit form with errors 
     assert_equal registration_path(@registration), path
+    assert_select %{form[action="#{registration_path(@registration)}"]}
+    assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
     assert_select  '#registration_name[value]', false  #check if non-changed name input field is empty
-    assert_select '#registration_phonenumber[value=?]', "0"*21 #check if error-changed input field is filled right
-    assert_select '#registration_city[value=?]', "Bochum" #check if changed non-error input field is filled right
+    assert_select '#registration_phonenumber[value=?]', error_input[:phonenumber] #check if error-changed input field is filled right
+    assert_select '#registration_city[value=?]', error_input[:city] #check if changed non-error input field is filled right
     assert_select "div#error_explanation"
     assert_select "div.field_with_errors"
+    #assert database-record unchanged 
+    saved_reg = Registration.find_by(hashedEmail: @registration.hashedEmail)
+    assert_equal @input[:name], decrypt(saved_reg.name)
+    assert_equal @input[:email].downcase, decrypt(saved_reg.email)
+    assert_equal @input[:phonenumber], decrypt(saved_reg.phonenumber)
+    assert_equal @input[:city], decrypt(saved_reg.city)
   end
   
 end
