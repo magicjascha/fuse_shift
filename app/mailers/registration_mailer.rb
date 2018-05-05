@@ -3,9 +3,8 @@ class RegistrationMailer < ApplicationMailer
   
   default from: "no-reply@festival-registration.de"
   
-  def registration_confirm(registration, data)
+  def registration_confirm(registration)
     @registration = registration
-    @data = data
     mail(to: @registration.email, subject: 'Confirm your registration for the festival')
   end
 end

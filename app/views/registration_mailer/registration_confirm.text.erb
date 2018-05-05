@@ -1,5 +1,5 @@
-Hi <%= @registration.name %>
+Hi
 
-You started your registration for the festival with the data:
-Please confirm your registration and go to https://example.com to finish. If you don't do that you are not registered.
-To edit your data click here: <%= registration_path(@registration) %>. 
+You started your registration for the festival.
+Please confirm your registration and go to <%= puts registration_confirm_url(@registration) %> to finish. If you don't do that you are not registered.
+To edit your data click here: <%= puts registration_url(@registration) %>. 

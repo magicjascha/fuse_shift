@@ -34,6 +34,9 @@ Rails.application.configure do
   # added for letter opener https://github.com/ryanb/letter_opener
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+  
+  #enabling urls in mailers
+  config.action_mailer.default_url_options = { host: "localhost:3000" }
 
 #   config.action_mailer.smtp_settings = {
 #     address:              'smtp.gmail.com',

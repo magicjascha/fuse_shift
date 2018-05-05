@@ -5,10 +5,9 @@
   </head>
   <body>
     <h1>Hi <%= @registration.name %></h1>
-    <p>
-      You started your registration for the festival with the data:
-      Please confirm your registration <%= link_to("here", "www.example.com") %> to finish. If you don't do that you are not registered.
-      To edit your data click <%= link_to("here", registration_path(@registration)) %>. 
+    <p>You started your registration for the festival.</p>
+    <p>Please confirm your registration <%= link_to("here", registration_confirm_url(@registration)) %> to finish. If you don't do that you are not registered.</p>
+    <p>To edit your data click <%= link_to("here", registration_url(@registration)) %>. 
     </p>
   </body>
 </html>

@@ -12,7 +12,7 @@ class RegistrationsController < ApplicationController
     if @registration.valid?
       Registration.new(add_hashed_email(params_encrypt(registration_params))).save(validate: false)
       @data = registration_params #contains params that should be displayed in success
-      RegistrationMailer.registration_confirm(@registration, @data).deliver_now
+      RegistrationMailer.registration_confirm(@registration).deliver_now
       render "success"    
     else 
       render 'new'
@@ -38,6 +38,13 @@ class RegistrationsController < ApplicationController
     end
   end
   
+  def confirm
+    @registration = Registration.find_by(hashedEmail: params[:hashed_email])
+    @registration.confirmed = true
+    @registration.save(validate: false)
+    render 'confirm'
+  end
+
   private
     def registration_params
       r = params.require(:registration).permit(:name, :email, :phonenumber, :city, :is_member, :contact_person)
@@ -57,7 +64,7 @@ class RegistrationsController < ApplicationController
     end
     
     def encrypt?(key)
-      !["is_member", "hashedEmail"].include?(key)
+      !["is_member", "hashedEmail", "confirmed"].include?(key)
     end
     
     def encrypt(value)
