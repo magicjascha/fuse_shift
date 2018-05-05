@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post 'registrations', to: 'registrations#create'
   get 'registrations/:hashed_email', to: 'registrations#edit' 
   put 'registrations/:hashed_email', to: 'registrations#update'
+  get 'registrations/:hashed_email/confirm', to: 'registrations#confirm'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

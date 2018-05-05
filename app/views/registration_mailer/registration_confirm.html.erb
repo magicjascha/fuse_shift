@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @registration.name %></h1>
+    <p>You started your registration for the festival.</p>
+    <p>Please confirm your registration <%= link_to("here", registration_confirm_url(@registration)) %> to finish. If you don't do that you are not registered.</p>
+    <p>To edit your data click <%= link_to("here", registration_url(@registration)) %>. 
+    </p>
+  </body>
+</html>

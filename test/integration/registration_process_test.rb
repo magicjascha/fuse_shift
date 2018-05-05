@@ -1,3 +1,6 @@
+#todo:
+#test form method and action
+# put in methods
 require 'test_helper'
 
 class RegistrationProcessTest < ActionDispatch::IntegrationTest
