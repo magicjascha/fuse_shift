@@ -24,8 +24,8 @@ class RegistrationTest < ActiveSupport::TestCase
   end
   
   test "hashedEmail should be unique" do
-    create :registration
-    registration = build(:registration)
+    build(:registration, :as_record).save(validate: false)
+    registration = build(:registration, :with_hashed_email)
     assert_not registration.valid?
   end
 

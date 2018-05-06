@@ -19,9 +19,11 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select 'form input[type=hidden][name="_method"]', false
     assert_select "form input[type=text]", count: 5 #check for 5 empty text-input fields.
     assert_select "form input[type=text][value]", false
-    #submit data to database 
+    #submit data to database, assert record was saved and confirm-email was queued    
     assert_difference 'Registration.count', 1 do
-      post registrations_path, params: { registration: @input}
+      assert_difference 'ActionMailer::Base.deliveries.size', +1 do
+        post registrations_path, params: { registration: @input}
+      end
     end
     #assert success-create-page with data
     assert_equal registrations_path, path

@@ -37,8 +37,12 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
   
-  #enabling urls in mailers
+  #enabling urls in mailers (doesn't work)
   config.action_mailer.default_url_options = { host: "localhost:3000" }
+  
+  #setting root_url genreally (doesn't work)
+  config.action_controller.default_url_options = { host: "localhost:3000" } 
+#   Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
