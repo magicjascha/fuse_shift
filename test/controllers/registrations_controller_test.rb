@@ -16,14 +16,10 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_difference 'ActionMailer::Base.deliveries.size', +1 do
       post registrations_path, params: { registration: input}
     end
-    #assert email_content
+    #assert that it's the right email
     confirm_email = ActionMailer::Base.deliveries.last
     assert_equal 'Confirm your registration for the festival', confirm_email.subject
     assert_equal input[:email].downcase, confirm_email.to[0]
-    assert_match(registration_path(registration), confirm_email.html_part.body.decoded)
-#     assert_match(registration_url(registration), confirm_email.html_part.body.decoded)-> fix default_url_options in test.rb
-#     assert_match(registration_confirm_url(registration), confirm_email.html_part.body.decoded)
-#     assert_equal("http://localhost:3000/", root_url)
   end
   
   test "confirmation saves to database" do
