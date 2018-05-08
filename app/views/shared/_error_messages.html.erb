@@ -1,6 +1,6 @@
 <% if !@registration.errors[:hashedEmail].empty? %>
   <div class="alert alert-danger">
-      There is already a registration for this email-adress. Klick here to <%= link_to "edit the existing registration", "https://www.example.com" %> or correct your input.
+      There is already a registration for this email-adress.
   </div>
 <% end %>
 <% if @registration.errors.any? %>

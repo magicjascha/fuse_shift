@@ -13,7 +13,7 @@ class RegistrationsController < ApplicationController
 #   authenticate_with_http_basic do |name, password|
 #     USERS.has_key?(name) && USERS[name] == password
 #   end
-  http_basic_authenticate_with name: "me", password: "@home"
+#   http_basic_authenticate_with name: "me", password: "@home"
   
   
   def new

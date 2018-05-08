@@ -31,7 +31,6 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select "td", @input[:email].downcase
     assert_select "td", @input[:phonenumber]
     assert_select "td", @input[:city]
-    assert_select "a[href=?]", registration_path(@registration), text: "Edit"
     #go to edit page
     get registration_path(@registration)
     #assert empty edit form
