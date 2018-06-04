@@ -1,20 +1,23 @@
 require 'json'
 
 class RegistrationsController < ApplicationController
-   PEM = File.read('config/keys/public.dev.pem')
+  PEM = File.read('config/keys/public.dev.pem')
 #   USERS = { 'me' => '@home', 'you' => '@work' }
 #   before_action :authenticate, only: :new
-#   
-#   
+  
+  
 #   def authenticate
 #     p request.env['HTTP_AUTHORIZATION']
 #     USERS.has_key?(name) && USERS[name] == password
 #   end
-#   authenticate_with_http_basic do |name, password|
+#   http_basic_authenticate_with do |name, password|
 #     USERS.has_key?(name) && USERS[name] == password
 #   end
 #   http_basic_authenticate_with name: "me", password: "@home"
   
+  def index
+    render json: Registration.all.to_json
+  end
   
   def new
     @registration = Registration.new
@@ -61,7 +64,7 @@ class RegistrationsController < ApplicationController
 
   private
     def registration_params
-      r = params.require(:registration).permit(:name, :email, :phonenumber, :city, :is_member, :contact_person)
+      r = params.require(:registration).permit(:name, :email, :phonenumber, :city, :is_member, :contact_person, :start)
       r[:email].downcase! if r[:email]
       r
     end

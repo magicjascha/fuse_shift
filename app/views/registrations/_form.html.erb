@@ -8,47 +8,110 @@
   </div>
 </div>
 
+<div class="form-group">
+  <%= f.label :shortname, t(:"shortname.label"), class:"control-label col-sm-4"%>
+  <div class="col-sm-8">
+    <%= f.text_field :name, class: 'form-control' %>
+    <small id="shortnameHelp" class="form-text text-muted"><%=t(:"shortname.help")%></small>
+  </div>
+</div>
+
 <% if action_name == "new" or action_name == "create" %>
   <div class="form-group">
-    <%= f.label :email, t(:email_label),class:"control-label col-sm-4" %>
+    <%= f.label :email, t("email.label"),class:"control-label col-sm-4" %>
     <div class="col-sm-8">
       <%= f.text_field :email, class: 'form-control' %>
-      <small id="emailHelp" class="form-text text-muted"><%=t(:email_help)%></small>
+      <small id="emailHelp" class="form-text text-muted"><%=t("email.help")%></small>
     </div>
   </div>
 <% end %>
 
 <div class="form-group">
-  <%= f.label :phonennumber, t(:phonenumber_label), class:"control-label col-sm-4" %>
+  <%= f.label :phonennumber, t("phonenumber.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.text_field :phonenumber, class: 'form-control' %>
-    <small id="phonenumberHelp" class="form-text text-muted"><%=t(:phonenumber_help)%></small>
+    <small id="phonenumberHelp" class="form-text text-muted"><%=t("phonenumber.help")%></small>
   </div>
 </div>
 
 <div class="form-group">
-  <div class="checkDiv">
-    <%= f.label :is_member, t(:is_member_label), class:"control-label col-sm-4" %>
-    <div class="col-sm-8">
+    <%= f.label :is_member, t("is_member.label"), class:"control-label col-sm-4" %>
+    <div class="col-sm-1 checkDiv">
       <%= f.check_box :is_member%>
-      <small id="isMemberHelp" class="form-text text-muted"><%=t(:is_member_help)%></small>
+      <small id="isMemberHelp" class="form-text text-muted"><%=t("is_member.help")%></small>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="form-group">
+    <%= f.label :german, t("languages.label"), class:"control-label col-sm-4" %>
+    <div class="col-sm-1">
+      <%= f.label :german, t("languages.german"), class:"control-label col-sm-1" %>
+    </div>
+    <div class="col-sm-1 checkDiv">
+      <%= f.check_box :german%>
+    </div>
+    <div class="col-sm-1">
+      <%= f.label :english, t("languages.english"), class:"control-label col-sm-1" %>
+    </div>
+    <div class="col-sm-1 checkDiv">
+      <%= f.check_box :english%>
+    </div>
+    <div class="col-sm-1">
+      <%= f.label :french, t("languages.french"), class:"control-label col-sm-1" %>
+    </div>
+    <div class="col-sm-2 checkDiv">
+      <%= f.check_box :french%>
     </div>
   </div>
+  <% if false %>
+<small id="languagesHelp" class="form-text text-muted"><%=t("languages.help")%></small>
+<% end %>
 </div>
 
 <div class="form-group">
-  <%= f.label :contact_person, t(:contact_person_label), class:"control-label col-sm-4" %>
+  <%= f.label :start, t("start.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
-    <%= f.text_field :contact_person, class: 'form-control'  %>
-    <small id="contactPersonHelp" class="form-text text-muted"><%=t(:contact_person_help)%></small>
+    <%= f.datetime_select(:start, class: 'form-control', order: [:day, :month, :hour], discard_minute: true, prompt: {day: 'Choose day', month: 'Choose month', hour: "Choose hour"}) %><br>
+    <small id="startHelp" class="form-text text-muted"><%=t("start.help")%></small>
+  </div>
+</div>
+
+<% if false %>
+    <%= date_select(:start_date, order: [:day, :month]) %>
+<% end %>
+
+<div class="form-group">
+  <%= f.label :end, t("end.label"), class:"control-label col-sm-4" %>
+  <div class="col-sm-8">
+    <%= f.datetime_select(:end, class: 'form-control', order: [:day, :month, :hour], discard_minute: true, prompt: {day: 'Choose day', month: 'Choose month', hour: "Choose hour"}) %><br>
+    <small id="startHelp" class="form-text text-muted"><%=t("end.help")%></small>
   </div>
 </div>
 
 <div class="form-group">
-  <%= f.label :city, t(:city_label), class:"control-label col-sm-4" %>
+  <%= f.label :contact_person, t("contact_person.label"), class:"control-label col-sm-4" %>
+  <div class="col-sm-8">
+    <%= f.text_field :contact_person, class: 'form-control'  %>
+    <small id="contactPersonHelp" class="form-text text-muted"><%=t("contact_person.help")%></small>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :city, t("city.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.text_field :city, class: 'form-control'  %>
-    <small id="cityHelp" class="form-text text-muted"><%=t(:city_help)%></small>
+    <small id="cityHelp" class="form-text text-muted"><%=t("city.help")%></small>
+  </div>
+</div>
+
+
+
+<div class="form-group">
+  <%= f.label :comment, t("comment.label"), class:"control-label col-sm-4" %>
+  <div class="col-sm-8">
+    <%= f.text_field :city, class: 'form-control'  %>
+    <small id="commentHelp" class="form-text text-muted"><%=t("comment.help")%></small>
   </div>
 </div>
 
