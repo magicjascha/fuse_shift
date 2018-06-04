@@ -14,6 +14,12 @@ class RegistrationsController < ApplicationController
 #     USERS.has_key?(name) && USERS[name] == password
 #   end
 #   http_basic_authenticate_with name: "me", password: "@home"
+   
+  def index
+    scope = Registration
+    scope = params[:confirmed] ? scope.where(confirmed: true) : scope.all
+    render json: scope.as_json
+  end
   
   
   def new
