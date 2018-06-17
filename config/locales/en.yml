@@ -30,29 +30,86 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
-  
+  festival_start: "2018-06-20T16:00:00+00:00"
+  festival_end: "2018-07-10T16:00:00+00:00"
+
   name: 
     label: "Name"
     help: "The name of the person, you want to register"
+    
+  shortname:
+    label: "Shortname"
+    help: ""
   
-  email_label: "Email"
-  email_help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."
+  email:
+    label: "Email"
+    help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."
   
-  phonenumber_label: "Cellphone-Number"
-  phonenumber_help: ""
+  phonenumber:
+    label: "Cellphone-Number"
+    help: ""
 
-  is_member_label: "Are you a member?"
-  is_member_help: ""
+  is_member:
+    label: "Are you a member?"
+    help: ""
   
-  contact_person_label: "Contact Person"
-  contact_person_help: "This has to be a member of the group"
+  languages:
+    label: "Languages"
+    german: "German"
+    english: "English"
+    french: "French"
+    help: "Select the languages you speek"
+    
+  start:
+    label: "Start of first shift"
+    help: "Enter the first time possible where you can start to work after you arrived. The first possible shift is %{festival_start}"
+    
+  end:
+    label: "End of first shift"
+    help: "Enter when you need to have finished to work before you leave"
   
-  city_label: "City"
-  city_help: "The city you live in"
+  contact_person:
+    label: ""
+    help: "This has to be a member of the group"
+  
+  city:
+    label: "City"
+    help: "The city you live in"
+  
+  comment:
+    label: "Comment"
+    help: "Optional additional information"
   
   submit:
     new: "Submit Registration"
     create: "Submit Registration"
     edit: "Update Registration"
     update: "Update Registration"
+    
+  activerecord:
+    attributes:
+      registration:
+        contact_person: "Contact person's email"
+        end: "Last shift"
+        hashedEmail: "Email"
+        start: "First shift"
+
+    errors:
+      models:
+        registration:
+          attributes:
+            start:
+              before: "must be before %{restriction} (festival end)"
+              on_or_before: "must be before last shift"
+            end:
+              after: "must be after %{restriction} (festival start)"
+            hashedEmail: 
+              uniqueness: "was already registered. If you want to change the previous registration, use the edit-link in the confirmation-email."  
+              
+  validates_timeliness:
+    error_value_formats:
+      datetime: '%d. %B %Y, %H:%M'
+      
+  #datetime:
+    #formats:
+      #default: '%d. %B %Y, %H:%M'
