@@ -11,7 +11,7 @@
 <div class="form-group">
   <%= f.label :shortname, t(:"shortname.label"), class:"control-label col-sm-4"%>
   <div class="col-sm-8">
-    <%= f.text_field :name, class: 'form-control' %>
+    <%= f.text_field :shortname, class: 'form-control' %>
     <small id="shortnameHelp" class="form-text text-muted"><%=t(:"shortname.help")%></small>
   </div>
 </div>
@@ -73,7 +73,7 @@
   <%= f.label :start, t("start.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.datetime_select(:start, class: 'form-control', order: [:day, :month, :hour], discard_minute: true, prompt: {day: 'Choose day', month: 'Choose month', hour: "Choose hour"}) %><br>
-    <small id="startHelp" class="form-text text-muted"><%=t("start.help")%></small>
+    <small id="startHelp" class="form-text text-muted"><%=t("start.help", festival_start: t(:festival_start))%></small>
   </div>
 </div>
 

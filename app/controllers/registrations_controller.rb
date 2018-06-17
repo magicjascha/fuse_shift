@@ -24,12 +24,13 @@ class RegistrationsController < ApplicationController
   end
   
   def create #add hashedEmail, validate that and the raw input data, save encrypted data without validation
+    p params
     @registration = Registration.new(add_hashed_email(registration_params))
     if @registration.valid?
       Registration.new(add_hashed_email(params_encrypt(registration_params))).save(validate: false)
       @data = registration_params #contains params that should be displayed in success
       RegistrationMailer.registration_confirm(@registration).deliver_now
-      render "success"    
+      render "create_success"    
     else 
       render 'new'
     end
@@ -64,8 +65,19 @@ class RegistrationsController < ApplicationController
 
   private
     def registration_params
-      r = params.require(:registration).permit(:name, :email, :phonenumber, :city, :is_member, :contact_person, :start)
-      r[:email].downcase! if r[:email]
+      input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_member, :contact_person, :comment, "start(1i)", "start(2i)", "start(3i)", "start(4i)", "start(5i)", "end(1i)", "end(2i)", "end(3i)", "end(4i)", "end(5i)")
+      r = input.reject { |k| k.starts_with?("start") || k.starts_with?("end")}
+      r[:email].downcase! if input[:email]
+      r[:start] = DateTime.new(Time.current.year, 
+                              input["start(2i)"].to_i,
+                              input["start(3i)"].to_i,
+                              input["start(4i)"].to_i,
+                              input["start(5i)"].to_i)
+      r[:end] = DateTime.new(Time.current.year, 
+                           input["end(2i)"].to_i,
+                           input["end(3i)"].to_i,
+                           input["end(4i)"].to_i,
+                           input["end(5i)"].to_i)
       r
     end
     
@@ -75,13 +87,15 @@ class RegistrationsController < ApplicationController
     
     def params_encrypt(params)
       params.to_h.map do |key, value|
+        p [key,value]
         value = encrypt(value) if encrypt?(key)
+        p [key,value]
         [key, value]
       end.to_h                     
     end
     
     def encrypt?(key)
-      !["is_member", "hashedEmail", "confirmed"].include?(key)
+      !["is_member", "hashedEmail", "confirmed", "start", "end", "english", "german", "french"].include?(key)
     end
     
     def encrypt(value)
