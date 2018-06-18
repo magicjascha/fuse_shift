@@ -9,9 +9,14 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   
   test "send confirm-email" do
     #load input hash from Factory
-    input = attributes_for(:registration)
-    #... and corresponding registration 
-    registration = build(:registration, :with_hashed_email)
+    input = attributes_for(:registration).merge(
+      "start(2i)" => "6",
+      "start(3i)" => "22",
+      "start(4i)" => "12", 
+      "end(2i)" => "7", 
+      "end(3i)" => "5", 
+      "end(4i)" => "16",
+    )
     #assert email is queued after registration
     assert_difference 'ActionMailer::Base.deliveries.size', +1 do
       post registrations_path, params: { registration: input}
@@ -26,11 +31,11 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     #build a registration and save
     registration = build(:registration, :as_record)
     registration.save(validate: false)
-    assert_equal nil, Registration.find_by(hashedEmail: registration.hashedEmail).confirmed
+    assert_equal nil, Registration.find_by(hashed_email: registration.hashed_email).confirmed
     #go to confirmation path for that registration
     get "#{registration_path(registration)}/confirm"
     assert_response :success
     #assert attribute confirmed of the record is true.
-    assert_equal true, Registration.find_by(hashedEmail: registration.hashedEmail).confirmed
+    assert_equal true, Registration.find_by(hashed_email: registration.hashed_email).confirmed
   end
 end

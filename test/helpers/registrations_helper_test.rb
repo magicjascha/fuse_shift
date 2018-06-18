@@ -6,9 +6,9 @@ class RegistrationHelperTest < ActionView::TestCase
     assert_equal "/registrations", registrations_path
   end
   
-  test "registration path helper with id hashedEmail" do
+  test "registration path helper with id hashed_email" do
     email = "bla@bla.de"
-    @registration = Registration.new(hashedEmail: digest(email))
+    @registration = Registration.new(hashed_email: digest(email))
     assert_equal "/registrations/#{digest(email)}", registration_path(@registration)
   end
   

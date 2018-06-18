@@ -2,7 +2,7 @@
   <div class="well">
     <h1>Edit a registration</h1>
     <p> We can't show you your previous data, because it's encrypted. Fields you don't fill out, will stay the same as before.</p>
-    <%= form_for(@registration, url: "/registrations/#{@registration.hashedEmail}", method: :put, html: {class: 'form-horizontal'}) do |f| %>
+    <%= form_for(@registration, url: "/registrations/#{@registration.hashed_email}", method: :put, html: {class: 'form-horizontal'}) do |f| %>
       <%= render 'form', :f => f %>
     <% end %> 
   <div>

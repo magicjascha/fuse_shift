@@ -5,21 +5,23 @@ require 'encrypt/encryptor'
 FactoryBot.define do
   PEM = File.read('config/keys/public.dev.pem')
   
-  factory :registration do
+  factory :registration do |f|
     
-    name "Lisa"
-    email "Lisa@does.de"
-    phonenumber "3839"
-    is_member true
-    contact_person "Mareike"
-    city "Hamburg"
+    f.name "Lisa"
+    f.email "Lisa@does.de"
+    f.phonenumber "3839"
+    f.is_friend true
+    f.contact_person "Mareike@mail.de"
+    f.city "Hamburg"
+    f.start DateTime.new(2018,6,21,16,0)
+    f.end DateTime.new(2018,7,5,8,0)
     
-    trait :with_hashed_email do
-      hashedEmail { Hasher.digest(email.downcase) }
+    f.trait :with_hashed_email do
+      hashed_email { Hasher.digest(email.downcase) }
       after(:build) { |registration| registration.email.downcase!}
     end
     
-    trait :as_record do
+    f.trait :as_record do
       with_hashed_email
       after(:build) do |registration| 
         registration.name = Encrypt::Encryptor.new(registration.name, PEM).apply      

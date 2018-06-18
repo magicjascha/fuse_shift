@@ -3,7 +3,7 @@ require 'digest'
 module RegistrationsHelper
   
   def registration_path(registration)
-    "/registrations/#{registration.hashedEmail}"
+    "/registrations/#{registration.hashed_email}"
   end
   
   def registration_url(registration)

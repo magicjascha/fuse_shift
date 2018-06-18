@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180528153206) do
+ActiveRecord::Schema.define(version: 20180618154537) do
 
   create_table "registrations", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "phonenumber"
-    t.boolean "is_member"
+    t.boolean "is_friend"
     t.string "contact_person"
     t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "hashedEmail"
+    t.string "hashed_email"
     t.boolean "confirmed"
     t.text "shortname"
     t.boolean "german"

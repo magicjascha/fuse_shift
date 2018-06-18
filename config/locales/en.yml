@@ -49,8 +49,8 @@ en:
     label: "Cellphone-Number"
     help: ""
 
-  is_member:
-    label: "Are you a member?"
+  is_friend:
+    label: "Is it a friend (not a member)?"
     help: ""
   
   languages:
@@ -91,7 +91,7 @@ en:
       registration:
         contact_person: "Contact person's email"
         end: "Last shift"
-        hashedEmail: "Email"
+        hashed_email: "Email"
         start: "First shift"
 
     errors:
@@ -100,11 +100,13 @@ en:
           attributes:
             start:
               before: "must be before %{restriction} (festival end)"
+              invalid_datetime: "is invalid"
               on_or_before: "must be before last shift"
             end:
               after: "must be after %{restriction} (festival start)"
-            hashedEmail: 
-              uniqueness: "was already registered. If you want to change the previous registration, use the edit-link in the confirmation-email."  
+              invalid_datetime: "is invalid"
+            hashed_email: 
+              uniqueness: "was already registered. If you want to change the previous registration, use the edit-link in the confirmation-email."
               
   validates_timeliness:
     error_value_formats:
