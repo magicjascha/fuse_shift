@@ -1,0 +1,16 @@
+<table class="table">
+<% @data.each do |key, value| %>
+  <tr>
+    <th><%= t("activerecord.attributes.registration.#{key}") %></th>    
+    <% if value.instance_of?(DateTime) %>
+      <td><%= l(value, format: :short_datetime) %></td>
+    <% elsif value == "1" %>
+      <td> Yes </td>
+    <% elsif value == "0" %>
+      <td> No </td>
+    <% else%>
+      <td><%= value %></td>
+    <% end%>
+  </tr>
+<% end %>
+</table>

@@ -33,67 +33,131 @@ en:
   festival_start: "2018-06-20T16:00:00+00:00"
   festival_end: "2018-07-10T16:00:00+00:00"
 
-  name: 
-    label: "Name"
-    help: "The name of the person, you want to register"
-    
-  shortname:
-    label: "Shortname"
-    help: ""
-  
-  email:
-    label: "Email"
-    help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."
-  
-  phonenumber:
-    label: "Cellphone-Number"
-    help: ""
+  mail:
+    registration_contact_person:
+      above_data_html: 
+        "Hi </br>
+        You registered %{name} for the festival with the data:"
+      below_data_html:
+        "You can edit it %{edit_link}.</br>
+        </br>
+        %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the %{root_link}</br>
+        </br>
+        If you want to add another registration, repeat the %{root_link}."
+      edit_link_text: "here"
+      root_link_text: "registration process"
+      above_data_txt: |
+        Hi,
+        
+        You registered %{name} for the festival with the data ...
+      below_data_txt: |
+        You can edit it with the link ...
+        %{edit_link}
+        
+        %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the registrations process with this link ...
+        %{root_link}
+    registration_confirm:
+      above_data_html:
+        "Hi %{name}, </br>
+        </br>
+        You started your registration for the festival. Please confirm your registration with this %{confirm_link} to finish. If you don't do that you are not registered. </br>
+        </br>
+        You were registered with the data..."
+      below_data: "If something is wrong with your data, please inform your contact person to change it."
+      confirm_link_text: "link"
+      above_data_txt: |
+        Hi %{name},
+        
+        You started your registration for the festival. Please confirm your registration with this link ...
+        %{confirm_link}
+        ...to finish. If you don't do that you are not registered.
 
-  is_friend:
-    label: "Is it a friend (not a member)?"
-    help: ""
+        You were registered with the data...
+        
+  views:
+    new:
+      headline: "Register"
+      above_form: "...your availability for shifts at the festival"
+    create_success:
+      headline: "You registered %{name} for the festival"
+      red_html: "Check if you got an email with the data. If not, check in the table below if there's a typo in your email-adress and correct it with %{edit_link}. If this doesn't work for you for some reason contact ...email... (only for emergencies)</br>
+      </br>
+       %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the %{root_link}."
+      green_above_data_html: "%{name} was registered with the data:"
+      green_below_data_html: ""
+      edit_link_text: "Edit"
+      root_link_text: "registration process"
+    confirm:
+      headline: "You confirmed your registration"
+      body: "The registration process is finished. We will write you an email, if and which shifts you got."
+    edit:
+      headline: "Edit a registration"
+      above_form: "We can't show you the previous data, because it's encrypted. Fields you don't fill out, will stay the same as before."
+    update_success:
+      headline: "You successfully updated a registration"
+      
+   
+  form:      
+    name: 
+      label: "Name"
+      help: "The name of the person, you want to register"    
+    shortname:
+      label: "Shortname"
+      help: ""  
+    email:
+      label: "Email"
+      help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."  
+    phonenumber:
+      label: "Cellphone-Number"
+      help: ""
+    is_friend:
+      label: "Is it a friend (not a member)?"
+      help: ""  
+    languages:
+      label: "Languages"
+      german: "German"
+      english: "English"
+      french: "French"
+      help: "Select the languages you speak"    
+    start:
+      label: "Start of first shift"
+      help: 'Enter the first time possible where you can start to work after you arrived. The first possible shift is %{festival_start}'    
+    end:
+      label: "End of first shift"
+      help: "Enter when you need to have finished to work before you leave. The last possible shift is %{festival_end}"
+    contact_person:
+      label: ""
+      help: "This has to be a member of the group"  
+    city:
+      label: "City"
+      help: "The city you live in"  
+    comment:
+      label: "Comment"
+      help: "Optional additional information"  
+    submit:
+      new: "Submit Registration"
+      create: "Submit Registration"
+      edit: "Update Registration"
+      update: "Update Registration"
   
-  languages:
-    label: "Languages"
-    german: "German"
-    english: "English"
-    french: "French"
-    help: "Select the languages you speek"
-    
-  start:
-    label: "Start of first shift"
-    help: "Enter the first time possible where you can start to work after you arrived. The first possible shift is %{festival_start}"
-    
-  end:
-    label: "End of first shift"
-    help: "Enter when you need to have finished to work before you leave"
-  
-  contact_person:
-    label: ""
-    help: "This has to be a member of the group"
-  
-  city:
-    label: "City"
-    help: "The city you live in"
-  
-  comment:
-    label: "Comment"
-    help: "Optional additional information"
-  
-  submit:
-    new: "Submit Registration"
-    create: "Submit Registration"
-    edit: "Update Registration"
-    update: "Update Registration"
-    
+# affects labels in the emails, error messages and views. Also the form if not replaced with the labels in section form.   
   activerecord:
     attributes:
       registration:
-        contact_person: "Contact person's email"
-        end: "Last shift"
+        name: "Name"
+        email: "Email"
         hashed_email: "Email"
+        shortname: "Shortname"
+        phonenumber: "Cellphone Number"
+        is_friend: "Is it a friend (not a member)?"
+        english: "English"
+        german: "German"
+        french: "French"
+        city: "City"
+        contact_person: "Contact person's email"
         start: "First shift"
-
+        end: "Last shift"
+        comment: "Comment"
     errors:
       models:
         registration:
@@ -112,6 +176,6 @@ en:
     error_value_formats:
       datetime: '%d. %B %Y, %H:%M'
       
-  #datetime:
-    #formats:
-      #default: '%d. %B %Y, %H:%M'
+  time:
+    formats:
+      short_datetime: '%d. %B %Y, %H:%M'

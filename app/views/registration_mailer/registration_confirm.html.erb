@@ -4,10 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hi</h1>
-    <p>You started your registration for the festival.</p>
-    <p>Please confirm your registration <%= link_to("here", registration_confirm_url(@registration)) %> to finish. If you don't do that you are not registered. </p>
-    <p>You can also edit your data at this link, if you want to change something. </p>
-    </p>
+    <p> <%= t("mail.registration_confirm.above_data_html", name: @registration.name, confirm_link: link_to(t("mail.registration_confirm.confirm_link_text"), registration_confirm_url(@registration))) %> </p>
+    <p><%= render '/shared/registration_data_table' %> </p>
+    <p> <%= t("mail.registration_confirm.below_data") %> </p>
   </body>
 </html>

@@ -30,12 +30,12 @@ class RegistrationsController < ApplicationController
   end
   
   def create #add hashed_email, validate that and the raw input data, save encrypted data without validation
-    p params
     @registration = Registration.new(add_hashed_email(registration_params))
     if @registration.valid?
       Registration.new(add_hashed_email(params_encrypt(registration_params))).save(validate: false)
       @data = registration_params #contains params that should be displayed in success
-      RegistrationMailer.registration_confirm(@registration).deliver_now
+      RegistrationMailer.registration_confirm(@registration, @data).deliver_now
+      RegistrationMailer.registration_contact_person(@registration, @data).deliver_now
       render "create_success"    
     else 
       render 'new'
@@ -93,9 +93,7 @@ class RegistrationsController < ApplicationController
     
     def params_encrypt(params)
       params.to_h.map do |key, value|
-        p [key,value]
         value = encrypt(value) if encrypt?(key)
-        p [key,value]
         [key, value]
       end.to_h                     
     end

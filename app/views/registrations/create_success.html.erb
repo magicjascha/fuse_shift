@@ -1,33 +1,13 @@
 <div class="container registration-container">
   <div class="well">
-  <h1> You're <strong>almost</strong> done <br> 
-  <small>with registering for the festival...</small></h1>
-    <div class="alert alert-success">
-      <p>
-        Please check your Email-Account for an Email we sent you. <strong>You have to klick the link in the Email to confirm your registration. </strong>If you don't do that you are not registered.
-      </p>
-      <p> Afterwards you will be registered with the data:<br>
-        <table class="table">
-        <% @data.each do |key, value| %>
-          <tr>
-            <th><%=key%></th>
-            <td><%=value%></td>
-          </tr>
-        <% end %>
-        </table>
-      </p>
-      <p>
-        We can't show you the data again, because it will be encrypted, so take a note. If you want to edit something you can also do that with the link in the email you got.
-      </p>
-      <p>
-        To register another person repeat the <%= link_to("registration-process", root_path) %>.
-      </p>
-    </div>
+      <h1> <%= t("views.create_success.headline", name: @registration.name) %> </h1>
     <div class="alert alert-danger">
-      <p>
-        <strong>If you didn't get an email</strong> most probably you made a typo in the email-adress. Hit the backwards-button of the browser to correct your input and submit again or just repeat the <%= link_to("registration-process", root_path) %> completely.
-        
-        If the email-address is definitely right, write an email to ...
+      <p> <%= t("views.create_success.red_html", name: @registration.name, edit_link: link_to(t("views.create_success.edit_link_text"), registration_url(@registration)), root_link: link_to(t("views.create_success.root_link_text"), root_url)) %> <p>
+    </div>
+    <div class="alert alert-success">
+      <p> <%= t("views.create_success.green_above_data_html", name: @registration.name) %> <p> 
+      <p><%= render '/shared/registration_data_table' %> </p>
+      <p> <%= t("views.create_success.green_below_data_html") %> <p> 
       </p>
     </div>
   </div>
