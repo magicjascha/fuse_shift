@@ -72,14 +72,22 @@ class RegistrationsController < ApplicationController
   private
     def registration_params
       input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :contact_person, :comment, "start(1i)", "start(2i)", "start(3i)", "start(4i)", "start(5i)", "end(1i)", "end(2i)", "end(3i)", "end(4i)", "end(5i)")
+      
+      input["start(2i)"] = "12" if input["start(2i)"] == ""
+      input["start(3i)"] = "30" if input["start(3i)"] == ""
+      input["start(4i)"] = "01" if input["start(4i)"] == ""
+      input["end(2i)"] = "12"   if input["end(2i)"] == ""
+      input["end(3i)"] = "31"   if input["end(3i)"] == ""
+      input["end(4i)"] = "01"   if input["end(4i)"] == ""
+
       r = input.reject { |k| k.starts_with?("start") || k.starts_with?("end")}
       r[:email].downcase! if input[:email]
-      r[:start] = DateTime.new(Time.current.year, 
-                              input["start(2i)"].to_i,
-                              input["start(3i)"].to_i,
-                              input["start(4i)"].to_i,
-                              input["start(5i)"].to_i)
-      r[:end] = DateTime.new(Time.current.year, 
+      r[:start] = DateTime.new(Time.current.year,
+                              input["start(2i)"].to_i, # month
+                              input["start(3i)"].to_i, # day
+                              input["start(4i)"].to_i, # hours
+                              input["start(5i)"].to_i) # minutes
+      r[:end] = DateTime.new(Time.current.year,
                            input["end(2i)"].to_i,
                            input["end(3i)"].to_i,
                            input["end(4i)"].to_i,
