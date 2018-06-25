@@ -1,19 +1,14 @@
 require 'json'
 
 class RegistrationsController < ApplicationController
-  PEM = File.read('config/keys/public.dev.pem')
-#   USERS = { 'me' => '@home', 'you' => '@work' }
-#   before_action :authenticate, only: :new
+  before_action :authenticate
   
-  
-#   def authenticate
-#     p request.env['HTTP_AUTHORIZATION']
-#     USERS.has_key?(name) && USERS[name] == password
-#   end
-#   http_basic_authenticate_with do |name, password|
-#     USERS.has_key?(name) && USERS[name] == password
-#   end
-#   http_basic_authenticate_with name: "me", password: "@home"
+  def authenticate
+    authenticate_or_request_with_http_digest do |username|
+      @city = username
+      USERS[username]
+    end
+  end
    
   def index
     scope = Registration
@@ -27,6 +22,7 @@ class RegistrationsController < ApplicationController
   
   def new
     @registration = Registration.new
+    @registration.city = @city
   end
   
   def create #add hashed_email, validate that and the raw input data, save encrypted data without validation
@@ -81,6 +77,7 @@ class RegistrationsController < ApplicationController
       input["end(4i)"] = "01"   if input["end(4i)"] == ""
 
       r = input.reject { |k| k.starts_with?("start") || k.starts_with?("end")}
+      r[:city] = @city
       r[:email].downcase! if input[:email]
       r[:start] = DateTime.new(Time.current.year,
                               input["start(2i)"].to_i, # month

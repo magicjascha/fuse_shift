@@ -12,6 +12,29 @@
     <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
-    <%= yield %>
+    <div class="row">
+      <div class="col-sm-12 col-md-3"></div>
+      <div class="col-sm-12 col-md-6 registration-container ">    
+        <div class="well">
+          <%= yield %>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-3 sidebar">
+        <div class="side-boxes">
+          <div class= "row alert info-box alert-warning text-center">
+            <h2>Deadline</h2>
+            <h3><%= l(deadline, format: :short_datetime) %></h3>
+          </div>
+          <% unless t("sidebar.info").empty? || t("sidebar.info")=="<span class=\"translation_missing\" title=\"translation missing: en.sidebar.info\">Info</span>"%>
+            <div class= "row alert alert-info info-box text-center">
+              <h2>Info</h2>
+              <p><%= t("sidebar.info") %><p>
+              <% p "huhu"
+                 p t("sidebar.info") %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -6,6 +6,7 @@ require 'test_helper'
 class RegistrationProcessTest < ActionDispatch::IntegrationTest
   
   def setup
+    @username = "Bochum"
     @input = {
       name: "Example Name",
       email: "eXample@Example.de",
@@ -22,8 +23,17 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
   end
   
   test "valid registration and edit" do
-    #go to registration page
+    #set request headers for http_authenticate
+#     authenticate_with_http_digest(@username, USERS[@username]) do
+#       get root_path
+#     end
     get root_path
+    authenticate_with_http_digest("invalid_login", "invalid_password") do
+      get root_path
+    end
+#     @request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Digest.encode_credentials(@username, USERS[@username])
+    go to registration page
+    get root_path    
     #assert empty registration form
     assert_select 'form[action="/registrations"]'
     assert_select 'form[method="post"]'
@@ -41,7 +51,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select "td", @input[:name]
     assert_select "td", @input[:email].downcase
     assert_select "td", @input[:phonenumber]
-    assert_select "td", @input[:city]
+    assert_select "td", @username
     #go to edit page
     get registration_path(@registration)
     #assert empty edit form
@@ -60,7 +70,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_equal "Another One", decrypt(saved_reg.name)
     assert_equal @input[:email].downcase, decrypt(saved_reg.email)
     assert_equal @input[:phonenumber], decrypt(saved_reg.phonenumber)
-    assert_equal @input[:city], decrypt(saved_reg.city)
+    assert_equal @username, decrypt(saved_reg.city)
   end
   
   test "encrypt registration right" do

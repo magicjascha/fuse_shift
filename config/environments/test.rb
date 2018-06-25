@@ -1,6 +1,13 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  
+  PEM = File.read('config/keys/public.dev.pem')
+  USERS = { 'Saarbrücken' => 'pw1', 'Bochum' => 'pw2' }
+  FESTIVAL_START = DateTime.parse("2018-06-20 06:00:00")
+  FESTIVAL_END = DateTime.parse("2018-07-10 18:00:00")
+  DEADLINE = DateTime.parse("2018-04-15 10:30:14")
+  ADMIN_EMAIL = "festival_help@mail.de"
+  
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
