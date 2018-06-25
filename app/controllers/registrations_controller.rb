@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
   before_action :authenticate
   
   def authenticate
-    authenticate_or_request_with_http_digest do |username|
+    authenticate_or_request_with_http_digest('FuseShift') do |username|
       @city = username
       USERS[username]
     end
@@ -14,10 +14,6 @@ class RegistrationsController < ApplicationController
     scope = Registration
     scope = params[:confirmed] ? scope.where(confirmed: true) : scope.all
     render json: scope.as_json
-  end
-  
-  def index
-    render json: Registration.all.to_json
   end
   
   def new
@@ -34,6 +30,8 @@ class RegistrationsController < ApplicationController
       RegistrationMailer.registration_contact_person(@registration, @data).deliver_now
       render "create_success"    
     else 
+      @registration.start=nil if @registration.errors.include?(:start) and @registration.start == 
+      @registration.end=nil if @registration.errors.include?(:end)
       render 'new'
     end
   end
@@ -68,6 +66,9 @@ class RegistrationsController < ApplicationController
   private
     def registration_params
       input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :contact_person, :comment, "start(1i)", "start(2i)", "start(3i)", "start(4i)", "start(5i)", "end(1i)", "end(2i)", "end(3i)", "end(4i)", "end(5i)")
+      
+#       input["start(1i)"] = FESTIVAL_START.year
+#       input["end(1i)"] = FESTIVAL_START.year
       
       input["start(2i)"] = "12" if input["start(2i)"] == ""
       input["start(3i)"] = "30" if input["start(3i)"] == ""

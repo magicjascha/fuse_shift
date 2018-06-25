@@ -1,6 +1,12 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+#   PEM = File.read('config/keys/public.dev.pem')
+#   USERS = ENV['FUSE_SHIFT_USERS']
+#   FESTIVAL_START = DateTime.parse("2018-06-20 06:00:00")
+#   FESTIVAL_END = DateTime.parse("2018-07-10 18:00:00")
+#   DEADLINE = DateTime.parse("2018-04-15 10:30:14")
+#   ADMIN_EMAIL = "festival_help@mail.de"
+  
   # Code is not reloaded between requests.
   config.cache_classes = true
 

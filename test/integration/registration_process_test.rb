@@ -19,20 +19,13 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
       "end(3i)" => "5", 
       "end(4i)" => "16",
     }
-    @registration = Registration.new({hashed_email: digest(@input[:email].downcase)})
+#     @registration = Registration.new({hashed_email: digest(@input[:email].downcase)})
+#     request.headers['Authorization'] = ActionController::HttpAuthentication::Digest.
+#     encode_credentials('get', @username, USERS[@username],)
   end
   
   test "valid registration and edit" do
-    #set request headers for http_authenticate
-#     authenticate_with_http_digest(@username, USERS[@username]) do
-#       get root_path
-#     end
-    get root_path
-    authenticate_with_http_digest("invalid_login", "invalid_password") do
-      get root_path
-    end
-#     @request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Digest.encode_credentials(@username, USERS[@username])
-    go to registration page
+    #go to registration page
     get root_path    
     #assert empty registration form
     assert_select 'form[action="/registrations"]'
