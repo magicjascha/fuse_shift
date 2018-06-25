@@ -1,14 +1,10 @@
-<div class="container registration-container">
-  <div class="well">
-      <h1> <%= t("views.create_success.headline", name: @registration.name) %> </h1>
-    <div class="alert alert-danger">
-      <p> <%= t("views.create_success.red_html", name: @registration.name, edit_link: link_to(t("views.create_success.edit_link_text"), registration_url(@registration)), root_link: link_to(t("views.create_success.root_link_text"), root_url)) %> <p>
-    </div>
-    <div class="alert alert-success">
-      <p> <%= t("views.create_success.green_above_data_html", name: @registration.name) %> <p> 
-      <p><%= render '/shared/registration_data_table' %> </p>
-      <p> <%= t("views.create_success.green_below_data_html") %> <p> 
-      </p>
-    </div>
-  </div>
-<div>
+<h1> <%= t("views.create_success.headline", name: @registration.name) %> </h1>
+<div class="alert alert-danger">
+  <p> <%= t("views.create_success.red_html", name: @registration.name, edit_link: link_to(t("views.create_success.edit_link_text"), registration_url(@registration)), root_link: link_to(t("views.create_success.root_link_text"), root_url)) %> <p>
+</div>
+<div class="alert alert-success">
+  <p> <%= t("views.create_success.green_above_data_html", name: @registration.name) %> <p> 
+  <p><%= render '/shared/registration_data_table' %> </p>
+  <p> <%= t("views.create_success.green_below_data_html") %> <p> 
+  </p>
+</div>

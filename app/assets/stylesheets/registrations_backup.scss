@@ -42,9 +42,8 @@ h1 ~ p {
   }
 }
 
-
 .registration-container{
-  max-width: 750px;
+/*   max-width: 750px; */
   padding: 2%; 
 }
 
@@ -56,4 +55,24 @@ h1 ~ p {
 th {
   text-align: left
   
+}
+
+.right-container {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */ 
+  min-height: 100vh;
+    
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-box {
+  padding: 10px;
+  margin: 30px;
+}
+
+@media (min-width: 768px) {
+  .blub {
+    position: fixed;
+  }
 }

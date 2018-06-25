@@ -73,13 +73,15 @@
   <%= f.label :start, t("form.start.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.datetime_select(:start, class: 'form-control', order: [:day, :month, :hour], discard_minute: true, prompt: {day: 'Choose day', month: 'Choose month', hour: "Choose hour"}) %><br>
-    <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(t(:festival_start).to_datetime, format: :short_datetime))%></small>
+    <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(festival_start, format: :short_datetime))%></small>
   </div>
 </div>
 
 
 
 <% if false %>
+
+t("form.start.help", festival_start: l(t(:festival_start).to_datetime, format: :short_datetime))
     <%=t("start.help", festival_start: t(:festival_start))%>
 <% end %>
 
@@ -87,7 +89,7 @@
   <%= f.label :end, t("form.end.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.datetime_select(:end, class: 'form-control', order: [:day, :month, :hour], discard_minute: true, prompt: {day: 'Choose day', month: 'Choose month', hour: "Choose hour"}) %><br>
-    <small id="startHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(t(:festival_end).to_datetime, format: :short_datetime))%></small>
+    <small id="startHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(festival_end, format: :short_datetime))%></small>
   </div>
 </div>
 
@@ -102,12 +104,10 @@
 <div class="form-group">
   <%= f.label :city, t("form.city.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
-    <%= f.text_field :city, class: 'form-control'  %>
+    <div class="form-control-static"><%= @city %></div>
     <small id="cityHelp" class="form-text text-muted"><%=t("form.city.help")%></small>
   </div>
 </div>
-
-
 
 <div class="form-group">
   <%= f.label :comment, t("form.comment.label"), class:"control-label col-sm-4" %>

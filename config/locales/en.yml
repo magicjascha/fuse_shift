@@ -30,8 +30,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  festival_start: "2018-06-20T16:00:00+00:00"
-  festival_end: "2018-07-10T16:00:00+00:00"
+
+#uncomment if you don't have infos.
+  sidebar:
+    info: "Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. "
 
   mail:
     registration_contact_person:
