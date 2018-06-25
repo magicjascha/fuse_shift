@@ -18,7 +18,8 @@ class Registration < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, if: proc { |r| r.email_changed? }
   validates :phonenumber, presence: true, length: { maximum: 20 }, if: proc { |r| r.phonenumber_changed? }
   validates :contact_person, presence: true, format: { with: VALID_EMAIL_REGEX }, if: proc { |r| r.contact_person_changed? }
-  validates_datetime :start, :before => lambda { festival_end }
-  validates_datetime :end, :after => lambda { festival_start }
-  validates_datetime :start, :on_or_before => :end
+  validates_datetime :start, :on_or_before => lambda { festival_end },
+                             :on_or_after => lambda { festival_start }
+  validates_datetime :end, :on_or_after => lambda { festival_start },
+                           :on_or_before => lambda { festival_end }
 end
