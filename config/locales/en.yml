@@ -77,7 +77,7 @@ en:
   views:
     new:
       headline: "Register"
-      above_form: "...your availability for shifts at the festival"
+      above_form: "Availability of your city-group's helper for shifts at the festival"
     create_success:
       headline: "You registered %{name} for the festival"
       red_html: "Check if you got an email with the data. If not, check in the table below if there's a typo in your email-adress and correct it with %{edit_link}. If this doesn't work for you for some reason contact ...email... (only for emergencies)</br>
@@ -129,8 +129,8 @@ en:
       label: ""
       help: "This has to be a member of the group"  
     city:
-      label: "City"
-      help: "The city you live in"  
+      label: "Contact person's city"
+      help: "The city that the contact person is responsible for"  
     comment:
       label: "Comment"
       help: "Optional additional information"  
@@ -163,11 +163,13 @@ en:
         registration:
           attributes:
             start:
-              before: "must be before %{restriction} (festival end)"
+              on_or_before: "must be before %{restriction} (festival end)"
+              on_or_after: "must be after %{restriction} (festival start)"
               invalid_datetime: "is invalid"
               on_or_before: "must be before last shift"
             end:
-              after: "must be after %{restriction} (festival start)"
+              on_or_after: "must be after %{restriction} (festival start)"
+              on_or_before: "must be before %{restriction} (festival end)"
               invalid_datetime: "is invalid"
             hashed_email: 
               uniqueness: "was already registered. If you want to change the previous registration, use the edit-link in the confirmation-email."
