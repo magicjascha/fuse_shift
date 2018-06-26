@@ -33,19 +33,31 @@ en:
 
 #uncomment if you don't have infos.
   sidebar:
-    info: "Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. "
+    info_html: |
+      Lorem ipsum dolor sit amet, consectetur 
+      
+      adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.
+
+      %{link1}
+
+      Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    link1: "https://www.example.com"
+    link1_text: "Example Link"
+    link2: "https://www.example.com"
+    link2_text: "Second example Link"
 
   mail:
     registration_contact_person:
-      above_data_html: 
-        "Hi </br>
-        You registered %{name} for the festival with the data:"
-      below_data_html:
-        "You can edit it %{edit_link}.</br>
-        </br>
-        %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the %{root_link}</br>
-        </br>
-        If you want to add another registration, repeat the %{root_link}."
+      above_data_html: |
+        Hi,
+        
+        You registered %{name} for the festival with the data ...
+      below_data_html: |
+        You can edit it %{edit_link}.
+        
+        %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the %{root_link}
+        
+        If you want to add another registration, repeat the %{root_link}.
       edit_link_text: "here"
       root_link_text: "registration process"
       above_data_txt: |
@@ -59,11 +71,11 @@ en:
         %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the registrations process with this link ...
         %{root_link}
     registration_confirm:
-      above_data_html:
-        "Hi %{name}, </br>
-        </br>
-        You started your registration for the festival. Please confirm your registration with this %{confirm_link} to finish. If you don't do that you are not registered. </br>
-        </br>
+      above_data_html: |
+        Hi %{name},
+        
+        You started your registration for the festival. Please confirm your registration with this %{confirm_link} to finish. If you don't do that you are not registered.
+        
         You were registered with the data..."
       below_data: "If something is wrong with your data, please inform your contact person to change it."
       confirm_link_text: "link"
@@ -82,9 +94,10 @@ en:
       above_form: "Availability of your city-group's helper for shifts at the festival"
     create_success:
       headline: "You registered %{name} for the festival"
-      red_html: "Check if you got an email with the data. If not, check in the table below if there's a typo in your email-adress and correct it with %{edit_link}. If this doesn't work for you for some reason contact ...email... (only for emergencies)</br>
-      </br>
-       %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the %{root_link}."
+      red_html: | 
+        Check if you got an email with the data. If not, check in the table below if there's a typo in your email-adress and correct it with %{edit_link}. If this doesn't work for you for some reason contact ...email... (only for emergencies)</br>
+      
+         %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the %{root_link}.
       green_above_data_html: "%{name} was registered with the data:"
       green_below_data_html: ""
       edit_link_text: "Edit"
@@ -101,64 +114,64 @@ en:
    
   form:      
     name: 
-      label: "Name"
-      help: "The name of the person, you want to register"    
+      label: ""
+      help: "The name of the person, you want to register"
     shortname:
-      label: "Shortname"
-      help: ""  
+      label: ""
+      help: ""
     email:
-      label: "Email"
-      help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."  
+      label: ""
+      help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."
     phonenumber:
-      label: "Cellphone-Number"
+      label: ""
       help: ""
     is_friend:
-      label: "Is it a friend (not a member)?"
-      help: ""  
+      label: ""
+      help: "...which means not a member"
     languages:
       label: "Languages"
       german: "German"
       english: "English"
       french: "French"
-      help: "Select the languages you speak"    
+      help: "Languages person speaks"
     start:
-      label: "Start of first shift"
-      help: 'Enter the first time possible where you can start to work after you arrived. The first possible shift is %{festival_start}'    
+      label: ""
+      help: 'Enter when the person can start to work after arriving. The first possible shift starts at %{festival_start}'
     end:
-      label: "End of first shift"
-      help: "Enter when you need to have finished to work before you leave. The last possible shift is %{festival_end}"
+      label: ""
+      help: "Enter when the person needs to be done with work before leaving. The last possible shift ends at %{festival_end}"
     contact_person:
       label: ""
-      help: "This has to be a member of the group"  
+      help: "This is yours"
     city:
-      label: "Contact person's city"
-      help: "The city that the contact person is responsible for"  
+      label: ""
+      help: "Your city"
     comment:
       label: "Comment"
-      help: "Optional additional information"  
+      help: "Optional additional information"
     submit:
       new: "Submit Registration"
       create: "Submit Registration"
       edit: "Update Registration"
       update: "Update Registration"
   
-# affects labels in the emails, error messages and views. Also the form if not replaced with the labels in section form.   
+# affects labels in the emails, error messages and views. Also the form if not replaced with the labels in section 'form'.   
   activerecord:
     attributes:
       registration:
         name: "Name"
         email: "Email"
-        hashed_email: "Email"
+        hashed_email: "Email" #This should be the same as email.
         shortname: "Shortname"
         phonenumber: "Cellphone Number"
-        is_friend: "Is it a friend (not a member)?"
+        is_friend: "Is it a Friend?"
         english: "English"
         german: "German"
         french: "French"
-        city: "City"
-        contact_person: "Contact person's email"
-        start: "First shift"
-        end: "Last shift"
+        city: "Contact Person's City"
+        contact_person: "Contact Person's Email"
+        start: "Arrival"
+        end: "Departure"
         comment: "Comment"
     errors:
       models:
@@ -174,7 +187,7 @@ en:
               on_or_before: "must be before %{restriction} (festival end)"
               invalid_datetime: "is invalid"
             hashed_email: 
-              uniqueness: "was already registered. If you want to change the previous registration, use the edit-link in the confirmation-email."
+              uniqueness: "was already registered. If you want to change the previous registration, use the edit-link in the email."
               
   validates_timeliness:
     error_value_formats:

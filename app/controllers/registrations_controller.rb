@@ -1,7 +1,7 @@
 require 'json'
 
 class RegistrationsController < ApplicationController
-  before_action :authenticate
+#   before_action :authenticate
   
   def authenticate
     authenticate_or_request_with_http_digest('FuseShift') do |username|

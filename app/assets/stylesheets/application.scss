@@ -20,10 +20,6 @@ body{
   background-color: #cc0000;
 }
 
-p{
-  padding: 2%;
-}
-
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;
@@ -37,6 +33,16 @@ h1 {
 h1 ~ p {
   text-align: center;
 }
+
+a 
+ {
+     color: purple;
+}
+
+th {
+  padding-right: 20px;
+}
+
 
 #error_explanation {
   color: red;
@@ -55,35 +61,37 @@ h1 ~ p {
 
 .registration-container{
   /*   max-width: 750px; */
-  padding: 2%; 
+  padding: 2%;
 }
 
 .checkDiv {
   margin-left: 15px;
   margin-top: 5px;
+/*   display: block; */
 }
 
-th {
-  text-align: left
-    
+.logo {
+  padding: 10%;
 }
 
-.sidebar {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */ 
-    min-height: 100vh;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 
 .info-box {
-  padding: 10px;
-  margin: 30px;
+  padding: 1%;
+  margin: 3%;
 }
+
+
 
 @media (min-width: 768px) {
   .side-boxes {
     position: fixed;
+  }
+  .sidebar {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */ 
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

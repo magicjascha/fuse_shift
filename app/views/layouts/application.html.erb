@@ -13,7 +13,11 @@
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
     <div class="row">
-      <div class="col-xs-12 col-sm-0 col-lg-3"></div>
+      <div class="col-xs-12 col-sm-0 col-lg-3">
+        <div class="logo hidden-xs hidden-sm hidden-md">
+          <%= image_tag("rubymonstas.png", :alt => "rubymonstas logo", :width => 120, :height => 120)%>
+        </div>
+      </div>
       <div class="col-xs-12 col-sm-7 col-lg-6 registration-container ">    
         <div class="well">
           <%= yield %>
@@ -25,12 +29,10 @@
             <h2>Deadline</h2>
             <h3><%= l(deadline, format: :short_datetime) %></h3>
           </div>
-          <% unless t("sidebar.info").empty? || t("sidebar.info")=="<span class=\"translation_missing\" title=\"translation missing: en.sidebar.info\">Info</span>"%>
-            <div class= "row alert alert-info info-box text-center">
+          <% unless t("sidebar.info").empty? || t("sidebar.info_html")=="<span class=\"translation_missing\" title=\"translation missing: en.sidebar.info_html\">Info</span>"%>
+            <div class= "row alert alert-info info-box">
               <h2>Info</h2>
-              <p><%= t("sidebar.info") %><p>
-              <% p "huhu"
-                 p t("sidebar.info") %>
+              <p><%= simple_format(t("sidebar.info_html", link1: locale_link("sidebar.link1"), link2: locale_link("sidebar.link2"))) %></p>
             </div>
           <% end %>
         </div>

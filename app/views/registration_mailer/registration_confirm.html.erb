@@ -4,7 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <p> <%= t("mail.registration_confirm.above_data_html", name: @registration.name, confirm_link: link_to(t("mail.registration_confirm.confirm_link_text"), registration_confirm_url(@registration))) %> </p>
+    <p> <%= simple_format(t("mail.registration_confirm.above_data_html", name: @registration.name, confirm_link: link_to(t("mail.registration_confirm.confirm_link_text"), registration_confirm_url(@registration)))) %> </p>
     <p><%= render '/shared/registration_data_table' %> </p>
     <p> <%= t("mail.registration_confirm.below_data") %> </p>
   </body>

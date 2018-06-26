@@ -36,37 +36,43 @@
 
 <div class="form-group">
     <%= f.label :is_friend, t("form.is_friend.label"), class:"control-label col-sm-4" %>
-    <div class="col-sm-1 checkDiv">
-      <%= f.check_box :is_friend%>
+    <div class="col-sm-8">
+      <div class="checkDiv"><%= f.check_box :is_friend%></div>
       <small id="isMemberHelp" class="form-text text-muted"><%=t("form.is_friend.help")%></small>
   </div>
 </div>
 
 <div class="form-group">
-  <div class="form-group">
-    <%= f.label :german, t("form.languages.label"), class:"control-label col-sm-4" %>
-    <div class="col-sm-1">
-      <%= f.label :german, t("form.languages.german"), class:"control-label col-sm-1" %>
+  <label class="control-label col-sm-4" for="languages">
+    <%= t("form.languages.label") %>
+  </label>
+  <div id="languages" class="col-sm-8">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <%= f.label :german, t("form.languages.german"), class:"control-label col-sm-4" %>
+        <div class="col-sm-1 checkDiv">
+          <%= f.check_box :german%>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-1 checkDiv">
-      <%= f.check_box :german%>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <%= f.label :english, t("form.languages.english"), class:"control-label col-sm-4" %>
+        <div class="col-sm-1 checkDiv">
+          <%= f.check_box :english%>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-1">
-      <%= f.label :english, t("form.languages.english"), class:"control-label col-sm-1" %>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <%= f.label :french, t("form.languages.french"), class:"control-label col-sm-4" %>
+        <div class="col-sm-1 checkDiv">
+          <%= f.check_box :french%>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-1 checkDiv">
-      <%= f.check_box :english%>
-    </div>
-    <div class="col-sm-1">
-      <%= f.label :french, t("form.languages.french"), class:"control-label col-sm-1" %>
-    </div>
-    <div class="col-sm-2 checkDiv">
-      <%= f.check_box :french%>
-    </div>
+  <small id="languagesHelp" class="form-text text-muted"><%=t("form.languages.help")%></small>
   </div>
-  <% if false %>
-<small id="languagesHelp" class="form-text text-muted"><%=t("form.languages.help")%></small>
-<% end %>
 </div>
 
 <div class="form-group">
@@ -76,14 +82,6 @@
     <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(festival_start, format: :short_datetime))%></small>
   </div>
 </div>
-
-
-
-<% if false %>
-
-t("form.start.help", festival_start: l(t(:festival_start).to_datetime, format: :short_datetime))
-    <%=t("start.help", festival_start: t(:festival_start))%>
-<% end %>
 
 <div class="form-group">
   <%= f.label :end, t("form.end.label"), class:"control-label col-sm-4" %>
