@@ -87,7 +87,7 @@
   <%= f.label :end, t("form.end.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.datetime_select(:end, class: 'form-control', order: [:day, :month, :hour], discard_minute: true, prompt: {day: 'Choose day', month: 'Choose month', hour: "Choose hour"}) %><br>
-    <small id="startHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(festival_end, format: :short_datetime))%></small>
+    <small id="endHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(festival_end, format: :short_datetime))%></small>
   </div>
 </div>
 
