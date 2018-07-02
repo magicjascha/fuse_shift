@@ -2,6 +2,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   
   #ausserhalb definieren, damit das in den views ist?
+  config.x.pem = File.read('config/keys/public.dev.pem')
   PEM = File.read('config/keys/public.dev.pem')
   USERS = { 'Saarbrücken' => 'pw1', 'Bochum' => 'pw2' }
   FESTIVAL_START = DateTime.parse("2018-06-20 06:00:00")

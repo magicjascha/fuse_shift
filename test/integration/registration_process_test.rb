@@ -78,13 +78,12 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_not_equal(@input[:name], saved_reg.name)
     assert_not_equal(@input[:email].downcase, saved_reg.email)
     assert_not_equal(@input[:phonenumber], saved_reg.phonenumber)
-    assert_not_equal(@input[:city], saved_reg.city)
-    p saved_reg.phonenumber
+    assert_not_equal(@input[:comment], saved_reg.comment)
     #assert data is decryptable
     assert_equal(@input[:name], decrypt(saved_reg.name))
     assert_equal(@input[:email].downcase, decrypt(saved_reg.email))
     assert_equal(@input[:phonenumber], decrypt(saved_reg.phonenumber))
-    assert_equal(@input[:city], decrypt(saved_reg.city))
+    assert_equal(@input[:comment], decrypt(saved_reg.comment))
   end
   
   test "invalid registration" do

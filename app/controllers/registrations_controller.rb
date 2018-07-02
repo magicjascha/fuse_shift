@@ -87,6 +87,7 @@ class RegistrationsController < ApplicationController
       r = input.reject { |k| k.starts_with?("start") || k.starts_with?("end")}
       r[:city] = @city
       r[:email].downcase! if input[:email]
+
       r[:start] = DateTime.new(input["start(1i)"].to_i,
                                input["start(2i)"].to_i, # month
                                input["start(3i)"].to_i, # day
