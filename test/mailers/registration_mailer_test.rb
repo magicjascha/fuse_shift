@@ -5,7 +5,8 @@ class RegistrationMailerTest < ActionMailer::TestCase
   test "confirm" do
     create :registration
     @registration = build(:registration)
-    email = RegistrationMailer.registration_confirm(@registration)
+    @data = {email: "bla"}
+    email = RegistrationMailer.registration_confirm(@registration, @data)
     # Send the email, then test that it got queued
     assert_emails 1 do
       email.deliver_now
