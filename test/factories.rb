@@ -3,7 +3,6 @@ require 'hasher'
 require 'encrypt/encryptor'
 
 FactoryBot.define do
-  PEM = File.read('config/keys/public.dev.pem')
   
   factory :registration do |f|
     

@@ -6,22 +6,22 @@ require 'test_helper'
 class RegistrationProcessTest < ActionDispatch::IntegrationTest
   
   def setup
-    @username = "Bochum"
     @input = {
       name: "Example Name",
       email: "eXample@Example.de",
       phonenumber: "1234",
-      city: "Salzburg",
+      comment: "Das ist ein Kommentar",
+      contact_person: "contact@email.de",
       "start(2i)" => "6",
       "start(3i)" => "22",
       "start(4i)" => "12", 
       "end(2i)" => "7", 
       "end(3i)" => "5", 
       "end(4i)" => "16",
+      english: true,
+      is_friend: true
     }
-#     @registration = Registration.new({hashed_email: digest(@input[:email].downcase)})
-#     request.headers['Authorization'] = ActionController::HttpAuthentication::Digest.
-#     encode_credentials('get', @username, USERS[@username],)
+     @registration = Registration.new({hashed_email: digest(@input[:email].downcase)})
   end
   
   test "valid registration and edit" do
@@ -31,11 +31,11 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select 'form[action="/registrations"]'
     assert_select 'form[method="post"]'
     assert_select 'form input[type=hidden][name="_method"]', false
-    assert_select "form input[type=text]", count: 7 #check for 7 empty text-input fields.
+    assert_select "form input[type=text]", count: 6 #check for 7 empty text-input fields.
     assert_select "form input[type=text][value]", false
     #submit data to database, assert record was saved and confirm-email was queued    
     assert_difference 'Registration.count', 1 do
-      assert_difference 'ActionMailer::Base.deliveries.size', +1 do
+      assert_difference 'ActionMailer::Base.deliveries.size', +2 do
         post registrations_path, params: { registration: @input}
       end
     end
@@ -44,14 +44,13 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select "td", @input[:name]
     assert_select "td", @input[:email].downcase
     assert_select "td", @input[:phonenumber]
-    assert_select "td", @username
     #go to edit page
     get registration_path(@registration)
     #assert empty edit form
     assert_equal registration_path(@registration), path
     assert_select %{form[action="#{registration_path(@registration)}"]}
     assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
-    assert_select "form input[type=text]", count: 6
+    assert_select "form input[type=text]", count: 5
     assert_select "form input[type=text][value]", false
     #submit data
     put registration_path(@registration), params: { registration: {name: "Another One", phonenumber: ""}}
@@ -63,7 +62,9 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_equal "Another One", decrypt(saved_reg.name)
     assert_equal @input[:email].downcase, decrypt(saved_reg.email)
     assert_equal @input[:phonenumber], decrypt(saved_reg.phonenumber)
-    assert_equal @username, decrypt(saved_reg.city)
+    assert_equal @input[:comment], decrypt(saved_reg.comment)
+    assert_equal @input[:english], decrypt(saved_reg.english)
+    assert_equal @input[:is_friend], decrypt(saved_reg.is_friend)
   end
   
   test "encrypt registration right" do
@@ -78,6 +79,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_not_equal(@input[:email].downcase, saved_reg.email)
     assert_not_equal(@input[:phonenumber], saved_reg.phonenumber)
     assert_not_equal(@input[:city], saved_reg.city)
+    p saved_reg.phonenumber
     #assert data is decryptable
     assert_equal(@input[:name], decrypt(saved_reg.name))
     assert_equal(@input[:email].downcase, decrypt(saved_reg.email))
@@ -107,7 +109,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
   end
   
   test "invalid edit" do
-    error_input = {phonenumber: "0"*21, city: "Bochum"}
+    error_input = {phonenumber: "0"*21, comment: "anotherComment"}
     #setup test record in database
     post registrations_path, params: { registration: @input}
     #go to edit-path of that registration
@@ -115,7 +117,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     #assert empty edit form
     assert_select %{form[action="#{registration_path(@registration)}"]}
     assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
-    assert_select "form input[type=text]", count: 6
+    assert_select "form input[type=text]", count: 5
     assert_select "form input[type=text][value]", false
     #submit new data
     put registration_path(@registration), params: { registration: error_input}
@@ -125,7 +127,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
     assert_select  '#registration_name[value]', false  #check if non-changed name input field is empty
     assert_select '#registration_phonenumber[value=?]', error_input[:phonenumber] #check if error-changed input field is filled right
-    assert_select '#registration_city[value=?]', error_input[:city] #check if changed non-error input field is filled right
+    assert_select '#registration_comment[value=?]', error_input[:comment] #check if changed non-error input field is filled right
     assert_select "div#error_explanation"
     assert_select "div.field_with_errors"
     #assert database-record unchanged 
@@ -133,7 +135,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_equal @input[:name], decrypt(saved_reg.name)
     assert_equal @input[:email].downcase, decrypt(saved_reg.email)
     assert_equal @input[:phonenumber], decrypt(saved_reg.phonenumber)
-    assert_equal @input[:city], decrypt(saved_reg.city)
+    assert_equal @input[:comment], decrypt(saved_reg.comment)
   end
   
 end
