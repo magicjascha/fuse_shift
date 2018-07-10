@@ -23,11 +23,11 @@ FactoryBot.define do
     f.trait :as_record do
       with_hashed_email
       after(:build) do |registration| 
-        registration.name = Encrypt::Encryptor.new(registration.name, PEM).apply      
-        registration.email = Encrypt::Encryptor.new(registration.email.downcase, PEM).apply
-        registration.phonenumber = Encrypt::Encryptor.new(registration.phonenumber, PEM).apply
-        registration.contact_person = Encrypt::Encryptor.new(registration.contact_person, PEM).apply
-        registration.city = Encrypt::Encryptor.new(registration.city, PEM).apply
+        registration.name = Encrypt::Encryptor.new(registration.name, Rails.configuration.x.pem).apply      
+        registration.email = Encrypt::Encryptor.new(registration.email.downcase, Rails.configuration.x.pem).apply
+        registration.phonenumber = Encrypt::Encryptor.new(registration.phonenumber, Rails.configuration.x.pem).apply
+        registration.contact_person = Encrypt::Encryptor.new(registration.contact_person, Rails.configuration.x.pem).apply
+        registration.city = Encrypt::Encryptor.new(registration.city, Rails.configuration.x.pem).apply
       end
     end
   end

@@ -11,7 +11,7 @@ class RegistrationsController < ApplicationController
   def authenticate
     authenticate_or_request_with_http_digest('FuseShift') do |username|
       @city = username
-      USERS[username]
+      Rails.configuration.x.users[username]
     end
   end
    
@@ -28,6 +28,11 @@ class RegistrationsController < ApplicationController
   
   def create #add hashed_email, validate that and the raw input data, save encrypted data without validation
     @registration = Registration.new(add_hashed_email(registration_params))
+    p "fffffffffffffffffffffffffffffffffffffffffff"
+    p add_hashed_email(registration_params)[:start].class
+    p Registration.new(add_hashed_email(registration_params)).start.class
+    p Registration.last
+    p Registration.last.class
     if @registration.valid?
       Registration.new(add_hashed_email(params_encrypt(registration_params))).save(validate: false)
       @data = registration_params #contains params that should be displayed in success
@@ -73,12 +78,12 @@ class RegistrationsController < ApplicationController
     def registration_params
       input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :contact_person, :comment, "start(1i)", "start(2i)", "start(3i)", "start(4i)", "start(5i)", "end(1i)", "end(2i)", "end(3i)", "end(4i)", "end(5i)")
       
-      input["start(1i)"] = FESTIVAL_START.year 
+      input["start(1i)"] = Rails.configuration.x.festival_start.year 
       input["start(1i)"] = "1970" if input["start(2i)"] == "" 
       input["start(2i)"] = "01" if input["start(2i)"] == ""
       input["start(3i)"] = "01" if input["start(3i)"] == ""
       input["start(4i)"] = "15" if input["start(4i)"] == ""
-      input["end(1i)"] = FESTIVAL_END.year
+      input["end(1i)"] = Rails.configuration.x.festival_end.year
       input["end(1i)"] = "1970" if input["end(2i)"] == ""
       input["end(2i)"] = "01"   if input["end(2i)"] == ""
       input["end(3i)"] = "01"   if input["end(3i)"] == ""

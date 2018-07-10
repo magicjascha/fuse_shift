@@ -3,13 +3,12 @@ Rails.application.configure do
   
   #ausserhalb definieren, damit das in den views ist?
   config.x.pem = File.read('config/keys/public.dev.pem')
-  PEM = File.read('config/keys/public.dev.pem')
-  USERS = { 'Saarbrücken' => 'pw1', 'Bochum' => 'pw2' }
-  FESTIVAL_START = DateTime.parse("2018-06-20 06:00:00")
-  FESTIVAL_END = DateTime.parse("2018-07-10 18:00:00")
-  DEADLINE = DateTime.parse("2018-04-15 10:30:14")
-  ADMIN_EMAIL = "festival_help@mail.de"
-  
+  config.x.users = { 'Saarbrücken' => 'pw1', 'Bochum' => 'pw2' }
+  config.x.festival_start = DateTime.parse("2018-06-20 06:00:00")
+  config.x.festival_end = DateTime.parse("2018-07-10 18:00:00")
+  config.x.deadline = DateTime.parse("2018-04-15 10:30:14")
+  config.x.admin_email = 'festival_help@mail.de'
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

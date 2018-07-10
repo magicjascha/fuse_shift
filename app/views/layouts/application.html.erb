@@ -27,7 +27,7 @@
         <div class="side-boxes">
           <div class= "row alert info-box alert-warning text-center">
             <h2>Deadline</h2>
-            <h3><%= l(deadline, format: :short_datetime) %></h3>
+            <h3><%= l(Rails.configuration.x.deadline, format: :short_datetime) %></h3>
           </div>
           <% unless t("sidebar.info").empty? || t("sidebar.info_html")=="<span class=\"translation_missing\" title=\"translation missing: en.sidebar.info_html\">Info</span>"%>
             <div class= "row alert alert-info info-box">
