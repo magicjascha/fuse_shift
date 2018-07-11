@@ -1,4 +1,9 @@
 <h1><%= t("views.edit.headline")%></h1>
+<% if @data %>
+  <p><%= t("views.edit.cookie_explanation") %></p>
+<% else %>
+  <p><%= t("views.edit.cookie_deleted_explanation") %></p>
+<% end %>
 <p><%=t("views.edit.above_form")%></p>      
 <%= form_for(@registration, url: "/registrations/#{@registration.hashed_email}", method: :put, html: {class: 'form-horizontal'}) do |f| %>
   <%= render 'form', :f => f %>

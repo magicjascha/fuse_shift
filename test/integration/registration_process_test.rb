@@ -46,12 +46,11 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select "td", @input[:phonenumber]
     #go to edit page
     get registration_path(@registration)
-    #assert empty edit form
+    #assert edit form
     assert_equal registration_path(@registration), path
     assert_select %{form[action="#{registration_path(@registration)}"]}
     assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
     assert_select "form input[type=text]", count: 5
-    assert_select "form input[type=text][value]", false
     #submit data
     put registration_path(@registration), params: { registration: {name: "Another One", phonenumber: ""}}
     #assert update-success-page with data
@@ -113,11 +112,10 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     post registrations_path, params: { registration: @input}
     #go to edit-path of that registration
     get registration_path(@registration)
-    #assert empty edit form
+    #assert edit form
     assert_select %{form[action="#{registration_path(@registration)}"]}
     assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
     assert_select "form input[type=text]", count: 5
-    assert_select "form input[type=text][value]", false
     #submit new data
     put registration_path(@registration), params: { registration: error_input}
     #assert filled edit form with errors 

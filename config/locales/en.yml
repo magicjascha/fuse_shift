@@ -112,7 +112,9 @@ en:
       body: "The registration process is finished. We will write you an email, if and which shifts you got."
     edit:
       headline: "Edit a registration"
-      above_form: "We can't show you the previous data, because it's encrypted. Fields you don't fill out, will stay the same as before."
+      cookie_explanation: "You can only see the data as long as you don't delete your cookies."
+      cookie_deleted_explanation: "You don't see the previously registered data, but we have it! Just leave fields empty if you don't want to change them. But make sure you have hit the email-edit-link of the right person. (You can't see the data because you deleted your cookies.)"
+      above_form: ""
     update_success:
       headline: "You successfully updated a registration"
       

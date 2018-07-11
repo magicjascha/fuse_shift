@@ -24,6 +24,7 @@ class RegistrationsController < ApplicationController
   def new
     @registration = Registration.new
     @registration.city = @city
+    @registration.contact_person = session[:contact_person] if session[:contact_person]#autofill contact_persons email if it's still in the session    
   end
   
   def create #add hashed_email, validate that and the raw input data, save encrypted data without validation
@@ -33,6 +34,8 @@ class RegistrationsController < ApplicationController
       @data = registration_params #contains params that should be displayed in success
       RegistrationMailer.registration_confirm(@registration, @data).deliver_now
       RegistrationMailer.registration_contact_person(@registration, @data).deliver_now
+      session[:contact_person] = @data[:contact_person]#for new registration
+      session[@registration.hashed_email] = @data#for edit
       render "create_success"    
     else
       @registration.start=nil if @registration.errors.include?(:start) && registration_params.value?("1970-01-01 15:00:00")
@@ -44,6 +47,10 @@ class RegistrationsController < ApplicationController
   def edit #identify record by hashed_email, display an otherwise empty record in the view.
     id = Registration.find_by(hashed_email: params[:hashed_email]).id
     @registration = Registration.new(id: id, hashed_email: params[:hashed_email])
+    if session[params[:hashed_email]]#display old data if it's still in the session
+      @data = session[params[:hashed_email]]
+      @registration.attributes =  @data
+    end
   end
 
   def update #validate raw input data, identify record by hashed_email, and save encrypted input without validation
