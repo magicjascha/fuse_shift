@@ -31,7 +31,10 @@
 
 en:
 
-#uncomment if you don't have infos.
+  #affects also http-authentication-dialogue
+  website_title: "FuseShift"
+
+  #uncomment sidebar block if you don't have infos.
   sidebar:
     info_html: |
       Lorem ipsum dolor sit amet, consectetur 
@@ -48,6 +51,7 @@ en:
 
   mail:
     registration_contact_person:
+      subject: "You registered somone for the festival"
       above_data_html: |
         Hi,
         
@@ -71,6 +75,7 @@ en:
         %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the registrations process with this link ...
         %{root_link}
     registration_confirm:
+      subject: "Confirm your registration for the festival"
       above_data_html: |
         Hi %{name},
         

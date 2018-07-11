@@ -3,13 +3,13 @@ require 'json'
 class RegistrationsController < ApplicationController
   
   if Rails.env.test? || Rails.env.development?
-    @city = "testCity" 
+    before_action {|controller| @city = "testCity"} 
   else
     before_action :authenticate
   end
-     
+       
   def authenticate
-    authenticate_or_request_with_http_digest('FuseShift') do |username|
+    authenticate_or_request_with_http_digest(I18n.t("website_title")) do |username|
       @city = username
       Rails.configuration.x.users[username]
     end
@@ -28,11 +28,6 @@ class RegistrationsController < ApplicationController
   
   def create #add hashed_email, validate that and the raw input data, save encrypted data without validation
     @registration = Registration.new(add_hashed_email(registration_params))
-    p "fffffffffffffffffffffffffffffffffffffffffff"
-    p add_hashed_email(registration_params)[:start].class
-    p Registration.new(add_hashed_email(registration_params)).start.class
-    p Registration.last
-    p Registration.last.class
     if @registration.valid?
       Registration.new(add_hashed_email(params_encrypt(registration_params))).save(validate: false)
       @data = registration_params #contains params that should be displayed in success
@@ -40,7 +35,6 @@ class RegistrationsController < ApplicationController
       RegistrationMailer.registration_contact_person(@registration, @data).deliver_now
       render "create_success"    
     else
-      p @registration 
       @registration.start=nil if @registration.errors.include?(:start) && registration_params.value?("1970-01-01 15:00:00")
       @registration.end=nil if @registration.errors.include?(:end) && registration_params.value?("1970-01-01 15:00:00")
       render 'new'

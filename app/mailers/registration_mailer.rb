@@ -6,12 +6,12 @@ class RegistrationMailer < ApplicationMailer
   def registration_confirm(registration, data)
     @data = data
     @registration = registration
-    mail(to: @registration.email, subject: 'Confirm your registration for the festival')
+    mail(to: @registration.email, subject: I18n.t("mail.registration_confirm.subject"))
   end
   
   def registration_contact_person(registration, data)
     @data = data
     @registration = registration
-    mail(to: @registration.contact_person, subject: 'You registered somone for the festival')
+    mail(to: @registration.contact_person, subject: I18n.t("mail.registration_contact_person.subject"))
   end
 end
