@@ -1,10 +1,6 @@
 <%= t("mail.registration_contact_person.above_data_txt", name: @registration.name) %>
 <% @data.each do |key, value| %>
-    <%= t("activerecord.attributes.registration.#{key}") %>: <% if value.instance_of?(DateTime) %> <%= l(value, format: :short_datetime) %>
-<% elsif value == "1" %>Yes
-<% elsif value == "0" %>No
-<% else%><%= value %>
-    <% end%>
+    <%= t("activerecord.attributes.registration.#{key}") %>: <%= better_read(value) %>
 <% end %>
 
 <%= t("mail.registration_contact_person.below_data_txt", name: @registration.name, edit_link: registration_url(@registration), root_link: root_url) %>

@@ -1,16 +1,8 @@
 <table class="text-left">
 <% @data.each do |key, value| %>
   <tr>
-    <th><%= t("activerecord.attributes.registration.#{key}") %></th>    
-    <% if value.instance_of?(DateTime) %>
-      <td><%= l(value, format: :short_datetime) %></td>
-    <% elsif value == "1" %>
-      <td> Yes </td>
-    <% elsif value == "0" %>
-      <td> No </td>
-    <% else%>
-      <td><%= value %></td>
-    <% end%>
+    <th><%= t("activerecord.attributes.registration.#{key}") %></th>
+    <td><%= better_read(value) %></td>
   </tr>
 <% end %>
 </table>
