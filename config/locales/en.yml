@@ -92,6 +92,13 @@ en:
         ...to finish. If you don't do that you are not registered.
 
         You were registered with the data...
+    updated_to_contact_person:
+      subject: "You changed a registration"
+      above_data: |
+        Hi,
+        
+        you changed the registration with id %{id}. Changed data (the rest stays as before)...
+      below_data: "The concerned person doesn't get an email. You will have to forward this email yourself."
         
   views:
     new:

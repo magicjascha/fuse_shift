@@ -1,0 +1,6 @@
+<%= t("mail.edit_contact_person.above_data", name: @registration.id) %>
+<% @data.each do |key, value| %>
+    <%= t("activerecord.attributes.registration.#{key}") %>: <%= better_read(value) %>
+<% end %>
+
+<%= t("mail.edit_contact_person.below_data") %>

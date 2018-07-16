@@ -30,8 +30,11 @@ class RegistrationsController < ApplicationController
   def create #add hashed_email, validate that and the raw input data, save encrypted data without validation
     @registration = Registration.new(add_hashed_email(registration_params))
     if @registration.valid?
-      Registration.new(add_hashed_email(params_encrypt(registration_params))).save(validate: false)
+      @saved_registration = Registration.new(add_hashed_email(params_encrypt(registration_params)))
+      @saved_registration.save(validate: false)
       @data = registration_params #contains params that should be displayed in success
+      p @saved_registration
+      @data.merge({id: @saved_registration.id})
       RegistrationMailer.registration_confirm(@registration, @data).deliver_now
       RegistrationMailer.registration_contact_person(@registration, @data).deliver_now
       session[:contact_person] = @data[:contact_person]#for new registration
@@ -61,6 +64,7 @@ class RegistrationsController < ApplicationController
       @registration.assign_attributes(params_encrypt(present_attributes))
       @registration.save(validate: false)
       @data = present_attributes #contains params that should be displayed in success
+      RegistrationMailer.updated_to_contact_person(@registration, @data).deliver_now
       render:'update_success'
     else 
       @registration.hashed_email = params[:hashed_email]
