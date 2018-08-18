@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
   if Rails.env.test? || Rails.env.development?
     before_action {|controller| session[:city] = "testCity"} 
   else
-    before_action :authenticate
+    before_action :authenticate, except: :confirm
   end
   
   before_action :check_contact_person, except: :confirm
