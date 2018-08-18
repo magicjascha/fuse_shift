@@ -3,10 +3,10 @@ Rails.application.routes.draw do
 
   root 'registrations#new'
   post 'registrations', to: 'registrations#create'
-  get 'registrations/:hashed_email', to: 'registrations#edit' 
+  get 'registrations/:hashed_email', to: 'registrations#edit', as: 'registration'
   put 'registrations/:hashed_email', to: 'registrations#update'
-  get 'registrations/:hashed_email/confirm', to: 'registrations#confirm'
   delete 'registrations/:hashed_email', to: 'registrations#delete'
+  get 'registrations/:hashed_email/confirm', to: 'registrations#confirm', as: 'registration_confirm'
   get 'registrations', to: 'registrations#index'
 
   get 'login', to: 'contact_persons#new'

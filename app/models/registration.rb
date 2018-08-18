@@ -4,6 +4,11 @@ require 'encrypt/encryptor'
 require 'digest'
 
 class Registration < ApplicationRecord
+  #Makes url and path_helpers work with hashed_email instead of id
+  def to_param
+    hashed_email
+  end
+  
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
   belongs_to :contact_person
