@@ -41,6 +41,27 @@ class ActiveSupport::TestCase
     select day, :from => "#{base_id}_3i" #day 
     select hour,  :from => "#{base_id}_4i" #hour
   end  
-  # Add more helper methods to be used by all tests here...
+
+  def create_confirmed_contact_person(email)#returns record with clear-text-email
+    record = build(:contact_person, :confirmed, :email_hashed, email: email)
+    record.save(validate: false)
+    record[:hashed_email] = email
+    record
+  end
+  
+  def get_data(registration)
+    data = registration.attributes.symbolize_keys().select{|key,value| ![:id, :hashed_email, :contact_person_id, :confirmed, :created_at, :updated_at].include?(key)}
+  end
+  
+  def get_input_hash(factory)
+    input_hash = get_data(factory).except(:start,:end)
+    input_hash["start(2i)"] = factory.start.month
+    input_hash["start(3i)"] = factory.start.day
+    input_hash["start(4i)"] = factory.start.hour
+    input_hash["end(2i)"] = factory.end.month
+    input_hash["end(3i)"] = factory.end.day
+    input_hash["end(4i)"] = factory.end.hour
+    input_hash
+  end
   
 end

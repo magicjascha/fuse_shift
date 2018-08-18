@@ -3,7 +3,7 @@ class RegistrationMailerPreview < ActionMailer::Preview
   
   def registration_confirm_preview
     data = {}
-    RegistrationMailer.registration_confirm(FactoryBot.build(:registration, :with_hashed_email))
+    RegistrationMailer.registration_confirm(FactoryBot.build(:registration))
   end
   
 end

@@ -4,8 +4,8 @@ class RegistrationMailerTest < ActionMailer::TestCase
   include Rails.application.routes.url_helpers
   test "confirm" do
     #get data into @registration
-    @registration = build(:registration, :with_hashed_email)
-    @data = @registration.attributes.symbolize_keys().select{|key,value| ![:hashed_email, :contact_person_id, :confirmed, :created_at, :updated_at].include?(key)}
+    @registration = build(:registration)
+    @data = get_data(@registration)
     email = RegistrationMailer.registration_confirm(@registration, @data)
     # Send the email, then test that it got queued
     assert_emails 1 do

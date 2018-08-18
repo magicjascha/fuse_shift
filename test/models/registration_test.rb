@@ -3,23 +3,12 @@ require 'test_helper'
 class RegistrationTest < ActiveSupport::TestCase
   
   def setup
-    #create contact_person with factory
-    contact_persons_email = build(:contact_person).hashed_email
-    @contact_person = build(:contact_person, :confirmed, :as_record)
-    @contact_person.save(validate: false)
-    @registration = Registration.new(
-    name: "Example Name",
-    email: "example@example.de",
-    phonenumber: "1234",
-    start: DateTime.new(2018, 6, 22, 12, 0),
-    end: DateTime.new(2018, 7, 3, 8, 0),
-    contact_persons_email: contact_persons_email,
-    contact_person: @contact_person
-    )
-    @registration.hashed_email = digest(@registration.email)
+    #create contact_person and build registration
+    @contact_person = create_confirmed_contact_person("emailofcontact@mail.de")
+    @registration = build(:registration, :all_fields, contact_person: @contact_person)
   end
   
-  test "should be valid" do
+  test "factory is valid" do
     assert @registration.valid?
   end
   
@@ -36,9 +25,10 @@ class RegistrationTest < ActiveSupport::TestCase
   end
   
   test "hashed_email should be unique" do
-    #create registration with factory
-    build(:registration, :as_record, contact_person: @contact_person).save(validate: false)
-    registration = build(:registration, :with_hashed_email)
+    #create record
+    build(:registration, :encrypted, contact_person: @contact_person).save(validate: false)
+    #check if a registration with the same data is valid
+    registration = build(:registration, contact_person: @contact_person)
     assert_not registration.valid?
   end 
   

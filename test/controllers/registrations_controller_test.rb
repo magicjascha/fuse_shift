@@ -4,9 +4,8 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   
   def setup
     #create contact_person
-    @contact_persons_email = build(:contact_person).hashed_email
-    @contact_person = build(:contact_person, :as_record, :confirmed)
-    @contact_person.save(validate: false)
+    @contact_persons_email = "maja.der.contact@mail.de"
+    create_confirmed_contact_person(@contact_persons_email)
   end
   
   test "should get new" do
@@ -21,7 +20,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     #login contact_person
     post login_path, params: { contact_person: {hashed_email: @contact_persons_email } }
     #load input hash from Factory
-    input = attributes_for(:registration).merge(
+    input = attributes_for(:registration_input).merge(
       "start(2i)" => "6",
       "start(3i)" => "22",
       "start(4i)" => "12", 
@@ -40,12 +39,12 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     #assert that second last email was the email contact_person with the right subject.
     contact_person_email = ActionMailer::Base.deliveries[-1]
     assert_equal I18n.t("mail.registration_contact_person.subject", id: "1"), contact_person_email.subject
-    assert_equal input[:contact_persons_email].downcase, contact_person_email.to[0].downcase
+    assert_equal @contact_persons_email.downcase, contact_person_email.to[0].downcase
   end
   
   test "confirmation saves to database" do
     #setup: save an unconfirmed registration
-    registration = build(:registration, :as_record)
+    registration = build(:registration, :encrypted)
     registration.save(validate: false)
     assert_not_equal true, Registration.find_by(hashed_email: registration.hashed_email).confirmed
     #go to confirmation path of that registration
