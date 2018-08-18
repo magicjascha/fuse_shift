@@ -86,6 +86,9 @@ feature "Register" do
     #login
     fill_in 'Email', with: @contact_persons_email
     click_button 'Submit'
+    #check if registration data is deleted
+    visit "/registrations/#{registration.hashed_email}"
+    page.assert_selector('h1', text: "Edit registration with ID")
     assert_no_text registration.name
   end
   

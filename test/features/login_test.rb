@@ -53,12 +53,4 @@ feature "Login" do
     page.must_have_content("Check your email-account to confirm your email-adress.")
   end
   
-  scenario "session fills fields" do
-    
-  end
-  
-  scenario "delete session" do
-    
-  end
-  
 end
