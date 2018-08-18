@@ -12,11 +12,11 @@ class ContactPersonsController < ApplicationController
   end
   
   def create
-    hashed_email = digest(params[:contact_person][:hashed_email])
+    hashed_email = digest(contact_person_params[:hashed_email])
     @contact_person = ContactPerson.new(contact_person_params)
     if @contact_person.valid?
       @contact_person = ContactPerson.find_or_create_by(hashed_email: hashed_email)
-      session[:contact_person] = params[:contact_person][:hashed_email]
+      session[:contact_person] = contact_person_params[:hashed_email]
       @contact_person.save(validate: false)
       if !@contact_person.confirmed
         ContactPersonMailer.confirm(@contact_person, session[:contact_person]).deliver_now
@@ -50,7 +50,9 @@ class ContactPersonsController < ApplicationController
   
   private
     def contact_person_params
-      params.require(:contact_person).permit(:hashed_email)
+      c = params.require(:contact_person).permit(:hashed_email)
+      c[:hashed_email].downcase!
+      c
     end 
     
     def authenticate

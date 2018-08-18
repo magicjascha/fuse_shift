@@ -3,8 +3,8 @@ require "test_helper"
 feature "Login" do
   scenario "Login, redirect and display of associated records work" do
     #build a contact person and and two associated record
-    contact_persons_email = build(:contact_person).hashed_email
-    contact_person = build(:contact_person, :confirmed, :as_record)
+    contact_persons_email = "CapitalLetterTest@Mail.De"
+    contact_person = build(:contact_person, :confirmed, :as_record, hashed_email: "capitallettertest@mail.de")
     contact_person.save(validate: false)
     build(:registration, :as_record, contact_person: contact_person).save(validate: false)
     build(:registration, :as_record, email: "bla@bla.de", contact_person: contact_person).save(validate: false)
