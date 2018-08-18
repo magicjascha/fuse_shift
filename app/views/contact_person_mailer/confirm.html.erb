@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p> <%= simple_format(t("mail.contact_person_confirm.text", confirm_link: link_to(t("mail.contact_person_confirm.confirm_link_text"), contact_person_confirm_url(@contact_person)))) %> </p>
+  </body>
+</html>

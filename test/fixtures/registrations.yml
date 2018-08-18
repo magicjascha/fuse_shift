@@ -5,7 +5,7 @@ one:
   email: Maria@blarrrrr.de
   phonenumber: "727289"
   is_friend: true
-  contact_person: Maria
+  contact_persons_email: Maria
   city: Kassel
   hashed_email: fd5f4a1a0be6f28e340140a7b7c4ad1f510cffd79131c6f44b9d79d5e952107a
 
@@ -14,5 +14,5 @@ two:
   email: MyString
   phonenumber: MyString
   is_friend: false
-  contact_person: MyString
+  contact_persons_email: MyString
   city: MyString

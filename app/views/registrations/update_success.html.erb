@@ -1,20 +1,10 @@
-<h1> You successfully updated a registration</h1>
+<h1> <%= t("views.update_success.headline", id: @registration.id) %> </h1>
+<div class="alert alert-danger">
+  <p> <%= simple_format(t("views.update_success.red_html", edit_link: link_to(t("views.update_success.edit_link_text"), registration_url(@registration)))) %> <p>
+</div>
 <div class="alert alert-success">
-  <p>
-    ...with the data:<br>
-    <table class="table">
-    <% @data.each do |key, value| %>
-      <tr>
-        <th><%=key%></th>
-        <td><%=value%></td>
-      </tr>
-    <% end %>
-    </table>
-  </p>
-  <p>
-    The rest of data stays as before. Still not right? Use the confirmation link in your email or go to <%= link_to("Edit", registration_path(@registration)) %>.
-  </p>
-  <p>
-    To register another person repeat the <%= link_to("registration-process", root_path) %>.
+  <p><%= simple_format(t("views.update_success.green_above_data_html")) %> 
+  <p><%= render '/shared/registration_data_table' %></p>
+  <p><%= simple_format(t("views.update_success.green_below_data_html")) %><p> 
   </p>
 </div>

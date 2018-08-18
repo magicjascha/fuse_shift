@@ -27,7 +27,7 @@
 <% end %>
 
 <div class="form-group">
-  <%= f.label :phonennumber, t("form.phonenumber.label"), class:"control-label col-sm-4" %>
+  <%= f.label :phonenumber, t("form.phonenumber.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.text_field :phonenumber, class: 'form-control' %>
     <small id="phonenumberHelp" class="form-text text-muted"><%=t("form.phonenumber.help")%></small>
@@ -92,26 +92,26 @@
 </div>
 
 <div class="form-group">
-  <%= f.label :contact_person, t("form.contact_person.label"), class:"control-label col-sm-4" %>
+  <%= f.label :comment, t("form.comment.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
-    <%= f.text_field :contact_person, class: 'form-control'  %>
-    <small id="contactPersonHelp" class="form-text text-muted"><%=t("form.contact_person.help")%></small>
+    <%= f.text_field :comment, class: 'form-control'  %>
+    <small id="commentHelp" class="form-text text-muted"><%=t("form.comment.help")%></small>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :contact_persons_email, t("form.contact_persons_email.label"), class:"control-label col-sm-4" %>
+  <div class="col-sm-8">
+    <div class="form-control-static"><%= @registration.contact_persons_email %></div>
+    <small id="contactPersonHelp" class="form-text text-muted"><%=t("form.contact_persons_email.help")%></small>
   </div>
 </div>
 
 <div class="form-group">
   <%= f.label :city, t("form.city.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
-    <div class="form-control-static"><%= @city %></div>
+    <div class="form-control-static"><%= @registration.city %></div>
     <small id="cityHelp" class="form-text text-muted"><%=t("form.city.help")%></small>
-  </div>
-</div>
-
-<div class="form-group">
-  <%= f.label :comment, t("form.comment.label"), class:"control-label col-sm-4" %>
-  <div class="col-sm-8">
-    <%= f.text_field :comment, class: 'form-control'  %>
-    <small id="commentHelp" class="form-text text-muted"><%=t("form.comment.help")%></small>
   </div>
 </div>
 

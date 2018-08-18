@@ -36,7 +36,9 @@ gem 'bootstrap-sass', '~> 3.3.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'validates_timeliness'
+gem 'validates_timeliness'  
+gem 'jquery-rails'
+gem 'minitest-rails-capybara'
 
 
 group :development, :test do

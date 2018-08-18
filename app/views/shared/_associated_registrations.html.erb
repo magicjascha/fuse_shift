@@ -1,0 +1,19 @@
+<h4>You registered <%= pluralize(associated_registrations.length, "person") %>:</h4>
+<table class="text-left table-hover">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Confirmed</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+<% associated_registrations.each do |id| %>
+  <tr>
+    <td><%= id %></td>
+    <td><%= replace_with_name(id) %></th>
+    <td><%= better_read(Registration.find_by(id: id).confirmed) %></td>
+    <td><%= link_to registration_path(Registration.find_by(id: id)) do %><i class="glyphicon glyphicon-edit"></i><% end %></td>
+    <td><%= link_to(registration_path(Registration.find_by(id: id)), method: :delete) do %><i class="glyphicon glyphicon-trash"></i><% end %></td>
+  </tr>
+<% end %>
+</table>

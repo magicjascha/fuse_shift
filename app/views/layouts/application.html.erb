@@ -9,17 +9,46 @@
   </head>
 
   <body>
-    <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type %>"><%= message %></div>
-      <% end %>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"><%= I18n.t("website_title") %></a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <%= link_to root_path do %>
+              <i class="glyphicon glyphicon-copy"></i> New Registration
+            <% end %>
+          </li>
+          <li>
+            <%= link_to logout_path do %>
+              <i class="glyphicon glyphicon-user"></i> Logout
+            <% end %>
+          </li>
+          <li>
+            <%= link_to clean_session_path do %>
+              <i class="glyphicon glyphicon-trash"></i> Delete Cookie-Data
+            <% end %>
+          </li>          
+        </ul>
+      </div>
+    </nav> 
     <div class="row">
       <div class="col-xs-12 col-sm-0 col-lg-3">
         <div class="logo hidden-xs hidden-sm hidden-md">
           <%= image_tag("rubymonstas.png", :alt => "rubymonstas logo", :width => 120, :height => 120)%>
         </div>
+      <% if session[:contact_person]%>
+       <div class="row alert info-box alert-danger text-center">
+          <%= render 'shared/associated_registrations' %>
+        </div>
+      <% end %>
       </div>
       <div class="col-xs-12 col-sm-7 col-lg-6 registration-container ">    
         <div class="well">
+          <% flash.each do |message_type, message| %>
+            <div class="text-center alert alert-<%= message_type %>"><%= message.html_safe %></div>
+          <% end %>
           <%= yield %>
         </div>
       </div>

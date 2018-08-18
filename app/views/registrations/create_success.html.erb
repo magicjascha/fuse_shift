@@ -1,6 +1,6 @@
 <h1> <%= t("views.create_success.headline", name: @registration.name) %> </h1>
 <div class="alert alert-danger">
-  <p> <%= simple_format(t("views.create_success.red_html", name: @registration.name, edit_link: link_to(t("views.create_success.edit_link_text"), registration_url(@registration)), root_link: link_to(t("views.create_success.root_link_text"), root_url))) %> <p>
+  <p> <%= simple_format(t("views.create_success.red_html", name: @registration.name, edit_link: link_to(t("views.create_success.edit_link_text"), registration_url(@registration)), registration_link: link_to(t("views.create_success.registration_link_text"), root_url))) %> <p>
 </div>
 <div class="alert alert-success">
   <p><%= simple_format(t("views.create_success.green_above_data_html", name: @registration.name)) %> 

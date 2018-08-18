@@ -50,8 +50,15 @@ en:
     link2_text: "Second example Link"
 
   mail:
+    contact_person_confirm:
+      subject: "You signed up as contact person for the festival"
+      text: | 
+        You signed up as contact person for the festival. 
+        
+        Klick this %{confirm_link} to confirm your email_adress. Then you can delete this email.
+      confirm_link_text: "Link"
     registration_contact_person:
-      subject: "You registered somone for the festival"
+      subject: "You registered somone with ID %{id} for the festival"
       above_data_html: |
         Hi,
         
@@ -93,12 +100,24 @@ en:
 
         You were registered with the data...
     updated_to_contact_person:
-      subject: "You changed a registration"
+      subject: "You changed the registration with ID %{id}"
       above_data: |
         Hi,
         
-        you changed the registration with id %{id}. Changed data (the rest stays as before)...
+        you changed the registration with ID %{id}. Changed data (if empty as before)...
       below_data: "The concerned person doesn't get an email. You will have to forward this email yourself."
+  
+  flash:
+    confirm: | 
+      You confirmed your email-adress.
+
+      Editing previous registrations might become a little bit more confusing, if you delete your cookies in between. Consider to keep them.
+
+      You can now start to enter registrations.
+    delete_cookie_data: |
+      The data that was saved in your cookie is deleted. We still have your encrypted registrations.
+    
+      You can't see the registration data itself anymore, but you can still identify single registrations by their IDs. Look the IDs up in your emails to connect them with names.
         
   views:
     new:
@@ -107,23 +126,33 @@ en:
     create_success:
       headline: "You registered %{name} for the festival"
       red_html: | 
-        Check if you got an email with the data. If not, check in the table below if there's a typo in your email-adress and correct it with %{edit_link}. If this doesn't work for you for some reason contact ...email... (only for emergencies)</br>
-      
-         %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the %{root_link}.
+        We sent you and %{name} an email with the data. %{name} has to use the confirm link to complete the registration.
+        
+        Do you want to %{edit_link} the data or make another %{registration_link}?
+      edit_link_text: "edit"
+      registration_link_text: "registration"
       green_above_data_html: "%{name} was registered with the data:"
       green_below_data_html: ""
-      edit_link_text: "Edit"
-      root_link_text: "registration process"
     confirm:
       headline: "You confirmed your registration"
       body: "The registration process is finished. We will write you an email, if and which shifts you got."
     edit:
-      headline: "Edit a registration"
+      headline: "Edit registration with ID %{id}"
       cookie_explanation: "You can only see the data as long as you don't delete your cookies."
       cookie_deleted_explanation: "You don't see the previously registered data, but we have it! Just leave fields empty if you don't want to change them. But make sure you have hit the email-edit-link of the right person. (You can't see the data because you deleted your cookies.)"
       above_form: ""
+    deleted: 
+      headline: "Deleted"
+      text: "The registration you tried to access was deleted."
     update_success:
-      headline: "You successfully updated a registration"
+      headline: "You updated the registration with ID %{id}"
+      red_html: | 
+        We sent you an email with the data. You have to forward it yourself to the person.
+        
+        Still not right? You can %{edit_link} again.
+      edit_link_text: "edit"
+      green_above_data_html: "Data:"
+      green_below_data_html: ""
       
    
   form:      
@@ -154,7 +183,7 @@ en:
     end:
       label: ""
       help: "Enter when the person needs to be done with work before leaving. The last possible shift ends at %{festival_end}"
-    contact_person:
+    contact_persons_email:
       label: ""
       help: "This is yours"
     city:
@@ -172,6 +201,8 @@ en:
 # affects labels in the emails, error messages and views. Also the form if not replaced with the labels in section 'form'.   
   activerecord:
     attributes:
+      contact_person:
+        hashed_email: "Email"
       registration:
         name: "Name"
         email: "Email"
@@ -183,7 +214,7 @@ en:
         german: "German"
         french: "French"
         city: "Contact Person's City"
-        contact_person: "Contact Person's Email"
+        contact_persons_email: "Contact Person's Email"
         start: "Arrival"
         end: "Departure"
         comment: "Comment"

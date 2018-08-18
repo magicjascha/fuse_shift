@@ -1,4 +1,4 @@
-<h1><%= t("views.edit.headline")%></h1>
+<h1><%= t("views.edit.headline", id: @registration.id)%></h1>
 <% if @data %>
   <p><%= t("views.edit.cookie_explanation") %></p>
 <% else %>

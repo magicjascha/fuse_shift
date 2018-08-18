@@ -20,6 +20,11 @@ body{
   background-color: #cc0000;
 }
 
+.dropdown-menu{
+    width: 300px;
+    white-space: normal;
+}
+
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;

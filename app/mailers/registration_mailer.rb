@@ -6,24 +6,21 @@ class RegistrationMailer < ApplicationMailer
   def registration_confirm(registration, data)
     @data = data
     @registration = registration
-    mail(to: @registration.email, subject: I18n.t("mail.registration_confirm.subject"))
+    @session_state = true
+    mail(to: @data[:email], subject: I18n.t("mail.registration_confirm.subject"))
   end
   
   def registration_contact_person(registration, data)
     @data = data
     @registration = registration
-    mail(to: @registration.contact_person, subject: I18n.t("mail.registration_contact_person.subject"))
+    @session_state = true
+    mail(to: @data[:contact_persons_email], subject: I18n.t("mail.registration_contact_person.subject", id: @data[:id]))
   end
   
-  def edit(registration, data)
+  def updated_to_contact_person(data, session_state)
+    @session_state = session_state
     @data = data
-    mail(to: @registration.email, subject: I18n.t(mail.edit.subject))
-  end
-  
-  def updated_to_contact_person(registration, data)
-    @data = data
-    @registration = registration
-    mail(to: @data[:contact_person], subject: I18n.t("mail.updated_to_contact_person.subject")) if @data[:contact_person]
+    mail(to: @data[:contact_persons_email], subject: I18n.t("mail.updated_to_contact_person.subject",id: @data[:id]))
   end
   
 end

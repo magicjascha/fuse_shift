@@ -6,12 +6,15 @@ require 'test_helper'
 class RegistrationProcessTest < ActionDispatch::IntegrationTest
   
   def setup
+    contact_persons_email = "contactmaja@mail.de"
+    @contact_person = build(:contact_person, :as_record, :confirmed, hashed_email: contact_persons_email)
+    @contact_person.save(validate: false)
+    post login_path, params: { contact_person: {hashed_email: contact_persons_email } }
     @input = {
       name: "Example Name",
       email: "eXample@Example.de",
       phonenumber: "1234",
       comment: "Das ist ein Kommentar",
-      contact_person: "contact@email.de",
       "start(2i)" => "6",
       "start(3i)" => "22",
       "start(4i)" => "12", 
@@ -31,7 +34,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_select 'form[action="/registrations"]'
     assert_select 'form[method="post"]'
     assert_select 'form input[type=hidden][name="_method"]', false
-    assert_select "form input[type=text]", count: 6 #check for 7 empty text-input fields.
+    assert_select "form input[type=text]", count: 5 #check for 5 empty text-input fields.
     assert_select "form input[type=text][value]", false
     #submit data to database, assert record was saved and confirm-email was queued    
     assert_difference 'Registration.count', 1 do
@@ -50,7 +53,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     assert_equal registration_path(@registration), path
     assert_select %{form[action="#{registration_path(@registration)}"]}
     assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
-    assert_select "form input[type=text]", count: 5
+    assert_select "form input[type=text]", count: 4
     #submit data
     put registration_path(@registration), params: { registration: {name: "Another One", phonenumber: ""}}
     #assert update-success-page with data
@@ -115,7 +118,7 @@ class RegistrationProcessTest < ActionDispatch::IntegrationTest
     #assert edit form
     assert_select %{form[action="#{registration_path(@registration)}"]}
     assert_select 'form input[type=hidden][name="_method"][value=?]', "put"
-    assert_select "form input[type=text]", count: 5
+    assert_select "form input[type=text]", count: 4
     #submit new data
     put registration_path(@registration), params: { registration: error_input}
     #assert filled edit form with errors 

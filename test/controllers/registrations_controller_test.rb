@@ -2,12 +2,24 @@ require 'test_helper'
 
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   
+  def setup
+    #create contact_person
+    @contact_persons_email = build(:contact_person).hashed_email
+    @contact_person = build(:contact_person, :as_record, :confirmed)
+    @contact_person.save(validate: false)
+  end
+  
   test "should get new" do
+    #login contact_person
+    post login_path, params: { contact_person: {hashed_email: @contact_persons_email } }
+    #go to register page
     get root_path
     assert_response :success
   end
   
-  test "send confirm-email" do
+  test "send two emails after registration" do
+    #login contact_person
+    post login_path, params: { contact_person: {hashed_email: @contact_persons_email } }
     #load input hash from Factory
     input = attributes_for(:registration).merge(
       "start(2i)" => "6",
@@ -27,16 +39,16 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal input[:email].downcase, confirm_email.to[0]
     #assert that second last email was the email contact_person with the right subject.
     contact_person_email = ActionMailer::Base.deliveries[-1]
-    assert_equal 'You registered somone for the festival', contact_person_email.subject
-    assert_equal input[:contact_person].downcase, contact_person_email.to[0].downcase
+    assert_equal I18n.t("mail.registration_contact_person.subject", id: "1"), contact_person_email.subject
+    assert_equal input[:contact_persons_email].downcase, contact_person_email.to[0].downcase
   end
   
   test "confirmation saves to database" do
-    #build a registration and save
+    #setup: save an unconfirmed registration
     registration = build(:registration, :as_record)
     registration.save(validate: false)
-    assert_equal nil, Registration.find_by(hashed_email: registration.hashed_email).confirmed
-    #go to confirmation path for that registration
+    assert_not_equal true, Registration.find_by(hashed_email: registration.hashed_email).confirmed
+    #go to confirmation path of that registration
     get "#{registration_path(registration)}/confirm"
     assert_response :success
     #assert attribute confirmed of the record is true.

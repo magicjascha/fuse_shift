@@ -10,14 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180710185101) do
+ActiveRecord::Schema.define(version: 20180815001208) do
+
+  create_table "contact_people", force: :cascade do |t|
+    t.string "hashed_email"
+    t.boolean "confirmed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hashed_email"], name: "index_contact_people_on_hashed_email", unique: true
+  end
 
   create_table "registrations", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "phonenumber"
     t.string "is_friend"
-    t.string "contact_person"
+    t.string "contact_persons_email"
     t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -30,6 +38,8 @@ ActiveRecord::Schema.define(version: 20180710185101) do
     t.text "comment"
     t.datetime "start"
     t.datetime "end"
+    t.integer "contact_person_id"
+    t.index ["contact_person_id"], name: "index_registrations_on_contact_person_id"
   end
 
 end
