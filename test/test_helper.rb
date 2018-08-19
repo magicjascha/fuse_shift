@@ -50,7 +50,7 @@ class ActiveSupport::TestCase
   end
   
   def get_data(registration)
-    data = registration.attributes.symbolize_keys().select{|key,value| ![:id, :hashed_email, :contact_person_id, :confirmed, :created_at, :updated_at].include?(key)}
+    data = registration.attributes.symbolize_keys().select{|key,value| ![:hashed_email, :contact_person_id, :confirmed, :created_at, :updated_at].include?(key)}
   end
   
   def get_input_hash(factory)

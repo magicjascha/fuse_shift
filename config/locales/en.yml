@@ -207,6 +207,7 @@ en:
         name: "Name"
         email: "Email"
         hashed_email: "Email" #This should be the same as email.
+        id: "ID"
         shortname: "Shortname"
         phonenumber: "Cellphone Number"
         is_friend: "Is it a Friend?"
