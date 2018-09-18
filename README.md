@@ -2,6 +2,12 @@
 
 Still Missing:
 
+Stuff for setting up the app in production
+
+generate key and iv with
+openssl enc -aes-256-cbc -k secret -P -md sha1
+
+
 1. Registration App:
 
 IN REGISTRATIONS:

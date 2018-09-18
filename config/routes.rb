@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root 'registrations#new'
   post 'registrations', to: 'registrations#create'
+  post '/decrypt', to: 'registrations#decrypt'
+  
   get 'registrations/:hashed_email', to: 'registrations#edit', as: 'registration'
   put 'registrations/:hashed_email', to: 'registrations#update'
   delete 'registrations/:hashed_email', to: 'registrations#delete'

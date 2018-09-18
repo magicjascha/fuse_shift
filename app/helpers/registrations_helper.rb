@@ -4,7 +4,7 @@ module RegistrationsHelper
   
   def associated_registrations
     @contact_person = ContactPerson.find_by(hashed_email: digest(session[:contact_person]))
-    @contact_person.registration_ids
+    @contact_person.registrations
   end
   
   def accessed_registration
@@ -18,7 +18,7 @@ module RegistrationsHelper
   
   #change formats of registration values in mails and views
   def better_read(value)
-    if value.instance_of?(DateTime)
+    if value.respond_to?(:strftime)
       l(value, format: :short_datetime)
     elsif value == "1" or value==true
       "Yes"

@@ -128,8 +128,7 @@ en:
       red_html: | 
         We sent you and %{name} an email with the data. %{name} has to use the confirm link to complete the registration.
         
-        Do you want to %{edit_link} the data or make another %{registration_link}?
-      edit_link_text: "edit"
+        Do you want to edit the data below or make another %{registration_link}?
       registration_link_text: "registration"
       green_above_data_html: "%{name} was registered with the data:"
       green_below_data_html: ""

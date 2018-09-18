@@ -1,4 +1,5 @@
 require 'json'
+require 'aes'
 
 class RegistrationsController < ApplicationController
   if Rails.env.test? || Rails.env.development?
@@ -21,16 +22,35 @@ class RegistrationsController < ApplicationController
     @registration.contact_persons_email = session[:contact_person]
   end
   
+  def localstorage_save
+    @data = registration_params
+    @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)  
+    @hashed_email = digest(@data[:email])
+    render 'localstorage_save'
+  end
+  
+  def decrypt
+    response = AES.decrypt(decrypt_params[:encrypted_json], Rails.configuration.x.symkey)
+    render json: response
+  end
+  
   def create #add hashed_email, validate that and the raw input data, save encrypted data without validation
+    #create registration for validation
     @registration = Registration.new(add_hashed_email(registration_params))
     if @registration.valid?
-      @saved_registration = Registration.new(add_hashed_email(params_encrypt(registration_params)))
+      #save asymatrically encrypted data to database
+      @saved_registration = Registration.new(params_encrypt(add_hashed_email(registration_params)))
       @saved_registration.save(validate: false)
-      @data = displayed_data(@saved_registration.id) #contains params that should be displayed in success
+      #success message in flash with link to new registration
+      flash[:danger] = ActionController::Base.helpers.simple_format(t("views.create_success.red_html", name: @registration.name, registration_link: ActionController::Base.helpers.link_to(t("views.create_success.registration_link_text"), root_url)))
+      @data = displayed_data(@saved_registration.id) #contains params displayed in emails and saved to localstorage
+      #send emails with plain data
       RegistrationMailer.registration_confirm(@registration, @data).deliver_now
       RegistrationMailer.registration_contact_person(@registration, @data).deliver_now
-      session[@registration.hashed_email] = @data#for edit
-      render "create_success"    
+      #save symmetrically encrypted data to the localstorage 
+      @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
+      @hashed_email = digest(@data[:email])
+      render 'localstorage_save'
     else
       @registration.start=nil if @registration.errors.include?(:start) && registration_params.value?("1970-01-01 15:00:00")
       @registration.end=nil if @registration.errors.include?(:end) && registration_params.value?("1970-01-01 15:00:00")
@@ -46,10 +66,6 @@ class RegistrationsController < ApplicationController
       @registration = Registration.new(id: id, hashed_email: params[:hashed_email])
       @registration.city = session[:city]
       @registration.contact_persons_email = session[:contact_person]
-      if session[params[:hashed_email]]#display old data if it's still in the session
-        @data = session[params[:hashed_email]]
-        @registration.attributes = @data
-      end
     end
   end
 
@@ -62,7 +78,6 @@ class RegistrationsController < ApplicationController
       @registration.assign_attributes(params_encrypt(present_attributes))
       @registration.save(validate: false)
       @data = displayed_data(@registration.id)
-      update_session(present_attributes, @session_state)
       RegistrationMailer.updated_to_contact_person(@data, @session_state).deliver_now
       render:'update_success'
     else 
@@ -91,7 +106,12 @@ class RegistrationsController < ApplicationController
   end
 
   private
-    def registration_params
+  
+    def decrypt_params
+      params.permit( :encrypted_json)
+    end
+  
+    def registration_params #permits params, downcases email, adds contact_persons email, city and id, transforms start and end date
       input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :contact_persons_email, :comment, "start(1i)", "start(2i)", "start(3i)", "start(4i)", "start(5i)", "end(1i)", "end(2i)", "end(3i)", "end(4i)", "end(5i)")
       
       input["start(1i)"] = Rails.configuration.x.festival_start.year 
@@ -124,7 +144,7 @@ class RegistrationsController < ApplicationController
     end
     
     def add_hashed_email(hash)
-      hash.merge!(hashed_email: digest(params[:registration][:email]))
+      hash.merge!(hashed_email: digest(hash[:email]))
     end
     
     def params_encrypt(params)
@@ -158,16 +178,6 @@ class RegistrationsController < ApplicationController
       data[:id]=id
       data.delete(:contact_person_id)
       data
-    end
-    
-    def update_session(present_attributes, session_state)
-      if !session_state
-        session[params[:hashed_email]] = @data
-      else
-        present_attributes.each do |key, value|
-          session[params[:hashed_email]][key] = value
-        end
-      end
     end
       
       

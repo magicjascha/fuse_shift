@@ -21,7 +21,11 @@ class RegistrationMailerTest < ActionMailer::TestCase
     for i in 0..(@data.length-1) do
       assert_match("<th>#{I18n.t("activerecord.attributes.registration.#{@data.keys[i]}")}</th>".gsub("'","&#39;"), email.html_part.body.decoded)
       if @data.values[i]
-        assert_match("<td>#{@data.values[i]}</td>", email.html_part.body.decoded)
+        if @data.values[i].respond_to?(:strftime)
+          assert_match("<td>#{I18n.l(@data.values[i], format: :short_datetime)}</td>", email.html_part.body.decoded)
+        else
+          assert_match("<td>#{@data.values[i]}</td>", email.html_part.body.decoded)
+        end
       end      
     end
   end
@@ -45,9 +49,13 @@ class RegistrationMailerTest < ActionMailer::TestCase
     for i in 0..(@data.length-1) do
       assert_match("<th>#{I18n.t("activerecord.attributes.registration.#{@data.keys[i]}")}</th>".gsub("'","&#39;"), email.html_part.body.decoded)
       if @data.values[i]
-        assert_match("<td>#{@data.values[i]}</td>", email.html_part.body.decoded)
+        #for dates there should be the custom format from the locale
+        if @data.values[i].respond_to?(:strftime)
+          assert_match("<td>#{I18n.l(@data.values[i], format: :short_datetime)}</td>", email.html_part.body.decoded)
+        else
+          assert_match("<td>#{@data.values[i]}</td>", email.html_part.body.decoded)
+        end
       end      
     end
-  end
-  
+  end  
 end

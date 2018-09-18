@@ -39,6 +39,7 @@ gem 'bootstrap-sass', '~> 3.3.7'
 gem 'validates_timeliness'  
 gem 'jquery-rails'
 gem 'minitest-rails-capybara'
+gem 'aes'
 
 
 group :development, :test do

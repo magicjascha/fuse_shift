@@ -1,3 +1,25 @@
+<script>
+  $( document ).ready(function(){
+    x = $().each;
+    $( "td[data-hashed_email]" ).each( function( index, td ) {
+      let hashed_email = td.getAttribute('data-hashed_email')
+      let encrypted_data = localStorage.getItem(hashed_email);
+      $.ajax({
+        url: '/decrypt',
+        type: 'POST',
+        headers: {
+        'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
+        },
+        data: {"encrypted_json": JSON.parse(encrypted_data)},
+        dataType:'json',
+        success: function (data, textStatus, jqXHR) {
+          td.innerHTML=data.name;
+        }
+      });
+    });
+  });
+</script>
+
 <h4>You registered <%= pluralize(associated_registrations.length, "person") %>:</h4>
 <table class="text-left table-hover">
   <tr>
@@ -7,13 +29,13 @@
     <th>Edit</th>
     <th>Delete</th>
   </tr>
-<% associated_registrations.each do |id| %>
+<% associated_registrations.each do |r| %>
   <tr>
-    <td><%= id %></td>
-    <td><%= replace_with_name(id) %></th>
-    <td><%= better_read(Registration.find_by(id: id).confirmed) %></td>
-    <td><%= link_to registration_path(Registration.find_by(id: id)) do %><i class="glyphicon glyphicon-edit"></i><% end %></td>
-    <td><%= link_to(registration_path(Registration.find_by(id: id)), method: :delete) do %><i class="glyphicon glyphicon-trash"></i><% end %></td>
+    <td><%= r.id %></td>
+    <td data-hashed_email=<%=r.hashed_email%> ></td>
+    <td><%= better_read(r.confirmed) %></td>
+    <td><%= link_to registration_path(r) do %><i class="glyphicon glyphicon-edit"></i><% end %></td>
+    <td><%= link_to(registration_path(r), method: :delete) do %><i class="glyphicon glyphicon-trash"></i><% end %></td>
   </tr>
 <% end %>
 </table>

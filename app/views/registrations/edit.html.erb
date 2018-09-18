@@ -1,3 +1,30 @@
+<script>
+  $( document ).ready(function() {
+    let hashed_email = <%=@registration.hashed_email.to_json.html_safe %>;
+    let encrypted_data = localStorage.getItem(hashed_email);
+    $.ajax({
+      url: '/decrypt',
+      type: 'POST',
+      headers: {
+      'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
+      },
+      data: {"encrypted_json": JSON.parse(encrypted_data)},
+      dataType:'json',
+      success: function (data, textStatus, jqXHR) {
+        $("[name='registration[name]']").val(data.name);
+        $('*[name="registration[email]"]').text(data.email);
+        $("[name='registration[shortname]']").val(data.shortname);
+        $("[name='registration[phonenumber]']").val(data.phonenumber);
+        $("[name='registration[is_friend]']").val(data.is_friend);
+        $("[name='registration[german]']").val(data.german);
+        $("[name='registration[english]']").val(data.english);
+        $("[name='registration[french]']").val(data.french);
+        $("[name='registration[comment]']").val(data.comment);
+      }
+    });
+  });
+</script>
+
 <h1><%= t("views.edit.headline", id: @registration.id)%></h1>
 <% if @data %>
   <p><%= t("views.edit.cookie_explanation") %></p>

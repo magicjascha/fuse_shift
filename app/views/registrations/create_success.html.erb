@@ -1,10 +1,36 @@
-<h1> <%= t("views.create_success.headline", name: @registration.name) %> </h1>
+<script>
+  let hashed_email = <%= params[:hashed_email] %>;
+  let encrypted_data = localStorage.getItem(hashed_email);
+  $.ajax({
+    url: '/decrypt',
+    type: 'POST',
+    headers: {
+    'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
+    },
+    data: {"encrypted_json": JSON.parse(encrypted_data)},
+    dataType:'json',
+    success: function (data, textStatus, jqXHR) {
+//       $("[name='registration[name]']").val(data.name);
+//       $("[name='registration[shortname]']").val(data.shortname);
+//       $("[name='registration[phonenumber]']").val(data.phonenumber);
+//       $("[name='registration[is_friend]']").val(data.is_friend);
+//       $("[name='registration[german]']").val(data.german);
+//       $("[name='registration[english]']").val(data.english);
+//       $("[name='registration[french]']").val(data.french);
+//       $("[name='registration[comment]']").val(data.comment);
+    }
+  });
+</script>
+
+<h1> <%= t("views.create_success.headline", name: "@registration.name") %> </h1>
 <div class="alert alert-danger">
-  <p> <%= simple_format(t("views.create_success.red_html", name: @registration.name, edit_link: link_to(t("views.create_success.edit_link_text"), registration_url(@registration)), registration_link: link_to(t("views.create_success.registration_link_text"), root_url))) %> <p>
+  <p> <%= simple_format(t("views.create_success.red_html", name: "@registration.name", edit_link: link_to(t("views.create_success.edit_link_text"), registration_url(@registration)), registration_link: link_to(t("views.create_success.registration_link_text"), root_url))) %> <p>
 </div>
+<% if false %>
 <div class="alert alert-success">
   <p><%= simple_format(t("views.create_success.green_above_data_html", name: @registration.name)) %> 
   <p><%= render '/shared/registration_data_table' %></p>
   <p><%= simple_format(t("views.create_success.green_below_data_html")) %><p> 
   </p>
 </div>
+<% end %>
