@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  
+  config.x.symkey = IO.readlines("config/keys/symkey.txt").map{|line| line.chomp("\n").split("=")}.select{|x| x[0]=="key"}[0][1]
   config.x.pem = File.read('config/keys/public.dev.pem')
   config.x.users = { 'Saarbrücken' => 'pw1', 'Bochum' => 'pw2' }
   config.x.festival_start = DateTime.parse("2018-06-20 06:00:00")

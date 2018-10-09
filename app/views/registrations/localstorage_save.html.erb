@@ -3,19 +3,6 @@
     let encrypted_data = <%= @encrypted_data.to_json.html_safe %>;
     let hashed_email = <%= @hashed_email.to_json.html_safe %>;
     localStorage.setItem(hashed_email, JSON.stringify(encrypted_data));
-    console.log("saved to local storage", JSON.stringify(encrypted_data));
     window.location.replace('/registrations/'+hashed_email);
-//     $.ajax({
-//       url: '/registrations/create',
-//       type: 'POST',
-//       headers: {
-//       'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
-//       },
-//       data: data,
-//       dataType:'html',
-//       success: function (response, textStatus, jqXHR) {
-//         $("body").html(response);
-//       }
-//     });
   });
 </script>

@@ -22,15 +22,23 @@ class RegistrationsController < ApplicationController
     @registration.contact_persons_email = session[:contact_person]
   end
   
-  def localstorage_save
-    @data = registration_params
-    @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)  
-    @hashed_email = digest(@data[:email])
-    render 'localstorage_save'
-  end
+#   def localstorage_save
+#     @data = registration_params
+#     @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)  
+#     @hashed_email = digest(@data[:email])
+#     render 'localstorage_save' #forwards to edit
+#   end
   
   def decrypt
-    response = AES.decrypt(decrypt_params[:encrypted_json], Rails.configuration.x.symkey)
+#     debugger
+    response = decrypt_params[:encrypted_registrations].to_h.map do |hashed_email, data|
+      if data!=""
+        [hashed_email, JSON.parse(AES.decrypt(data, Rails.configuration.x.symkey))]
+      else
+        p "data of #{hashed_email} was empty"
+        ""
+      end
+    end
     render json: response
   end
   
@@ -50,7 +58,7 @@ class RegistrationsController < ApplicationController
       #save symmetrically encrypted data to the localstorage 
       @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
       @hashed_email = digest(@data[:email])
-      render 'localstorage_save'
+      render 'localstorage_save' #forwards to edit
     else
       @registration.start=nil if @registration.errors.include?(:start) && registration_params.value?("1970-01-01 15:00:00")
       @registration.end=nil if @registration.errors.include?(:end) && registration_params.value?("1970-01-01 15:00:00")
@@ -108,7 +116,7 @@ class RegistrationsController < ApplicationController
   private
   
     def decrypt_params
-      params.permit( :encrypted_json)
+      params.permit(encrypted_registrations: {})
     end
   
     def registration_params #permits params, downcases email, adds contact_persons email, city and id, transforms start and end date

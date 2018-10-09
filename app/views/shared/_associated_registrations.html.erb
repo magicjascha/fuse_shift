@@ -1,21 +1,29 @@
 <script>
   $( document ).ready(function(){
-    x = $().each;
+    //load all registrations from localstorage, which are in the associated records list into a hash of registrations
+    let all_local_registrations = {};
     $( "td[data-hashed_email]" ).each( function( index, td ) {
-      let hashed_email = td.getAttribute('data-hashed_email')
+      let hashed_email = td.getAttribute('data-hashed_email');
       let encrypted_data = localStorage.getItem(hashed_email);
-      $.ajax({
-        url: '/decrypt',
-        type: 'POST',
-        headers: {
-        'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
-        },
-        data: {"encrypted_json": JSON.parse(encrypted_data)},
-        dataType:'json',
-        success: function (data, textStatus, jqXHR) {
-          td.innerHTML=data.name;
-        }
+      all_local_registrations[hashed_email] = JSON.parse(encrypted_data);
       });
+    console.log("load from localStorage", all_local_registrations);
+    //server-request: send hash and decrypt registrations inside
+    $.ajax({
+      url: '/decrypt',
+      type: 'POST',
+      headers: {
+      'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
+      },
+      data: {"encrypted_registrations": all_local_registrations},
+      dataType:'json',
+      success: function (data, textStatus, jqXHR) {
+        $.each(data, function(index,registration) {
+          //fill in tds in the list
+          element = document.querySelectorAll("[data-hashed_email='"+registration[0]+"']");
+          element[0].innerHTML = registration[1]["name"];   
+        });
+      }
     });
   });
 </script>
