@@ -79,6 +79,8 @@ GEM
       railties (>= 3.0.0)
     ffi (1.9.23)
     ffi (1.9.23-x86-mingw32)
+    flatpickr_rails (1.1.0)
+      railties (>= 3.0)
     formatador (0.2.5)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -251,6 +253,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   factory_bot_rails
+  flatpickr_rails
   guard
   guard-minitest
   jbuilder (~> 2.5)

@@ -40,6 +40,7 @@ gem 'validates_timeliness'
 gem 'jquery-rails'
 gem 'minitest-rails-capybara'
 gem 'aes'
+gem 'flatpickr_rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
