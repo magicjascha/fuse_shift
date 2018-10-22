@@ -8,8 +8,8 @@
     flatpickr('#flatpickr-input', {
       enableTime: true,
       dateFormat: "Y-m-d H:i",
-      minDate: "2018-10-13 12:00",
-      maxDate: "2018-10-21 12:00"
+      minDate: "<%= I18n.l(Rails.configuration.x.festival_start, format: :blub) %>",
+      maxDate: "<%= I18n.l(Rails.configuration.x.festival_end, format: :blub) %>"
     });
   });
 </script>
