@@ -8,6 +8,9 @@ Rails.application.configure do
   config.x.deadline = DateTime.parse("2018-04-15 10:30:14")
   config.x.admin_email = 'festival_help@mail.de'
   
+  #for timeliness gem (compare datetime-values delivered as strings)
+  config.use_plugin_parser = true
+  
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped

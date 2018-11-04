@@ -9,6 +9,9 @@ Rails.application.configure do
   config.x.festival_end = DateTime.parse("2018-07-10 18:00:00")
   config.x.deadline = DateTime.parse("2018-04-15 10:30:14")
   config.x.admin_email = 'festival_help@mail.de'
+  
+  #for timeliness gem (compare datetime-values delivered as strings)
+  config.use_plugin_parser = true
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

@@ -78,6 +78,37 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    flatpickr('.flatpickr-input', {
+//       allowInput: true,
+      enableTime: true,
+      time_24hr: true,
+      minuteIncrement: 30,
+      dateFormat: "Y-m-d H:i",
+      minDate: "<%= I18n.l(Rails.configuration.x.festival_start, format: :blub) %>",
+      maxDate: "<%= I18n.l(Rails.configuration.x.festival_end, format: :blub) %>",
+    });
+  });
+</script>
+
+<div class="form-group">
+  <%= f.label :start, t(:"form.start.label"), class:"control-label col-sm-4"%>
+  <div class="col-sm-8">
+    <%= f.text_field :start, class: 'form-control flatpickr-input'%>
+    <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(Rails.configuration.x.festival_start, format: :short_datetime))%></small>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= f.label :end, t(:"form.end.label"), class:"control-label col-sm-4"%>
+  <div class="col-sm-8">
+    <%= f.text_field :end, class: 'form-control flatpickr-input'%>
+    <small id="endHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(Rails.configuration.x.festival_end, format: :short_datetime))%></small>
+  </div>
+</div>
+
+<% if false %>
 <div class="form-group">
   <%= f.label :start, t("form.start.label"), class:"control-label col-sm-4" %>
   <div class="col-sm-8">
@@ -93,6 +124,8 @@
     <small id="endHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(Rails.configuration.x.festival_end, format: :short_datetime))%></small>
   </div>
 </div>
+<% end %>
+
 
 <div class="form-group">
   <%= f.label :comment, t("form.comment.label"), class:"control-label col-sm-4" %>

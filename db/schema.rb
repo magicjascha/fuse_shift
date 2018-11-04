@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180818025214) do
+ActiveRecord::Schema.define(version: 20181029204336) do
 
   create_table "contact_people", force: :cascade do |t|
     t.string "hashed_email"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 20180818025214) do
     t.string "english"
     t.string "french"
     t.text "comment"
-    t.datetime "start"
-    t.datetime "end"
+    t.string "start"
+    t.string "end"
     t.integer "contact_person_id"
     t.index ["contact_person_id"], name: "index_registrations_on_contact_person_id"
     t.index ["hashed_email"], name: "index_registrations_on_hashed_email", unique: true

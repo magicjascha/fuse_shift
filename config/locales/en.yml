@@ -111,7 +111,7 @@ en:
     confirm: | 
       You confirmed your email-adress.
 
-      Editing previous registrations might become a little bit more confusing, if you delete your cookies in between. Consider to keep them.
+      Editing previous registrations might become a little bit more confusing, if you delete your site data in between. Consider to keep them until the festival.
 
       You can now start to enter registrations.
     delete_cookie_data: |

@@ -30,4 +30,8 @@ module RegistrationsHelper
       value
     end
   end 
+  
+  def date_is_empty_at_create?(dateString)
+    DateTime.parse(dateString) == DateTime.parse("1970-01-01 15:00:00 UTC")
+  end
 end
