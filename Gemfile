@@ -36,11 +36,12 @@ gem 'bootstrap-sass', '~> 3.3.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'validates_timeliness'  
-gem 'jquery-rails'
-gem 'minitest-rails-capybara'
-gem 'aes'
-gem 'flatpickr_rails'
+gem 'validates_timeliness', '~> 5.0.0.alpha3'#datetime-validation
+gem 'jquery-rails'#javascript jquery
+gem 'minitest-rails-capybara'#test
+gem 'aes'#symmetric encryption
+gem 'flatpickr_rails'#jquery-datepicker
+gem 'colorize'#terminal-output colors for debugging
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

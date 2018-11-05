@@ -6,7 +6,7 @@ class RegistrationMailerTest < ActionMailer::TestCase
   test "confirm-email after registration" do
     #get data into @registration
     @registration = build(:registration)
-    @data = get_data(@registration)
+    @data = get_input_hash(@registration)
     email = RegistrationMailer.registration_confirm(@registration, @data)
     # Send the email, then test that it got queued
     assert_emails 1 do
@@ -34,7 +34,7 @@ class RegistrationMailerTest < ActionMailer::TestCase
     #get data into @registration
     @registration = build(:registration)
     @registration.save(validate:false)
-    @data = get_data(@registration)
+    @data = get_input_hash(@registration)
     email = RegistrationMailer.registration_contact_person(@registration, @data)
     # Send the email, then test that it got queued
     assert_emails 1 do

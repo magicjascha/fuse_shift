@@ -4,6 +4,7 @@ require 'rails/test_help'
 require "minitest/reporters"
 require 'hasher'
 require 'minitest/rails/capybara'
+require 'colorize'
 Minitest::Reporters.use!
 
 # class ActionDispatch::IntegrationTest
@@ -49,19 +50,8 @@ class ActiveSupport::TestCase
     record
   end
   
-  def get_data(registration)
+  def get_input_hash(registration)
     data = registration.attributes.symbolize_keys().select{|key,value| ![:hashed_email, :contact_person_id, :confirmed, :created_at, :updated_at].include?(key)}
-  end
-  
-  def get_input_hash(factory)
-    input_hash = get_data(factory).except(:start,:end)
-    input_hash["start(2i)"] = factory.start.month
-    input_hash["start(3i)"] = factory.start.day
-    input_hash["start(4i)"] = factory.start.hour
-    input_hash["end(2i)"] = factory.end.month
-    input_hash["end(3i)"] = factory.end.day
-    input_hash["end(4i)"] = factory.end.hour
-    input_hash
   end
   
 end

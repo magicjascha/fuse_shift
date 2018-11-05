@@ -18,8 +18,8 @@ feature "Register" do
     page.must_have_content("You registered 0 people")
     fill_in 'Name', with: registration.name
     fill_in 'Email', with: registration.email
-    select_date_and_time '21,June,15', :from => 'Arrival'
-    select_date_and_time '27,June,15', :from => 'Departure'
+    page.execute_script("$('#registration_start').val('#{registration.start}')")
+    page.execute_script("$('#registration_end').val('#{registration.end}')")
     click_button 'Submit'
     page.must_have_content "You registered #{registration.name} for the festival"
     page.must_have_content("You registered 1 person")
@@ -29,8 +29,8 @@ feature "Register" do
     registration = build(:registration_input)
     page.must_have_content("You registered 0 people")
     fill_in 'Email', with: registration.email
-    select_date_and_time '21,June,15', :from => 'Arrival'
-    select_date_and_time '27,June,15', :from => 'Departure'
+    page.execute_script("$('#registration_start').val('#{registration.start}')")
+    page.execute_script("$('#registration_end').val('#{registration.end}')")
     click_button 'Submit'
     page.must_have_content "Name can't be blank"
     page.must_have_content("You registered 0 people")
@@ -46,8 +46,8 @@ feature "Register" do
       find('input#registration_email.form-control', wait: 5)
       fill_in 'Name', with: registration.name
       fill_in 'Email', with: registration.email
-      select_date_and_time '21,June,15', :from => 'Arrival'
-      select_date_and_time '27,June,15', :from => 'Departure'
+      page.execute_script("$('#registration_start').val('#{registration.start}')")
+      page.execute_script("$('#registration_end').val('#{registration.end}')")
       click_button 'Submit'
       find('div#editpage_email.form-control-static', wait: 5)
     end
@@ -63,8 +63,8 @@ feature "Register" do
     registration = build(:registration)
     fill_in 'Name', with: registration.name
     fill_in 'Email', with: registration.email
-    select_date_and_time '21,June,15', :from => 'Arrival'
-    select_date_and_time '27,June,15', :from => 'Departure'
+    page.execute_script("$('#registration_start').val('#{registration.start}')")
+    page.execute_script("$('#registration_end').val('#{registration.end}')")
     click_button 'Submit'
     #
     find('div#editpage_email.form-control-static', wait: 5)
@@ -75,29 +75,30 @@ feature "Register" do
     #check if the edit-form is filled in
     assert_equal find_field('Name').value, registration.name
   end
-  
-  scenario "delete session" do
-    #register
-    registration = build(:registration)
-    fill_in 'Name', with: registration.name
-    fill_in 'Email', with: registration.email
-    select_date_and_time '21,June,15', :from => 'Arrival'
-    select_date_and_time '27,June,15', :from => 'Departure'
-    click_button 'Submit'
-    #check session-fill in on edit-page
-    visit "/registrations/#{registration.hashed_email}"
-    assert_equal find_field('Name').value, registration.name
-    #delete session
-    click_link 'Delete Cookie-Data'
-    #check logout
-    assert_equal login_path, current_path
-    #login
-    fill_in 'Email', with: @contact_persons_email
-    click_button 'Submit'
-    #check if registration data is deleted
-    visit "/registrations/#{registration.hashed_email}"
-    page.assert_selector('h1', text: "Edit registration with ID")
-    assert_no_text registration.name
-  end
+ 
+#Fix test when decided if session-delete is replaced with local-storage-delete
+#   scenario "delete session" do
+#     #register
+#     registration = build(:registration)
+#     fill_in 'Name', with: registration.name
+#     fill_in 'Email', with: registration.email
+#     fill_in 'Arrival', with: registration.start
+#     fill_in 'Departure', with: registration.end
+#     click_button 'Submit'
+#     #check session-fill in on edit-page
+#     visit "/registrations/#{registration.hashed_email}"
+#     assert_equal find_field('Name').value, registration.name
+#     #delete session
+#     click_link 'Delete Cookie-Data'
+#     #check logout
+#     assert_equal login_path, current_path
+#     #login
+#     fill_in 'Email', with: @contact_persons_email
+#     click_button 'Submit'
+#     #check if registration data is deleted
+#     visit "/registrations/#{registration.hashed_email}"
+#     page.assert_selector('h1', text: "Edit registration with ID")
+#     assert_no_text registration.name
+#   end
   
 end

@@ -1,5 +1,6 @@
 require 'json'
 require 'aes'
+require 'colorize'
 
 class RegistrationsController < ApplicationController
   if Rails.env.test? || Rails.env.development?
@@ -30,7 +31,6 @@ class RegistrationsController < ApplicationController
 #   end
   
   def decrypt
-#     debugger
     response = decrypt_params[:encrypted_registrations].to_h.map do |hashed_email, data|
       if data!=""
         [hashed_email, JSON.parse(AES.decrypt(data, Rails.configuration.x.symkey))]
@@ -42,12 +42,9 @@ class RegistrationsController < ApplicationController
     render json: response
   end
   
-  def create #add hashed_email, validate that and the raw input data, save encrypted data without validation
+  def create #add hashed_email, validate, save encrypted data without validation
     #create registration for validation
     @registration = Registration.new(add_hashed_email(registration_params))
-    #work-around to invalidate empty dates, only when the record is created (needed only for dates because of timeliness-gem-behavior)
-    @registration.end = @registration.end.present? ? @registration.end : "1970-01-01 15:00:00 UTC"
-    @registration.start = @registration.start.present? ? @registration.start : "1970-01-01 15:00:00 UTC"
     if @registration.valid?
       #save asymetrically encrypted data to database
       @saved_registration = Registration.new(params_encrypt(add_hashed_email(registration_params)))
@@ -63,8 +60,8 @@ class RegistrationsController < ApplicationController
       @hashed_email = digest(@data[:email])
       render 'localstorage_save' #forwards to edit
     else
-      @registration.end = date_is_empty_at_create?(@registration.end) ? "" : @registration.end
-      @registration.start = date_is_empty_at_create?(@registration.start) ? "" : @registration.start
+#       @registration.end = date_is_empty_at_create?(@registration.end) ? "" : @registration.end
+#       @registration.start = date_is_empty_at_create?(@registration.start) ? "" : @registration.start
       render 'new'
     end
   end
@@ -139,7 +136,6 @@ class RegistrationsController < ApplicationController
     def params_encrypt(params)
       params.to_h.map do |key, value|
       value = encrypt(value.to_s) if encrypt?(key)
-        p [key, value]
         [key, value]
       end.to_h                     
     end

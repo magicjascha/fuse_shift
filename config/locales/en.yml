@@ -231,8 +231,8 @@ en:
               on_or_after: "must be after %{restriction} (festival start)"
               on_or_before: "must be before %{restriction} (festival end)"
               invalid_datetime: "is invalid"
-            hashed_email: 
-              uniqueness: "was already registered. If you want to change the previous registration, use the edit-link in the email."
+            email:
+              uniqueness: "was already registered. You can delete or edit the old registration."
               
   validates_timeliness:
     error_value_formats:

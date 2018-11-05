@@ -20,14 +20,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     #login contact_person
     post login_path, params: { contact_person: {hashed_email: @contact_persons_email } }
     #load input hash from Factory
-    input = attributes_for(:registration_input).merge(
-      "start(2i)" => "6",
-      "start(3i)" => "22",
-      "start(4i)" => "12", 
-      "end(2i)" => "7", 
-      "end(3i)" => "5", 
-      "end(4i)" => "16",
-    )
+    input = attributes_for(:registration_input)
     #assert email is queued after registration
     assert_difference 'ActionMailer::Base.deliveries.size', +2 do
       post registrations_path, params: { registration: input}

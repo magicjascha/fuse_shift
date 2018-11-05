@@ -15,4 +15,5 @@ ValidatesTimeliness.setup do |config|
 #    )
   # Use the plugin date/time parser which is stricter and extendable
   config.use_plugin_parser = true
+  config.enable_date_time_select_extension!
 end

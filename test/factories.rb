@@ -5,10 +5,11 @@ require 'encrypt/encryptor'
 FactoryBot.define do
   
   factory :registration_input, class: Registration do |f|
+    #required fields
     f.name { "Lisa" }
     f.email { "lisa@mail.de" }
-    f.start { DateTime.new(2018,6,21,16,0) }#year,month,day,hour,minute
-    f.end { DateTime.new(2018,7,5,8,0) }
+    f.start { "2018-06-21 16:00" }#year,month,day,hour,minute
+    f.end { "2018-07-05 08:00" }
     
     f.trait :all_fields do
       shortname {"kurz"}
@@ -44,6 +45,8 @@ FactoryBot.define do
         registration.french = Encrypt::Encryptor.new(registration.french, Rails.configuration.x.pem).apply
         registration.is_friend = Encrypt::Encryptor.new(registration.is_friend, Rails.configuration.x.pem).apply
         registration.comment = Encrypt::Encryptor.new(registration.comment, Rails.configuration.x.pem).apply
+        registration.start = Encrypt::Encryptor.new(registration.start, Rails.configuration.x.pem).apply
+        registration.end = Encrypt::Encryptor.new(registration.end, Rails.configuration.x.pem).apply
       end
     end
     
