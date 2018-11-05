@@ -16,8 +16,7 @@ class Registration < ApplicationRecord
   
 
   validates :name, presence: true, length: { maximum: 50 }, if: proc { |r| r.name_changed? }
-  validates :contact_persons_email, presence: true, format: { with: VALID_EMAIL_REGEX }, if: proc { |r| r.contact_persons_email_changed? }
-  
+  validates :contact_persons_email, presence: true, format: { with: VALID_EMAIL_REGEX }, if: proc { |r| r.contact_persons_email_changed? }  
   validates :hashed_email, 
     :uniqueness => { case_sensitive: false },
     :if => proc { |r| r.hashed_email_changed? && r.email.present?}
