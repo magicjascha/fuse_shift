@@ -1,7 +1,7 @@
 <h1><%= t("views.new.headline")%></h1>
 <p><%=t("views.new.above_form")%></p>    
 
-<%= form_for(@registration, html: {class: 'form-horizontal'}) do |f| %>
+<%= form_for(@registration, html: {class: 'form-horizontal', autocomplete: "off"}) do |f| %>
   <%= render 'form', :f => f %>
 <% end %>          
 

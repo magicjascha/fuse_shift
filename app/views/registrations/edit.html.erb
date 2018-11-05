@@ -37,6 +37,6 @@
   <p><%= t("views.edit.cookie_deleted_explanation") %></p>
 <% end %>
 <p><%=t("views.edit.above_form")%></p>      
-<%= form_for(@registration, url: "/registrations/#{@registration.hashed_email}", method: :put, html: {class: 'form-horizontal'}) do |f| %>
+<%= form_for(@registration, url: "/registrations/#{@registration.hashed_email}", method: :put, html: {class: 'form-horizontal', autocomplete: "off"}) do |f| %>
   <%= render 'form', :f => f %>
 <% end %> 
