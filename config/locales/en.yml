@@ -108,6 +108,8 @@ en:
       below_data: "The concerned person doesn't get an email. You will have to forward this email yourself."
   
   flash:
+    update_success: |
+      You updated. We sent you an email with the data. You have to forward it yourself to the person.
     confirm: | 
       You confirmed your email-adress.
 

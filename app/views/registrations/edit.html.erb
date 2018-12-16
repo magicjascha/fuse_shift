@@ -13,12 +13,15 @@
       data: {"encrypted_registrations": local_registration},
       dataType:'json',
       success: function (data, textStatus, jqXHR) {
-        let registration = data[0][1]
+        let registration = data[0][1];
+        console.log("name", registration.name);
+        console.log("is_friend", registration.is_friend);
         $("[name='registration[name]']").val(registration.name);
         $('*[name="registration[email]"]').text(registration.email);
+        $('*[name="registration[email]"]').val(registration.email);
         $("[name='registration[shortname]']").val(registration.shortname);
         $("[name='registration[phonenumber]']").val(registration.phonenumber);
-        $("[name='registration[is_friend]']").val(registration.is_friend);
+        $("#registration_is_friend_"+registration.is_friend).attr("checked", "checked");                
         $("[name='registration[german]']").val(registration.german);
         $("[name='registration[english]']").val(registration.english);
         $("[name='registration[french]']").val(registration.french);

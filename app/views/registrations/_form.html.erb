@@ -24,6 +24,7 @@
       <%= f.text_field :email, class: 'form-control' %>      
     <% else %>
       <div id="editpage_email" name='registration[email]' type="text" class="form-control-static"></div>
+      <%= f.hidden_field :email %>   
     <% end %>
       <small id="emailHelp" class="form-text text-muted"><%=t("form.email.help")%></small>
     </div>
@@ -40,7 +41,25 @@
 <div class="form-group">
     <%= f.label :is_friend, t("form.is_friend.label"), class:"control-label col-sm-4" %>
     <div class="col-sm-8">
-      <div class="checkDiv"><%= f.check_box :is_friend%></div>
+      <% if action_name == "new" or action_name == "create" %>
+        <div class="checkDiv"><%= f.check_box :is_friend%></div>
+      <% else %>
+        <div class="form_row">
+        <% if false %>
+          <%= f.radio_button(:is_friend, true, value: true) %> <%= label(:is_friend, "Yes", value: true) %>
+          <%= f.radio_button(:is_friend, false, value: false) %> <%= label(:is_friend, "No", value: false) %> 
+        <% end %>
+  
+    
+        <% if false %>
+                <% end %>
+           <%= radio_button("registration", "is_friend", value="1") %> Yes
+            <%= radio_button("registration", "is_friend", value="0") %> No
+            <%= radio_button("registration", "is_friend", "", checked: true) %> As Before
+
+
+        </div>
+      <% end %>
       <small id="isMemberHelp" class="form-text text-muted"><%=t("form.is_friend.help")%></small>
   </div>
 </div>

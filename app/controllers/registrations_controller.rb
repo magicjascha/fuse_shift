@@ -23,13 +23,6 @@ class RegistrationsController < ApplicationController
     @registration.contact_persons_email = session[:contact_person]
   end
   
-#   def localstorage_save
-#     @data = registration_params
-#     @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)  
-#     @hashed_email = digest(@data[:email])
-#     render 'localstorage_save' #forwards to edit
-#   end
-  
   def decrypt
     response = decrypt_params[:encrypted_registrations].to_h.map do |hashed_email, data|
       if data!=""
@@ -60,8 +53,6 @@ class RegistrationsController < ApplicationController
       @hashed_email = digest(@data[:email])
       render 'localstorage_save' #forwards to edit
     else
-#       @registration.end = date_is_empty_at_create?(@registration.end) ? "" : @registration.end
-#       @registration.start = date_is_empty_at_create?(@registration.start) ? "" : @registration.start
       render 'new'
     end
   end
@@ -87,7 +78,11 @@ class RegistrationsController < ApplicationController
       @registration.save(validate: false)
       @data = displayed_data(@registration.id)
       RegistrationMailer.updated_to_contact_person(@data, @session_state).deliver_now
-      render:'update_success'
+      #save symmetrically encrypted data to the localstorage 
+      flash[:danger] = ActionController::Base.helpers.simple_format(t("flash.update_success"))
+      @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
+      @hashed_email = params[:hashed_email]  
+      render:'localstorage_save' #forwards to edit
     else 
       @registration.hashed_email = params[:hashed_email]
       render 'edit'
@@ -135,13 +130,12 @@ class RegistrationsController < ApplicationController
     
     def params_encrypt(params)
       params.to_h.map do |key, value|
-      value = encrypt(value.to_s) if encrypt?(key)
+        value = encrypt(value.to_s) if encrypt?(key)
         [key, value]
       end.to_h                     
     end
     
     def encrypt?(key)
-#       !["hashed_email", "confirmed", "start", "end", "contact_person_id"].include?(key)
       !["hashed_email", "confirmed", "contact_person_id"].include?(key)
     end
     

@@ -37,7 +37,7 @@ feature "Register" do
   end
   
   scenario "local storage fills names of associated records" do
-    registrations_count = 5#must be bigger 1, session overflow when bigger 5
+    registrations_count = 10#must be bigger 1, session overflow when bigger 5
     names = []
     registrations_count.times do 
       click_link 'New Registration'
