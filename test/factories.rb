@@ -62,7 +62,7 @@ FactoryBot.define do
     hashed_email { email }
     
     trait :confirmed do
-      confirmed true
+      confirmed { true }
     end
     
     trait :email_hashed do

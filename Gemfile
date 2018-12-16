@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.4'
+gem 'rails', '>= 5.2.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -36,12 +36,18 @@ gem 'bootstrap-sass', '~> 3.3.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+#my app
 gem 'validates_timeliness', '~> 5.0.0.alpha3'#datetime-validation
 gem 'jquery-rails'#javascript jquery
 gem 'minitest-rails-capybara'#test
 gem 'aes'#symmetric encryption
 gem 'flatpickr_rails'#jquery-datepicker
 gem 'colorize'#terminal-output colors for debugging
+
+
+#security fixes
+# gem "rack", ">= 2.0.6"
+# gem "loofah", ">= 2.2.3"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
