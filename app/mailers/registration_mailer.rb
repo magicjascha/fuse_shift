@@ -6,19 +6,17 @@ class RegistrationMailer < ApplicationMailer
   def registration_confirm(registration, data)
     @data = data
     @registration = registration
-    @session_state = true
     mail(to: @data[:email], subject: I18n.t("mail.registration_confirm.subject"))
   end
   
   def registration_contact_person(registration, data)
     @data = data
     @registration = registration
-    @session_state = true
     mail(to: @data[:contact_persons_email], subject: I18n.t("mail.registration_contact_person.subject", id: @data[:id]))
   end
   
-  def updated_to_contact_person(data, session_state)
-    @session_state = session_state
+  def updated_to_contact_person(data, memory_loss)
+    @memory_loss = memory_loss
     @data = data
     mail(to: @data[:contact_persons_email], subject: I18n.t("mail.updated_to_contact_person.subject",id: @data[:id]))
   end

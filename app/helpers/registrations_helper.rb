@@ -24,7 +24,7 @@ module RegistrationsHelper
       "Yes"
     elsif value == "0" or value==false or value==nil
       "No"
-    elsif value == "" and !@session_state
+    elsif value == "" and @memory_loss
      "[as before]"
     else
       value

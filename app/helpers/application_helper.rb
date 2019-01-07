@@ -9,8 +9,4 @@ module ApplicationHelper
     link = locale_key.split('.')[1]
     link_to(I18n.t("#{namespace}.#{link}_text"),I18n.t("#{namespace}.#{link}"))
   end
-  
-#   def festival_start
-#     
-#   end
 end

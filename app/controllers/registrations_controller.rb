@@ -28,9 +28,14 @@ class RegistrationsController < ApplicationController
       if data!=""
         [hashed_email, JSON.parse(AES.decrypt(data, Rails.configuration.x.symkey))]
       else
-        p "data of #{hashed_email} was empty"
         ""
       end
+    end
+    if response.length == 1
+      localstorage_time = DateTime.parse(response[0][1]["changed_on"])
+      datebase_time = Registration.find_by(hashed_email: response[0][0]).updated_at
+      timegap = (datebase_time - localstorage_time).abs
+      response[0][1]["memory_loss"] = "last time" if timegap > 1.second
     end
     render json: response
   end
@@ -71,17 +76,18 @@ class RegistrationsController < ApplicationController
   def update #validate raw input data, identify record by hashed_email, and save encrypted input without validation
     present_attributes = registration_params.select{|key,value| value.present?}
     @registration = Registration.new(present_attributes)
-    @session_state = !!params[:hashed_email]
     if @registration.valid?
       @registration = Registration.find_by(hashed_email: params[:hashed_email])
       @registration.assign_attributes(params_encrypt(present_attributes))
       @registration.save(validate: false)
+      #send email with @data, need memory_loss-info for format
       @data = displayed_data(@registration.id)
-      RegistrationMailer.updated_to_contact_person(@data, @session_state).deliver_now
-      #save symmetrically encrypted data to the localstorage 
-      flash[:danger] = ActionController::Base.helpers.simple_format(t("flash.update_success"))
+      RegistrationMailer.updated_to_contact_person(@data, !(params["memory_loss"].empty?)).deliver_now
+      #add browser-memory-loss-info to data and save symmetrically encrypted to the localstorage 
+      @data["memory_loss"] = "before last time" if !params["memory_loss"].empty?
       @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
-      @hashed_email = params[:hashed_email]  
+      @hashed_email = params[:hashed_email]
+      flash[:danger] = ActionController::Base.helpers.simple_format(t("flash.update_success"))
       render:'localstorage_save' #forwards to edit
     else 
       @registration.hashed_email = params[:hashed_email]
@@ -156,10 +162,11 @@ class RegistrationsController < ApplicationController
     
     def displayed_data(id)
       data = registration_params
-      data[:id]=id
+      data[:id]=id      
+      data[:changed_on] = Registration.find_by(id: id).updated_at
+      puts "flag updated_at when saving".red
+      p data[:changed_on]
       data.delete(:contact_person_id)
       data
     end
-      
-      
 end

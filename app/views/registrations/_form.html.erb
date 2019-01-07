@@ -25,6 +25,7 @@
     <% else %>
       <div id="editpage_email" name='registration[email]' type="text" class="form-control-static"></div>
       <%= f.hidden_field :email %>   
+      <input type="hidden" id="memory_loss" name="memory_loss" />
     <% end %>
       <small id="emailHelp" class="form-text text-muted"><%=t("form.email.help")%></small>
     </div>
@@ -45,19 +46,9 @@
         <div class="checkDiv"><%= f.check_box :is_friend%></div>
       <% else %>
         <div class="form_row">
-        <% if false %>
-          <%= f.radio_button(:is_friend, true, value: true) %> <%= label(:is_friend, "Yes", value: true) %>
-          <%= f.radio_button(:is_friend, false, value: false) %> <%= label(:is_friend, "No", value: false) %> 
-        <% end %>
-  
-    
-        <% if false %>
-                <% end %>
-           <%= radio_button("registration", "is_friend", value="1") %> Yes
-            <%= radio_button("registration", "is_friend", value="0") %> No
-            <%= radio_button("registration", "is_friend", "", checked: true) %> As Before
-
-
+          <%= radio_button("registration", "is_friend", value="1") %> Yes
+          <%= radio_button("registration", "is_friend", value="0") %> No
+          <%= radio_button("registration", "is_friend", "", checked: true) %> As Before
         </div>
       <% end %>
       <small id="isMemberHelp" class="form-text text-muted"><%=t("form.is_friend.help")%></small>

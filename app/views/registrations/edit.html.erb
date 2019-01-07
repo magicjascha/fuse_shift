@@ -2,43 +2,65 @@
   $( document ).ready(function() {
     let hashed_email = <%=@registration.hashed_email.to_json.html_safe %>;
     let encrypted_data = localStorage.getItem(hashed_email);
-    let local_registration = {};
-    local_registration[hashed_email] = JSON.parse(encrypted_data);
-    $.ajax({
-      url: '/decrypt',
-      type: 'POST',
-      headers: {
-      'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
-      },
-      data: {"encrypted_registrations": local_registration},
-      dataType:'json',
-      success: function (data, textStatus, jqXHR) {
-        let registration = data[0][1];
-        console.log("name", registration.name);
-        console.log("is_friend", registration.is_friend);
-        $("[name='registration[name]']").val(registration.name);
-        $('*[name="registration[email]"]').text(registration.email);
-        $('*[name="registration[email]"]').val(registration.email);
-        $("[name='registration[shortname]']").val(registration.shortname);
-        $("[name='registration[phonenumber]']").val(registration.phonenumber);
-        $("#registration_is_friend_"+registration.is_friend).attr("checked", "checked");                
-        $("[name='registration[german]']").val(registration.german);
-        $("[name='registration[english]']").val(registration.english);
-        $("[name='registration[french]']").val(registration.french);
-        $("[name='registration[comment]']").val(registration.comment);
-        $("[name='registration[start]']").val(registration.start);
-        $("[name='registration[end]']").val(registration.end);
+    if (!!encrypted_data == false){
+      alert("Your browser doesn't remember the (encrypted) data for this registration.\n\nIf you created the registration from another computer (or browser), consider to return there for changing it. If you update now we delete the browser-memory for this registration.\n\nTo identify a registration without browser-memory look up the ID in your old emails.")
+      $("[type='text']").attr("placeholder", "as before");
+      $('*[name="registration[email]"]').text("[as before]");
       }
-    });    
+    else {
+      let local_registration = {};
+      local_registration[hashed_email] = JSON.parse(encrypted_data);
+      $.ajax({
+        url: '/decrypt',
+        type: 'POST',
+        headers: {
+        'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
+        },
+        data: {"encrypted_registrations": local_registration},
+        dataType:'json',
+        success: function (data, textStatus, jqXHR) {
+          let hashed_email = data[0][0];
+          let registration = data[0][1];
+          //If memory loss of localstorgae was last time, give an alert, and fill in with "as before"
+          if (registration.memory_loss == "last time"){
+            localStorage.removeItem(hashed_email);
+            alert("Last time you changed this registration from another computer (or browser). Your browser-memory for this registration is deleted.", 'Explanation');
+            $("[type='text']").attr("placeholder", "as before");
+            $('*[name="registration[email]"]').text("[as before]");
+            $("#memory_loss").val("before last time") 
+          }
+          else {
+            //If memory loss of localstorgae was before last time, in with "as before"
+            if (registration.memory_loss == "before last time") {             
+              $("[type='text']").attr("placeholder", "as before");
+              $('*[name="registration[email]"]').text("[as before]");
+              $("#memory_loss").val("before last time") 
+              }
+            $("[name='registration[name]']").val(registration.name);
+            $("[name='registration[shortname]']").val(registration.shortname);
+            $("[name='registration[phonenumber]']").val(registration.phonenumber);
+            if (registration.email){
+              $('*[name="registration[email]"]').text(registration.email);
+            }
+            $("#registration_is_friend_"+registration.is_friend).attr("checked", "checked");                
+            $("[name='registration[german]']").val(registration.german);
+            $("[name='registration[english]']").val(registration.english);
+            $("[name='registration[french]']").val(registration.french);
+            $("[name='registration[comment]']").val(registration.comment);
+            $("[name='registration[start]']").val(registration.start);
+            $("[name='registration[end]']").val(registration.end);
+            //post hidden information from localstorage 
+            $('*[name="registration[email]"]').val(registration.email);
+          }
+          console.log("name", registration.name);
+          console.log("changed_on", registration.changed_on);
+        }
+      });
+    }    
   });
 </script>
 
 <h1><%= t("views.edit.headline", id: @registration.id)%></h1>
-<% if @data %>
-  <p><%= t("views.edit.cookie_explanation") %></p>
-<% else %>
-  <p><%= t("views.edit.cookie_deleted_explanation") %></p>
-<% end %>
 <p><%=t("views.edit.above_form")%></p>      
 <%= form_for(@registration, url: "/registrations/#{@registration.hashed_email}", method: :put, html: {class: 'form-horizontal', autocomplete: "off"}) do |f| %>
   <%= render 'form', :f => f %>

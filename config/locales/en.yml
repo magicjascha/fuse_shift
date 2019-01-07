@@ -139,8 +139,6 @@ en:
       body: "The registration process is finished. We will write you an email, if and which shifts you got."
     edit:
       headline: "Edit registration with ID %{id}"
-      cookie_explanation: "You can only see the data as long as you don't delete your cookies."
-      cookie_deleted_explanation: "If you deleted the website-data in your browser, you don't see the previously registered data. In this case leave fields empty if you don't want to change them. But make sure you have hit the email-edit-link of the right person."
       above_form: ""
     deleted: 
       headline: "Deleted"
