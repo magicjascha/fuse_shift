@@ -55,7 +55,7 @@ en:
       text: | 
         You signed up as contact person for the festival. 
         
-        Klick this %{confirm_link} to confirm your email_adress. Then you can delete this email.
+        Klick this %{confirm_link} to confirm your email_address. Then you can delete this email.
       confirm_link_text: "Link"
     registration_contact_person:
       subject: "You registered somone with ID %{id} for the festival"
@@ -111,7 +111,7 @@ en:
     update_success: |
       You updated. We sent you an email with the data. You have to forward it yourself to the person.
     confirm: | 
-      You confirmed your email-adress.
+      You confirmed your email-address.
 
       Editing previous registrations might become a little bit more confusing, if you delete your site data in between. Consider to keep them until the festival.
 

@@ -25,7 +25,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_difference 'ActionMailer::Base.deliveries.size', +2 do
       post registrations_path, params: { registration: input}
     end
-    #assert that second last email sent was the confirm email sent to the right adress.
+    #assert that second last email sent was the confirm email sent to the right address.
     confirm_email = ActionMailer::Base.deliveries[-2]
     assert_equal 'Confirm your registration for the festival', confirm_email.subject
     assert_equal input[:email].downcase, confirm_email.to[0]
