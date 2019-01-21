@@ -24,6 +24,7 @@ class RegistrationsController < ApplicationController
   end
   
   def decrypt
+    #decrypt_params[:encrypted_registrations] is an array of records from the localstorage, that should be decrypted. The structure of one item in the array is another array [hashed_email, hash with data].
     response = decrypt_params[:encrypted_registrations].to_h.map do |hashed_email, data|
       if data!=""
         [hashed_email, JSON.parse(AES.decrypt(data, Rails.configuration.x.symkey))]
@@ -31,7 +32,8 @@ class RegistrationsController < ApplicationController
         ""
       end
     end
-    if response.length == 1
+    #set status of changed_on and memory_loss in localstorage
+    if response.length == 1 and response != [""]
       localstorage_time = DateTime.parse(response[0][1]["changed_on"])
       datebase_time = Registration.find_by(hashed_email: response[0][0]).updated_at
       timegap = (datebase_time - localstorage_time).abs
@@ -82,9 +84,10 @@ class RegistrationsController < ApplicationController
       @registration.save(validate: false)
       #send email with @data, need memory_loss-info for format
       @data = displayed_data(@registration.id)
-      RegistrationMailer.updated_to_contact_person(@data, !(params["memory_loss"].empty?)).deliver_now
-      #add browser-memory-loss-info to data and save symmetrically encrypted to the localstorage 
-      @data["memory_loss"] = "before last time" if !params["memory_loss"].empty?
+#       byebug
+      RegistrationMailer.updated_to_contact_person(@data, !params["memory_loss"].blank?).deliver_now
+      #add browser-memory-loss-info to data and save symmetrically encrypted to the localstorage
+      @data["memory_loss"] = "before last time" if !params["memory_loss"].blank?
       @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
       @hashed_email = params[:hashed_email]
       flash[:danger] = ActionController::Base.helpers.simple_format(t("flash.update_success"))
@@ -164,8 +167,6 @@ class RegistrationsController < ApplicationController
       data = registration_params
       data[:id]=id      
       data[:changed_on] = Registration.find_by(id: id).updated_at
-      puts "flag updated_at when saving".red
-      p data[:changed_on]
       data.delete(:contact_person_id)
       data
     end

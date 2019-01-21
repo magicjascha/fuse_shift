@@ -34,7 +34,7 @@ class ContactPersonsController < ApplicationController
     redirect_to login_path
   end
   
-  def clean_session
+  def clean_browser
     reset_session
     flash[:danger] = simple_format(I18n.t("flash.delete_cookie_data"))
     redirect_to login_path

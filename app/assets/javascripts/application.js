@@ -15,3 +15,16 @@
 //= require rails-ujs
 //= require_tree .
 //= require flatpickr
+
+//delete localstorage with button Delete Browser Memory
+$(document).ready(function() {
+  $('#delete-memory a').click(function(){ 
+    if(confirm("Do you want to delete all the data of all users of this website from your browser-memory?")) {
+      localStorage.clear();
+      alert('You deleted the memory');
+    }
+    else {
+      return false;
+    }
+  });
+});

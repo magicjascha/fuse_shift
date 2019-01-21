@@ -8,7 +8,7 @@
     <%= javascript_include_tag 'application' %>
     <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>        
   </head>
 
   <body>
@@ -28,9 +28,9 @@
               <i class="glyphicon glyphicon-user"></i> Logout
             <% end %>
           </li>
-          <li>
-            <%= link_to clean_session_path do %>
-              <i class="glyphicon glyphicon-trash"></i> Delete Cookie-Data
+          <li id="delete-memory">
+            <%= link_to clean_browser_path, title: 'Extra-security if this is not your own computer. But there is no plain data in your browser-memory anyway.', rel: 'tooltip' do %>
+              <i class="glyphicon glyphicon-trash"></i> Delete Browser-Memory
             <% end %>
           </li>          
         </ul>

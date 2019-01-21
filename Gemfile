@@ -39,6 +39,7 @@ gem 'bootstrap-sass', '~> 3.3.7'
 #my app
 gem 'validates_timeliness', '~> 5.0.0.alpha3'#datetime-validation
 gem 'jquery-rails'#javascript jquery
+# gem 'jquery-cookie-rails'
 gem 'minitest-rails-capybara'#test
 gem 'aes'#symmetric encryption
 gem 'flatpickr_rails'#jquery-datepicker
