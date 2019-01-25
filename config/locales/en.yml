@@ -117,7 +117,7 @@ en:
 
       You can now start to enter registrations.
     delete_cookie_data: |
-      The data that was saved in your cookie is deleted. We still have your encrypted registrations.
+      The data that was saved in your browser is deleted. We still have your encrypted registrations.
     
       You can't see the registration data itself anymore, but you can still identify single registrations by their IDs. Look the IDs up in your emails to connect them with names.
         

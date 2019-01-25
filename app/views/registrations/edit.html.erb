@@ -6,6 +6,7 @@
       alert("Your browser doesn't remember the (encrypted) data for this registration.\n\nIf you created the registration from another computer (or browser), consider to return there for changing it. If you update now we delete the browser-memory for this registration.\n\nTo identify a registration without browser-memory look up the ID in your old emails.")
       $("[type='text']").attr("placeholder", "as before");
       $('*[name="registration[email]"]').text("[as before]");
+      $("#memory_loss").val("before last time")
       }
     else {
       let local_registration = {};
@@ -21,7 +22,7 @@
         success: function (data, textStatus, jqXHR) {
           let hashed_email = data[0][0];
           let registration = data[0][1];
-          //If memory loss of localstorgae was last time, give an alert, and fill in with "as before"
+          //If memory loss of localstorgae was last time, give an alert, make background-placeholder "as before" for fields
           if (registration.memory_loss == "last time"){
             localStorage.removeItem(hashed_email);
             alert("Last time you changed this registration from another computer (or browser). Your browser-memory for this registration is deleted.", 'Explanation');
@@ -30,7 +31,7 @@
             $("#memory_loss").val("before last time") 
           }
           else {
-            //If memory loss of localstorgae was before last time, in with "as before"
+            //If memory loss of localstorage was before last time, make background-placeholder "as before" for inputs which don't have updated information
             if (registration.memory_loss == "before last time") {             
               $("[type='text']").attr("placeholder", "as before");
               $('*[name="registration[email]"]').text("[as before]");
@@ -53,6 +54,7 @@
             $('*[name="registration[email]"]').val(registration.email);
           }
           console.log("name", registration.name);
+          console.log("name", registration.memory_loss);
           console.log("changed_on", registration.changed_on);
         }
       });

@@ -5,6 +5,7 @@ feature "Register" do
   def setup
     #logged in
     Capybara.current_driver = Capybara.javascript_driver
+
 #     Capybara.current_driver = :selenium
     @contact_persons_email = "maja.the.contact@mail.de"
     contact_person = create_confirmed_contact_person(@contact_persons_email)
@@ -75,30 +76,50 @@ feature "Register" do
     #check if the edit-form is filled in
     assert_equal find_field('Name').value, registration.name
   end
- 
-#Fix test when decided if session-delete is replaced with local-storage-delete
-#   scenario "delete session" do
+
+#not working because js-alert can't be captured
+#   scenario "delete browser-memory" do
 #     #register
 #     registration = build(:registration)
 #     fill_in 'Name', with: registration.name
 #     fill_in 'Email', with: registration.email
-#     fill_in 'Arrival', with: registration.start
-#     fill_in 'Departure', with: registration.end
+#     page.execute_script("$('#registration_start').val('#{registration.start}')")
+#     page.execute_script("$('#registration_end').val('#{registration.end}')")
 #     click_button 'Submit'
 #     #check session-fill in on edit-page
 #     visit "/registrations/#{registration.hashed_email}"
 #     assert_equal find_field('Name').value, registration.name
-#     #delete session
-#     click_link 'Delete Cookie-Data'
-#     #check logout
-#     assert_equal login_path, current_path
-#     #login
-#     fill_in 'Email', with: @contact_persons_email
-#     click_button 'Submit'
+# 
+#     #delete localstorage and refresh page
+#     page.execute_script 'localStorage.clear()'
+# 
+# #     page.refresh
+# #     byebug
+# #     wait = Selenium::WebDriver::Wait.new ignore: Selenium::WebDriver::Error::NoSuchAlertError
+# # #     wait = Selenium::WebDriver::Wait.new ignore: Selenium::WebDriver::Error::NoAlertPresentError
+# #     alert = wait.until { page.driver.browser.switch_to.alert }
+# #     alert.accept
+# #     page.refresh
+# 
+#     page.refresh
+#     
+# #     page.driver.findElement(By.xpath("//input[@name='Explanation']")).sendKeys("OK").accept()
+# 
+# #     page.evaluate_script('window.alert = function() { return true; }')
+# #     page.refresh('Remove')
+# #     accept_alert do
+# # #       click_link 'Delete Browser-Memory'
+# #       page.refresh
+# #     end
+# #     page.refresh
+# #     sleep 1.second
+# 
 #     #check if registration data is deleted
 #     visit "/registrations/#{registration.hashed_email}"
 #     page.assert_selector('h1', text: "Edit registration with ID")
 #     assert_no_text registration.name
+#     
 #   end
+
   
 end
