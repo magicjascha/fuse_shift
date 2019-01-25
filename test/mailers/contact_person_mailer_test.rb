@@ -9,7 +9,7 @@ class ContactPersonMailerTest < ActionMailer::TestCase
     @contact_person = build(:contact_person, :email_hashed, email: contact_persons_email)
     #check email from mailer
     email = ContactPersonMailer.confirm(@contact_person, contact_persons_email)
-    #check email adresses and suject
+    #check email addresses and suject
     assert_equal ["no-reply@festival-registration.de"], email.from
     assert_equal [contact_persons_email], email.to
     assert_equal I18n.t("mail.contact_person_confirm.subject"), email.subject

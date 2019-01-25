@@ -38,7 +38,7 @@ feature "Login" do
     click_button 'Submit'
     #no redirect to registerpage
     assert_equal login_path, current_path
-    page.must_have_content("Check your email-account to confirm your email-adress.")
+    page.must_have_content("Check your email-account to confirm your email-address.")
   end
   
   scenario "login with unknown email doesn't log in" do
@@ -50,7 +50,7 @@ feature "Login" do
     click_button 'Submit'
     #no redirect to registerpage
     assert_equal login_path, current_path
-    page.must_have_content("Check your email-account to confirm your email-adress.")
+    page.must_have_content("Check your email-account to confirm your email-address.")
   end
   
 end

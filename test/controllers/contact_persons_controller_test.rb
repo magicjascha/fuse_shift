@@ -41,7 +41,7 @@ class ContactPersonsControllerTest < ActionDispatch::IntegrationTest
     assert_equal login_path, path
   end
   
-  test "unknown email-adress login sends confirm-email" do
+  test "unknown email-address login sends confirm-email" do
     #check if email was sent
     assert_difference 'ActionMailer::Base.deliveries.size', +1 do
       post login_path, params: { contact_person: {hashed_email: "unknown@email.de" } }
@@ -55,7 +55,7 @@ class ContactPersonsControllerTest < ActionDispatch::IntegrationTest
     assert_equal login_path, path
   end
   
-  test "unconfirmed email-adress login sends confirm-email" do
+  test "unconfirmed email-address login sends confirm-email" do
     email = "unconfirmed@mail.de"
     #build and save record with confirmed: nil
     build(:contact_person, :email_hashed, email: email).save(validate: false)
