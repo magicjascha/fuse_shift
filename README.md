@@ -1,64 +1,50 @@
-# README
+# FuseShift
 
-Still Missing:
+This app was constructed for data-collection with high security needs. 
 
-Stuff for setting up the app in production
+## Encryption
+The data submitted by the users is saved assymmetrically encrypted on the server. Since only the public key resides on the computer, it can only be decrypted after downloading it to a private computer, where the private key resides.
 
-generate key and iv with
-openssl enc -aes-256-cbc -k secret -P -md sha1
+To enable the users to look at submitted data nevertheless, a symmetrically encrypted copy of the data is saved in the browser's localstorage. It can only be decrypted when the browser communicated with the app.
 
+## Who submits what?
 
-1. Registration App:
+There are users "contact people" which can submit several people's data-sets "registrations". They need to login in order to do so. This happens in two steps: 
+1. with an http-authentication-login
+2. simply typing in their email-adress without any further password-authentication. The email-adress needs to be confirmed at the first login.
 
-IN REGISTRATIONS:
-* hashed-email: correct ugly small mistakes in the validation-message for emails, originating from validating the email with attribute hashed-email not the email itself: 
-  * email-field should be red, when invalid
-  * "email has already been taken" instead of "Hashedemail has already been taken".
-* attributes shifts and languages
-* some validations
-* tests
+-> The http-authentication-logins need to be given to the users through other secure ways. It is assumed that several people with the same http-authentication-login don't have an interest to manipulate the other users data.
 
-OTHER TASKS
+As the app collects data for putting up a shift plan,the datafields for each registration are: Name, Shortname, Email, Cellphone Number, Is it a Friend?, Languages, Arrival, Departure, Comment, Contact Person's Email, Contact Person's City.
+- Name, Email, Arrival, Departure are mandatory
+- Contact person's city is filled automatically by the http-authentication-username
+- Contact Person's email is filled automatically by the the user's login
 
-ONLY ADMIN-ACCESS
-* input shifts
-* upload public key (maybe not)
-* download data
+## Email-Confirmations
+After the contact person/user submits a registration, the contact person, as well as the registered person obtain emails with the submitted data. The registered person needs to confirm their email-adress.
 
-Notes: One user has to be able to make several registrations
+## Customization
+Almost all text can be altered by making changes in config/locale.en
+This concerns the text of the info-box as well as all labels and helptexts of the input-fields.
 
-LATER:
-* action for adjusting labels and helptext for the input-fields
+## Configuration
+in config/environments/production.rb in the first lines:
+ 
+* The public key for the asymmteric encryption must be placed under following path 'config/keys/public.dev.pem' or the path in the variable config.x.pem customized
+  ```ruby
+  config.x.pem = File.read('config/keys/public.dev.pem')```ruby
 
+* The key for the symmteric encryption must be placed under following path 'config/keys/symkey.txt' or the path in the variable onfig.x.symkey customized
+  ```ruby
+  config.x.symkey = IO.readlines("config/keys/symkey.txt").map{|line| line.chomp("\n").split("=")}.select{|x| x[0]=="key"}[0][1]```ruby
 
-2. Evalutation App
-....
+* The http-authentication-login must be ........[change]
+* There must be entered a start date and end date for the schedule and a registration deadline.
+  ```ruby
+  config.x.festival_start = DateTime.parse("2018-06-20 06:00:00")
+  config.x.festival_end = DateTime.parse("2018-07-10 18:00:00")
+  config.x.deadline = DateTime.parse("2018-04-15 10:30:14")```ruby
 
-DONE:
-* registration
-* encrpytion
-* hashed email for id
-* edit-view
-
-
-
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* The admin should leave an email, the users can turn to for errors
+  ```ruby
+  config.x.admin_email = 'festival_help@mail.de'```ruby

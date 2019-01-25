@@ -22,12 +22,13 @@
     <div class="col-sm-8">
     <% if action_name == "new" or action_name == "create" %>
       <%= f.text_field :email, class: 'form-control' %>      
+      <small id="emailHelp" class="form-text text-muted"><%=t("form.email.help")%></small>
     <% else %>
       <div id="editpage_email" name='registration[email]' type="text" class="form-control-static"></div>
       <%= f.hidden_field :email %>   
       <input type="hidden" id="memory_loss" name="memory_loss" />
+      <small id="emailHelp" class="form-text text-muted"><%=t("form.email.help-edit")%></small>
     <% end %>
-      <small id="emailHelp" class="form-text text-muted"><%=t("form.email.help")%></small>
     </div>
   </div>
 

@@ -164,6 +164,7 @@ en:
     email:
       label: ""
       help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."
+      help-edit: "You can't change the email-adress. Please delete the registration and make a new one."
     phonenumber:
       label: ""
       help: ""
