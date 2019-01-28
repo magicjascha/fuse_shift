@@ -1,7 +1,7 @@
 class ContactPersonsController < ApplicationController
   include ActionView::Helpers::TextHelper
   
-  if Rails.env.test? || Rails.env.development?
+  if Rails.env.test? #|| Rails.env.development?
     before_action {|controller| session[:city] = "testCity"} 
   else
     before_action :authenticate
