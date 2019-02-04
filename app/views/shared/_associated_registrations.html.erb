@@ -36,7 +36,8 @@
 </script>
 
 <h4>You registered <%= pluralize(associated_registrations.length, "person") %>:</h4>
-<table class="text-left table-hover">
+<div class="table-wrapper">
+<table class="text-center table-hover">
   <tr>
     <th><div class="helptext"><span class="helptexttext">If the registration-data was deleted from your browser, you can you can look it up in your emails with this ID.</span>ID</div></th>
     <th><div class="helptext"><span class="helptexttext">Name is not showing if the data in your browser was deleted</span>Name</div></th>
@@ -54,3 +55,4 @@
   </tr>
 <% end %>
 </table>
+</div>
