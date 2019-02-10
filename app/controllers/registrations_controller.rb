@@ -125,6 +125,7 @@ class RegistrationsController < ApplicationController
   
     def registration_params #permits params, downcases email, adds contact_persons email, city and id
       input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :contact_persons_email, :comment, "start", "end")
+      puts "INPUT #{input}"
       r = input
       r[:contact_persons_email] = session[:contact_person]
       r[:city] = session[:city]
