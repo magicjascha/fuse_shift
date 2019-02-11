@@ -88,18 +88,22 @@
       </div>
      <small id="languagesHelp" class="form-text text-muted"><%=t("form.languages.help")%></small>
      <% else %>
-       
           <div class="col-sm-4">
             <%= f.label :german, t("form.languages.german"), class:"control-label col-sm-4" %>
-            <%= f.select(:german, options_for_select([["As before", ""], ["Yes", "1"], ["No", "0"]])) %>
+            <%
+=begin%>
+ <%= f.select(:german, options_for_select([["As before", ""], ["Yes", "1"], ["No", "0"]])) %> 
+<%
+=end%>
+            <%= f.select(:german, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
           </div>
           <div class="col-sm-4">
             <%= f.label :english, t("form.languages.english"), class:"control-label col-sm-4" %>
-            <%= f.select(:english, options_for_select([["As before", ""], ["Yes", "1"], ["No", "0"]])) %>
+            <%= f.select(:english, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
           </div>
           <div class="col-sm-4">
             <%= f.label :french, t("form.languages.french"), class:"control-label col-sm-4" %>
-            <%= f.select(:french, options_for_select([["As before", ""], ["Yes", "1"], ["No", "0"]])) %>
+            <%= f.select(:french, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
           </div>
       <% end %>
   </div>

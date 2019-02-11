@@ -23,6 +23,7 @@ class RegistrationsController < ApplicationController
     @registration.contact_persons_email = session[:contact_person]
   end
   
+  #decrypts symmterically encrypted data in localstorage
   def decrypt
     #decrypt_params[:encrypted_registrations] is an array of records from the localstorage, that should be decrypted. The structure of one item in the array is another array [hashed_email, hash with data].
     response = decrypt_params[:encrypted_registrations].to_h.map do |hashed_email, data|
@@ -125,7 +126,6 @@ class RegistrationsController < ApplicationController
   
     def registration_params #permits params, downcases email, adds contact_persons email, city and id
       input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :contact_persons_email, :comment, "start", "end")
-      puts "INPUT #{input}"
       r = input
       r[:contact_persons_email] = session[:contact_person]
       r[:city] = session[:city]
