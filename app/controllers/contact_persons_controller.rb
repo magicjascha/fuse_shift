@@ -54,13 +54,6 @@ class ContactPersonsController < ApplicationController
       c[:hashed_email].downcase!
       c
     end 
-    
-    def authenticate
-      authenticate_or_request_with_http_digest(I18n.t("website_title")) do |username|
-        session[:city] = username
-        Rails.configuration.x.users[username]
-      end
-    end    
 end
 
 

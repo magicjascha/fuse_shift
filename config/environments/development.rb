@@ -3,22 +3,24 @@ require 'csv'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   
-  #ausserhalb definieren, damit das in den views ist?
-  config.x.pem = File.read('config/keys/public.dev.pem')
-  config.x.symkey = IO.readlines("config/keys/symkey.txt").map{|line| line.chomp("\n").split("=")}.select{|x| x[0]=="key"}[0][1]
-  csv_text = File.read('config/keys/http_auth.csv')
-  csv = CSV.parse(csv_text, :headers => false).to_h
-#   p csv.to_h  
-#   csv.each do |row|
-#     p row
-#     row
-#   end
-  config.x.users = csv
-#   config.x.users = { 'Saarbrücken' => 'pw1', 'Bochum' => 'pw2' }
-  config.x.festival_start = DateTime.parse("2018-06-20 06:00:00")
-  config.x.festival_end = DateTime.parse("2018-07-10 18:00:00")
-  config.x.deadline = DateTime.parse("2018-04-15 10:30:14")
-  config.x.admin_email = 'festival_help@mail.de'
+  config.x.pem = File.read('config/keys/development/public.pem')
+  config.x.symkey = IO.readlines("config/keys/development/symkey.txt").map{|line| line.chomp("\n").split("=")}.select{|x| x[0]=="key"}[0][1]
+  
+  
+  #config.x.auth_users contains users {{'Saarbruecken', 'pw1'},{'Bochum', 'pw2'}, {'Ulm', 'pw3'}}
+  csv_text_http_auth_users = File.read('config/keys/development/http_auth_users.csv')
+  config.x.auth_users = CSV.parse(csv_text_http_auth_users, :headers => false).to_h
+  
+  csv_text_http_auth_admin = File.read('config/keys/development/http_auth_admin.csv')
+  config.x.auth_admin = CSV.parse(csv_text_http_auth_admin, :headers => false).to_h
+ 
+  csv_text_config_data = File.read('config/keys/development/config_data.csv')
+  config_data_hash = CSV.parse(csv_text_config_data, :headers => false).to_h
+  config.x.website_title = config_data_hash["Website Title"]
+  config.x.festival_start = DateTime.parse(config_data_hash["Festival Start"])
+  config.x.festival_end = DateTime.parse(config_data_hash["Festival End"])
+  config.x.deadline = DateTime.parse(config_data_hash["Deadline"])
+  config.x.admin_email = config_data_hash["Admin Email"]
   
   #for timeliness gem (compare datetime-values delivered as strings)
   config.use_plugin_parser = true

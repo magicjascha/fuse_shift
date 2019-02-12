@@ -31,10 +31,7 @@
 
 en:
 
-  #affects also http-authentication-dialogue
-  website_title: "FuseShift"
-
-  #uncomment sidebar block if you don't have infos.
+#  uncomment sidebar block if you don't have infos.
   sidebar:
     info_html: |
       Lorem ipsum dolor sit amet, consectetur 

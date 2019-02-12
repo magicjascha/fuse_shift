@@ -1,15 +1,17 @@
 require 'json'
 require 'aes'
 require 'colorize'
+# require 'bcrypt'
 
 class RegistrationsController < ApplicationController
-  if Rails.env.test? || Rails.env.development?
+  if Rails.env.test? #|| Rails.env.development?
     before_action {|controller| session[:city] = "testCity"} 
   else
-    before_action :authenticate, except: :confirm
+    before_action :authenticate, except: [:confirm, :index]
   end
   
-  before_action :check_contact_person, except: :confirm
+  before_action :check_contact_person, except: [:confirm, :index]
+  before_action :auth_admin, only: :index
      
   def index
     scope = Registration
@@ -24,7 +26,7 @@ class RegistrationsController < ApplicationController
   end
   
   def decrypt
-    #decrypt_params[:encrypted_registrations] is an array of records from the localstorage, that should be decrypted. The structure of one item in the array is another array [hashed_email, hash with data].
+    #decrypt_params[:encrypted_registrations] is an array of records from the localstorage, that should be decrypted. Structured like this: [[hashed_email_1, data_hash_1],[hashed_email_2, data_hash_2],...]
     response = decrypt_params[:encrypted_registrations].to_h.map do |hashed_email, data|
       if data!=""
         [hashed_email, JSON.parse(AES.decrypt(data, Rails.configuration.x.symkey))]
@@ -152,12 +154,12 @@ class RegistrationsController < ApplicationController
       Encrypt::Encryptor.new(value, Rails.configuration.x.pem).apply
     end
     
-    def authenticate
-      authenticate_or_request_with_http_digest(I18n.t("website_title")) do |username|
-        session[:city] = username
-        Rails.configuration.x.users[username]
+    def auth_admin
+      authenticate_or_request_with_http_basic(Rails.configuration.x.website_title) do |username, password|
+      Rails.configuration.x.auth_admin.has_key?(username) && BCrypt::Password.new(Rails.configuration.x.auth_admin[username]) == password
       end
-    end      
+    end
+      
     
     def check_contact_person
       redirect_to login_path unless session[:contact_person] and ContactPerson.find_by(hashed_email: digest(session[:contact_person])).confirmed

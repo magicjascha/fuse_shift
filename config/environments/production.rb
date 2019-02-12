@@ -1,11 +1,24 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-#   config.x.pem = File.read('config/keys/public.dev.pem')
-#   config.x.users = { 'Saarbrücken' => 'pw1', 'Bochum' => 'pw2' }
-#   config.x.festival_start = DateTime.parse("2018-06-20 06:00:00")
-#   config.x.festival_end = DateTime.parse("2018-07-10 18:00:00")
-#   config.x.deadline = DateTime.parse("2018-04-15 10:30:14")
-#   config.x.admin_email = 'festival_help@mail.de'
+  
+  config.x.pem = File.read('config/keys/production/public.pem')
+  config.x.symkey = IO.readlines("config/keys/production/symkey.txt").map{|line| line.chomp("\n").split("=")}.select{|x| x[0]=="key"}[0][1]
+  
+  
+  #config.x.auth_users contains users {{'Saarbruecken', 'pw1'},{'Bochum', 'pw2'}, {'Ulm', 'pw3'}}
+  csv_text_http_auth_users = File.read('config/keys/production/http_auth_users.csv')
+  config.x.auth_users = CSV.parse(csv_text_http_auth_users, :headers => false).to_h
+  
+  csv_text_http_auth_admin = File.read('config/keys/production/http_auth_admin.csv')
+  config.x.auth_admin = CSV.parse(csv_text_http_auth_admin, :headers => false).to_h
+ 
+  csv_text_config_data = File.read('config/keys/production/config_data.csv')
+  config_data_hash = CSV.parse(csv_text_config_data, :headers => false).to_h
+  config.x.website_title = config_data_hash["Website Title"]
+  config.x.festival_start = DateTime.parse(config_data_hash["Festival Start"])
+  config.x.festival_end = DateTime.parse(config_data_hash["Festival End"])
+  config.x.deadline = DateTime.parse(config_data_hash["Deadline"])
+  config.x.admin_email = config_data_hash["Admin Email"]
   
   # Code is not reloaded between requests.
   config.cache_classes = true

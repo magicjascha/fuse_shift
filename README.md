@@ -3,7 +3,7 @@
 This app was constructed for data-collection with high security needs. 
 
 ## Encryption
-The data submitted by the users is saved assymmetrically encrypted on the server. Since only the public key resides on the computer, it can only be decrypted after downloading it to a private computer, where the private key resides.
+The data submitted by the users is saved assymmetrically encrypted on the server. Since only the public key resides on the server, it can only be decrypted after downloading it to a private computer, where the private key resides.
 
 To enable the users to look at submitted data nevertheless, a symmetrically encrypted copy of the data is saved in the browser's localstorage. It can only be decrypted when the browser communicated with the app.
 
@@ -28,23 +28,19 @@ Almost all text can be altered by making changes in config/locale.en
 This concerns the text of the info-box as well as all labels and helptexts of the input-fields.
 
 ## Configuration
-in config/environments/production.rb in the first lines:
+You need to generate equivalents for all files in config/environments/keys/development in config/environments/keys/production, EXCEPT the private.pem. This is the private key, which should NOT be on the server in production.
  
-* The public key for the asymmteric encryption must be placed under following path 'config/keys/public.dev.pem' or the path in the variable config.x.pem customized
-  ```
-  config.x.pem = File.read('config/keys/public.dev.pem')```
+* The public key for assymetric encryption public.pem
 
-* The key for the symmteric encryption must be placed under following path 'config/keys/symkey.txt' or the path in the variable config.x.symkey customized
-  ```
-  config.x.symkey = IO.readlines("config/keys/symkey.txt").map{|line| line.chomp("\n").split("=")}.select{|x| x[0]=="key"}[0][1]```
+* The key for the symmetric encryption symkey.txt
 
-* The http-authentication-login must be ........[change]
-* There must be entered a start date and end date for the schedule and a registration deadline.
-  ```ruby
-  config.x.festival_start = DateTime.parse("2018-06-20 06:00:00")
-  config.x.festival_end = DateTime.parse("2018-07-10 18:00:00")
-  config.x.deadline = DateTime.parse("2018-04-15 10:30:14")```
+* The http-authentication-login for normal users http_auth_users.csv
 
-* The admin should leave an email, the users can turn to for errors
-  ```ruby
-  config.x.admin_email = 'festival_help@mail.de'```
+  * The different logins are separated by line.
+  * Username and password are separated by a comma.
+  * Password needs to be hashed with bcrypt BCrypt::Password.create('password')
+  * Only use UTF-8 valid characters.
+
+* Proceed analogous with the http-authentication-login for the admin http_auth_admin.csv
+
+* Specifics for the app: website title, deadline, festival start and end data
