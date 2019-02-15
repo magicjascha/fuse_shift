@@ -119,6 +119,28 @@ class RegistrationsController < ApplicationController
     session[params[:hashed_email]]=nil
     redirect_back(fallback_location: root_path)
   end
+  
+  def shift_confirm_yes
+    if accessed_registration == nil
+      render 'deleted'
+    else
+      @registration = Registration.find_by(hashed_email: params[:hashed_email])
+      @registration.shift_confirmed = true
+      @registration.save(validate: false)
+      render 'shift_confirm_yes'
+    end
+  end
+  
+  def shift_confirm_no
+    if accessed_registration == nil
+      render 'deleted'
+    else
+      @registration = Registration.find_by(hashed_email: params[:hashed_email])
+      @registration.shift_confirmed = false
+      @registration.save(validate: false)
+      render 'shift_confirm_no'
+    end
+  end
 
   private
   

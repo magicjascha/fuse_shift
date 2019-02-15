@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   delete 'registrations/:hashed_email', to: 'registrations#delete'
   get 'registrations/:hashed_email/confirm', to: 'registrations#confirm', as: 'registration_confirm'
   get 'registrations', to: 'registrations#index'
+  get 'registrations/:hashed_email/shift_confirm_yes', to: 'registrations#shift_confirm_yes', as: 'registrations_shift_confirm_yes'
+  get 'registrations/:hashed_email/shift_confirm_no', to: 'registrations#shift_confirm_no', as: 'registrations_shift_confirm_no'
 
   get '/login', to: 'contact_persons#new'
   post 'login', to: 'contact_persons#create'

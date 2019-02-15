@@ -140,6 +140,12 @@ en:
     deleted: 
       headline: "Deleted"
       text: "The registration you tried to access was deleted."
+    shift_confirm_no:
+      headline: "You canceled your shift"
+      body: "This means you won't come to the festival. If you did a mistake and wanted to confirm you can correct that by clicking the other link in your email"
+    shift_confirm_yes: 
+      headline: "You confirmed your shift"
+      body: "If you did a mistake and wanted to cancel your shift you can correct that by clicking the other link in your email."
     update_success:
       headline: "You updated the registration with ID %{id}"
       red_html: | 
