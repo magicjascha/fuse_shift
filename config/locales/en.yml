@@ -107,10 +107,10 @@ en:
   flash:
     update_success: |
       You updated. We sent you an email with the data. You have to forward it yourself to the person.
-    confirm: | 
+    contact_person_confirm: | 
       You confirmed your email-address.
 
-      Editing previous registrations might become a little bit more confusing, if you delete your site data in between. Consider to keep them until the festival.
+      Editing previous registrations will become confusing for you, if you delete your browser-memory in between. We strongly advise you to keep it until the festival.
 
       You can now start to enter registrations.
     delete_cookie_data: |

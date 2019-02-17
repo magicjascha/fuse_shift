@@ -34,17 +34,18 @@ class ContactPersonsController < ApplicationController
     redirect_to login_path
   end
   
-  def clean_browser
-    reset_session
-    flash[:danger] = simple_format(I18n.t("flash.delete_cookie_data"))
-    redirect_to login_path
-  end
+  #disabled feature
+#   def clean_browser
+#     reset_session
+#     flash[:danger] = simple_format(I18n.t("flash.delete_cookie_data"))
+#     redirect_to login_path
+#   end
   
   def confirm
     @contact_person = ContactPerson.find_by(hashed_email: params[:hashed_email])
     @contact_person.confirmed = true
     @contact_person.save(validate: false)
-    flash[:danger] = simple_format(I18n.t("flash.confirm"))
+    flash[:danger] = simple_format(I18n.t("flash.contact_person_confirm"))
     redirect_to root_url
   end
   
