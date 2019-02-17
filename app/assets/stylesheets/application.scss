@@ -92,52 +92,6 @@ th {
     justify-content: center;
 }
 
-/* helptext container */
-.helptext {
-    position: relative;
-    display: inline-block;
-}
-
-/* helptext text */
-.helptext .helptexttext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-
-    /* Position the helptext text */
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-
-    /* Fade in helptext */
-    opacity: 0;
-    transition: opacity 1s;
-}
-
-/* helptext arrow */
-.helptext .helptexttext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-}
-
-/* Show the helptext text when you mouse over the helptext container */
-.helptext:hover .helptexttext {
-    visibility: visible;
-    opacity: 1;
-}
-
 @media (min-width: 768px) {
     .side-boxes {
         position: fixed;

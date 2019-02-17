@@ -4,7 +4,7 @@ require 'colorize'
 # require 'bcrypt'
 
 class RegistrationsController < ApplicationController
-  if Rails.env.test? #|| Rails.env.development?
+  if Rails.env.test? || Rails.env.development?
     before_action {|controller| session[:city] = "testCity"} 
   else
     before_action :authenticate, except: [:confirm, :index]
@@ -107,7 +107,7 @@ class RegistrationsController < ApplicationController
     else 
       @registration = Registration.find_by(hashed_email: params[:hashed_email])
       @registration.confirmed = true
-      @registration.save(validate: false)
+      @registration.save(validate: false, touch: false)
       render 'confirm'
     end
   end
