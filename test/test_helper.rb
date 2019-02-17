@@ -51,7 +51,7 @@ class ActiveSupport::TestCase
   end
   
   def get_input_hash(registration)
-    data = registration.attributes.symbolize_keys().select{|key,value| ![:hashed_email, :contact_person_id, :confirmed, :created_at, :updated_at].include?(key)}
+    data = registration.attributes.symbolize_keys().select{|key,value| ![:hashed_email, :contact_person_id, :confirmed, :shift_confirmed, :created_at, :updated_at].include?(key)}
   end
   
 end

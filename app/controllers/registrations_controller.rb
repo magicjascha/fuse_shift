@@ -126,7 +126,7 @@ class RegistrationsController < ApplicationController
     else
       @registration = Registration.find_by(hashed_email: params[:hashed_email])
       @registration.shift_confirmed = true
-      @registration.save(validate: false)
+      @registration.save(validate: false, touch: false)
       render 'shift_confirm_yes'
     end
   end
@@ -137,7 +137,7 @@ class RegistrationsController < ApplicationController
     else
       @registration = Registration.find_by(hashed_email: params[:hashed_email])
       @registration.shift_confirmed = false
-      @registration.save(validate: false)
+      @registration.save(validate: false, touch: false)
       render 'shift_confirm_no'
     end
   end
@@ -189,9 +189,12 @@ class RegistrationsController < ApplicationController
     end
     
     def displayed_data(id)
+      #get data from input, since record is encrypted
       data = registration_params
+      #get id and updated_at from record
       data[:id]=id      
       data[:changed_on] = Registration.find_by(id: id).updated_at
+      #information about contact_person_id is not relevant for users.
       data.delete(:contact_person_id)
       data
     end

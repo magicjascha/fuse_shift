@@ -1,6 +1,13 @@
-# require 'test_helper' #why does this not work to replace hasher and encrypt/encryptor as in registration process test
 require 'hasher'
 require 'encrypt/encryptor'
+
+# build(:registration_input) -> registration with the must-have-input of the app
+# build(:registration_input, :sequence) -> if the registration is built several times, each time another name and email adress is used. 
+# build(:registration_input, :all_fields) -> registration with all input fields filled (not encrypted), but without hashed_email, contact_persons_email, city)
+
+#:registration is built on top of :registration_input and has also the options :all_fields and :sequence
+# build(:registration) -> registration with hashed_email, contact_persons_email, city, non encrypted record
+# build(:registration, :encrypted) -> encrypted complete registration.
 
 FactoryBot.define do
   
@@ -28,7 +35,7 @@ FactoryBot.define do
   end
   
   factory :registration, parent: :registration_input do |f|    
-    f.association :contact_person, :confirmed, strategy: :build #with build no record is created. With create both records are created.
+    f.association :contact_person, :confirmed, strategy: :build #with build no record is created. With create both records (contact_person and registration) are created.
     f.contact_persons_email { contact_person.hashed_email}
     f.city { "testCity" }
     f.hashed_email { Hasher.digest(email.downcase) }
@@ -55,6 +62,7 @@ FactoryBot.define do
   end
   
   factory :contact_person do
+    #transients are not part of the model. "email" is just needed to build the attribute hashed_email
     transient do
       email { "koko@mail.de" }
     end
