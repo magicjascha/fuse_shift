@@ -107,7 +107,7 @@ class RegistrationsController < ApplicationController
     else 
       @registration = Registration.find_by(hashed_email: params[:hashed_email])
       @registration.confirmed = true
-      @registration.save(validate: false)
+      @registration.save(validate: false, touch: false)
       render 'confirm'
     end
   end
