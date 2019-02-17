@@ -4,7 +4,7 @@ require 'colorize'
 # require 'bcrypt'
 
 class RegistrationsController < ApplicationController
-  if Rails.env.test? #|| Rails.env.development?
+  if Rails.env.test? || Rails.env.development?
     before_action {|controller| session[:city] = "testCity"} 
   else
     before_action :authenticate, except: [:confirm, :index]
