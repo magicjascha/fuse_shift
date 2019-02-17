@@ -22,3 +22,9 @@
 
 .byebug_history
 *.kate-swp
+
+# Ignore the file for customizing the locale.
+/config/locales/en_customize.yml
+#Ignore production config
+/config/keys/production/*
+/config/environments/production.rb

@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   include Hasher
   include RegistrationsHelper
   protect_from_forgery with: :exception
+  before_action :set_locale
+ 
+  def set_locale
+    I18n.locale = :en_customize || :en
+  end
   
   private
     def authenticate

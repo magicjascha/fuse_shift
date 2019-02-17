@@ -20,12 +20,28 @@ As the app collects data for putting up a shift plan,the datafields for each reg
 - Contact person's city is filled automatically by the http-authentication-username
 - Contact Person's email is filled automatically by the the user's login
 
+There is an additional confirmation process associated with the property "shift_confirmed" in the model of registration. The registered people should receive links after their shifts were calculated on a private computer outside this app. With these links they can either confirm or cancel their shift. The links are...
+[URL]/registrations/[hashed_email]/shift_confirm_yes (confirm, saves 1 in shift_confirmed)
+[URL]/registrations/[hashed_email]/shift_confirm_no (cancel, saves 0 in shift_confirmed)
+... where [hashed_email] is the 256-bit SHA (SHA2 family) of the email-adress. In ruby it would be calculated with Digest::SHA2.hexdigest(email).
+
+
 ## Email-Confirmations
 After the contact person/user submits a registration, the contact person, as well as the registered person obtain emails with the submitted data. The registered person needs to confirm their email-adress.
 
 ## Customization
-Almost all text can be altered by making changes in config/locale.en
-This concerns the text of the info-box as well as all labels and helptexts of the input-fields.
+Almost all text can be altered. This concerns the text of the info-box and headlines as well as all labels and helptexts of the input-fields.
+
+- Make a file in config/locales/en_customize.yml 
+  It will not be touched by updates (as opposed to en.yml)
+- Search for the text you want to replace in config/locales/en.yml, look up the associated hierarchy of labels below the first level "en:" (which is replaced by "en_customize:" in this file).
+- Reproduce the label-hierarchy here as given in the example below. This example would replace the headline of the new registrations page "Register" with "This is a new headline".
+```
+en_customize:
+  views:
+    new:
+      headline: "This is a new headline"
+```
 
 ## Configuration
 You need to generate equivalents for all files in config/environments/keys/development in config/environments/keys/production, EXCEPT the private.pem. This is the private key, which should NOT be on the server in production.
