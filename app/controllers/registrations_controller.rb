@@ -11,11 +11,24 @@ class RegistrationsController < ApplicationController
   end
   
   before_action :check_contact_person, except: [:confirm, :index]
-  before_action :auth_admin, only: :index
+  #before_action :auth_admin, only: :index
      
   def index
     scope = Registration
-    scope = params[:confirmed] ? scope.where(confirmed: true) : scope.all
+    if params[:confirmed]=="true"
+      scope = scope.where(confirmed: true)
+    elsif params[:confirmed]=="false"
+      scope = scope.where(confirmed: [nil,false])
+    elsif params[:shift_confirmed]=="true"
+      scope = scope.where(shift_confirmed: true)
+    elsif params[:shift_confirmed]=="false"
+      scope = scope.where(shift_confirmed: [nil,false]) 
+    else
+      scope = scope.all
+    end
+    puts "flag".red
+    p params
+#     scope = params[:confirmed] ? scope.where(confirmed: true) : scope.all
     render json: scope.as_json
   end
   
