@@ -54,12 +54,12 @@
         <div class="side-boxes">
           <div class= "row alert info-box alert-warning text-center">
             <h2>Deadline</h2>
-            <h3><%= l(Rails.configuration.x.deadline, format: :short_datetime) %></h3>
+            <h3><%= l(Rails.configuration.x.deadline, format: :datetime1) %></h3>
           </div>
-          <% unless t("sidebar.info").empty? || t("sidebar.info_html")=="<span class=\"translation_missing\" title=\"translation missing: en.sidebar.info_html\">Info</span>"%>
+          <% unless t("sidebar.info_html").empty? %>
             <div class= "row alert alert-info info-box">
               <h2>Info</h2>
-              <p><%= simple_format(t("sidebar.info_html", link1: locale_link("sidebar.link1"), link2: locale_link("sidebar.link2"))) %></p>
+              <p><%= simple_format(t("sidebar.info_html", info_link1: locale_link("sidebar.info_link1"), info_link2: locale_link("sidebar.info_link2"))) %></p>
             </div>
           <% end %>
         </div>

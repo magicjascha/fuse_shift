@@ -19,7 +19,7 @@ module RegistrationsHelper
   #change formats of registration values in mails and views
   def better_read(value)
     if value.respond_to?(:strftime)
-      l(value, format: :short_datetime)
+      l(value, format: :datetime1)
     elsif value == "1" or value==true
       "Yes"
     elsif value == "0" or value==false or value==nil

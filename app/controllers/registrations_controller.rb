@@ -66,7 +66,7 @@ class RegistrationsController < ApplicationController
       @saved_registration = Registration.new(params_encrypt(add_hashed_email(registration_params)))
       @saved_registration.save(validate: false)
       #success message in flash with link to new registration
-      flash[:danger] = ActionController::Base.helpers.simple_format(t("views.create_success.red_html", name: @registration.name, registration_link: ActionController::Base.helpers.link_to(t("views.create_success.registration_link_text"), root_url)))
+      flash[:danger] = ActionController::Base.helpers.simple_format(t("flash.create_success", name: @registration.name))
       @data = displayed_data(@saved_registration.id) #contains params displayed in emails and saved to localstorage
       #send emails with plain data
       RegistrationMailer.registration_confirm(@registration, @data).deliver_now
@@ -100,7 +100,6 @@ class RegistrationsController < ApplicationController
       @registration.save(validate: false)
       #send email with @data, need memory_loss-info for format
       @data = displayed_data(@registration.id)
-#       byebug
       RegistrationMailer.updated_to_contact_person(@data, !params["memory_loss"].blank?).deliver_now
       #add browser-memory-loss-info to data and save symmetrically encrypted to the localstorage
       @data["memory_loss"] = "before last time" if !params["memory_loss"].blank?

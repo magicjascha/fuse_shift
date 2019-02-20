@@ -2,6 +2,7 @@
   $( document ).ready(function() {
     let hashed_email = <%=@registration.hashed_email.to_json.html_safe %>;
     let encrypted_data = localStorage.getItem(hashed_email);
+    //local-storage for this registration not present
     if (!!encrypted_data == false){
       function getValue() {
         var retVal = prompt("Your browser doesn't remember the (encrypted) data for this registration.\n\nIf you created the registration from another computer (or browser), consider to return there for changing it. If you update now we delete the browser-memory for this registration, which will make editing more confusing for you.\n\nTo identify a registration without browser-memory, look up the ID in your old emails. You can re-enter the name for getting a better overview\n\nIf you understand the consequences of updating this dataset with this browser, type 'I understand' : ");
@@ -14,6 +15,7 @@
       $('*[name="registration[email]"]').text("[as before]");
       $("#memory_loss").val("before last time")
       }
+    //localstrorage-memory present
     else {
       let local_registration = {};
       local_registration[hashed_email] = JSON.parse(encrypted_data);
@@ -34,8 +36,9 @@
             alert("Last time you changed this registration from another computer (or browser). Your browser-memory for this registration is deleted.", 'Explanation');
             $("[type='text']").attr("placeholder", "as before");
             $('*[name="registration[email]"]').text("[as before]");
-            $("#memory_loss").val("before last time") 
+            $("#memory_loss").val("before last time") //update localstorage about memory-loss information via hidden formfields, if submitted
           }
+          //No memory-loss or memory loss before last time.
           else {
             //If memory loss of localstorage was before last time, make background-placeholder "as before" for inputs which don't have updated information
             if (registration.memory_loss == "before last time") {             
@@ -43,20 +46,21 @@
               $('*[name="registration[email]"]').text("[as before]");
               $("#memory_loss").val("before last time") 
               }
+            //fill form with localstorage-memory
             $("[name='registration[name]']").val(registration.name);
             $("[name='registration[shortname]']").val(registration.shortname);
             $("[name='registration[phonenumber]']").val(registration.phonenumber);
             if (registration.email){
               $('*[name="registration[email]"]').text(registration.email);
             }
-            $("#registration_is_friend_"+registration.is_friend).attr("checked", "checked");                
+            $("[name='registration[is_friend]']").val(registration.is_friend);  
             $("[name='registration[german]']").val(registration.german);
             $("[name='registration[english]']").val(registration.english);
             $("[name='registration[french]']").val(registration.french);
             $("[name='registration[comment]']").val(registration.comment);
             $("[name='registration[start]']").val(registration.start);
             $("[name='registration[end]']").val(registration.end);
-            //post hidden information from localstorage 
+            //submit email from localstorage as hidden form-input
             $('*[name="registration[email]"]').val(registration.email);
           }
           console.log("name", registration.name);

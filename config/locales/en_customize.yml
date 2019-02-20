@@ -1,4 +1,7 @@
 en_customize:
   views:
     new:
-      headline: #"This is a new headline"
+      headline:
+  
+  sidebar:
+    info_html: 

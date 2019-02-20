@@ -31,20 +31,72 @@
 
 en:
 
-#  uncomment sidebar block if you don't have infos.
   sidebar:
+    #info block will not be displayed if info_html is an empty string ""
     info_html: |
       Lorem ipsum dolor sit amet, consectetur 
       
       adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.
 
-      %{link1}
+      %{info_link1}
 
-      Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    link1: "https://www.example.com"
-    link1_text: "Example Link"
-    link2: "https://www.example.com"
-    link2_text: "Second example Link"
+      Quis aute iure reprehenderit in %{info_link2} velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    info_link1: "https://www.example.com"
+    info_link1_text: "Example Link"
+    info_link2: "https://www.example.com"
+    info_link2_text: "voluptate"
+    
+  views:
+    new:
+      headline: "Register"
+      above_form: "Availability of your city-group's helper for shifts at the festival"
+    confirm:
+      headline: "You confirmed your registration"
+      body: "The registration process is finished. We will write you an email, if and which shifts you got."
+    edit:
+      headline: "Edit registration with ID %{id}"
+      above_form: ""
+    deleted: 
+      headline: "Deleted"
+      text: "The registration you tried to access was deleted."
+    shift_confirm_no:
+      headline: "You canceled your shift"
+      body: "This means you won't come to the festival. If you did a mistake and wanted to confirm you can correct that by clicking the other link in your email"
+    shift_confirm_yes: 
+      headline: "You confirmed your shift"
+      body: "If you did a mistake and wanted to cancel your shift you can correct that by clicking the other link in your email."
+
+  form:      
+    name:
+      help: "The name of the person, you want to register"
+    shortname:
+      help: ""
+    email:
+      help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."
+      help-edit: "You can't change the email-adress. Please delete the registration and make a new one."
+    phonenumber:
+      help: ""
+    is_friend:
+      help: "...which means not a member"
+    languages:
+      label: "Languages"
+      help: "Languages person speaks"
+      help-edit: "Languages person speaks"
+    start:
+      help: 'Enter when the person can start to work after arriving. The first possible shift starts at %{festival_start}'
+    end:
+      help: "Enter when the person needs to be done with work before leaving. The last possible shift ends at %{festival_end}"
+    contact_persons_email:
+      help: "This is yours"
+    city:
+      help: "Your city"
+    comment:
+      help: "Optional additional information"
+    submit:
+      new: "Submit Registration"
+      create: "Submit Registration"
+      edit: "Update Registration"
+      update: "Update Registration"
 
   mail:
     contact_person_confirm:
@@ -104,7 +156,9 @@ en:
         you changed the registration with ID %{id}. Changed data (if empty as before)...
       below_data: "The concerned person doesn't get an email. You will have to forward this email yourself."
   
-  flash:
+  flash: #When an action is successful (for example after submitting) these messages are added to the top of the next page.
+    create_success: | 
+      You registered %{name} for the festival. We sent both of you an email with the data. %{name} has to use the confirm link to complete the registration.
     update_success: |
       You updated. We sent you an email with the data. You have to forward it yourself to the person.
     contact_person_confirm: | 
@@ -113,95 +167,13 @@ en:
       Editing previous registrations will become confusing for you, if you delete your browser-memory in between. We strongly advise you to keep it until the festival.
 
       You can now start to enter registrations.
-    delete_cookie_data: |
-      The data that was saved in your browser is deleted. We still have your encrypted registrations.
-    
-      You can't see the registration data itself anymore, but you can still identify single registrations by their IDs. Look the IDs up in your emails to connect them with names.
-        
-  views:
-    new:
-      headline: "Register"
-      above_form: "Availability of your city-group's helper for shifts at the festival"
-    create_success:
-      headline: "You registered %{name} for the festival"
-      red_html: | 
-        You registered %{name} for the festival. We sent both of you an email with the data. %{name} has to use the confirm link to complete the registration.
-        
-        Do you want to edit the data below or make another %{registration_link}?
-      registration_link_text: "registration"
-      green_above_data_html: "%{name} was registered with the data:"
-      green_below_data_html: ""
-    confirm:
-      headline: "You confirmed your registration"
-      body: "The registration process is finished. We will write you an email, if and which shifts you got."
-    edit:
-      headline: "Edit registration with ID %{id}"
-      above_form: ""
-    deleted: 
-      headline: "Deleted"
-      text: "The registration you tried to access was deleted."
-    shift_confirm_no:
-      headline: "You canceled your shift"
-      body: "This means you won't come to the festival. If you did a mistake and wanted to confirm you can correct that by clicking the other link in your email"
-    shift_confirm_yes: 
-      headline: "You confirmed your shift"
-      body: "If you did a mistake and wanted to cancel your shift you can correct that by clicking the other link in your email."
-    update_success:
-      headline: "You updated the registration with ID %{id}"
-      red_html: | 
-        We sent you an email with the data. You have to forward it yourself to the person.
-        
-        Still not right? You can %{edit_link} again.
-      edit_link_text: "edit"
-      green_above_data_html: "Data:"
-      green_below_data_html: ""
       
-   
-  form:      
-    name: 
-      label: ""
-      help: "The name of the person, you want to register"
-    shortname:
-      label: ""
-      help: ""
-    email:
-      label: ""
-      help: "The registration has to be confirmed via email and the shift will be sent there. So it should work and the person should be checking their account."
-      help-edit: "You can't change the email-adress. Please delete the registration and make a new one."
-    phonenumber:
-      label: ""
-      help: ""
-    is_friend:
-      label: ""
-      help: "...which means not a member"
-    languages:
-      label: "Languages"
-      german: "German"
-      english: "English"
-      french: "French"
-      help: "Languages person speaks"
-    start:
-      label: ""
-      help: 'Enter when the person can start to work after arriving. The first possible shift starts at %{festival_start}'
-    end:
-      label: ""
-      help: "Enter when the person needs to be done with work before leaving. The last possible shift ends at %{festival_end}"
-    contact_persons_email:
-      label: ""
-      help: "This is yours"
-    city:
-      label: ""
-      help: "Your city"
-    comment:
-      label: "Comment"
-      help: "Optional additional information"
-    submit:
-      new: "Submit Registration"
-      create: "Submit Registration"
-      edit: "Update Registration"
-      update: "Update Registration"
+  time:
+    formats:
+      datetime1: '%d. %B %Y, %H:%M'
+      datetime2: '%Y-%m-%d %H:%M'
   
-# affects labels in the emails, error messages and views. Also the form if not replaced with the labels in section 'form'.   
+# affects labels in the form, emails and error messages.  
   activerecord:
     attributes:
       contact_person:
@@ -209,7 +181,7 @@ en:
       registration:
         name: "Name"
         email: "Email"
-        hashed_email: "Email" #This should be the same as email.
+        hashed_email: "Email" #This should be the same as email (determines the email-uniqueness-error-message)
         id: "ID"
         shortname: "Shortname"
         phonenumber: "Cellphone Number"
@@ -244,5 +216,5 @@ en:
       
   time:
     formats:
-      short_datetime: '%d. %B %Y, %H:%M'
-      blub: '%Y-%m-%d %H:%M'
+      datetime1: '%d. %B %Y, %H:%M'
+      datetime2: '%Y-%m-%d %H:%M'

@@ -1,7 +1,20 @@
 <%= render 'shared/error_messages' %>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    flatpickr('.flatpickr-input', {
+      enableTime: true,
+      time_24hr: true,
+      minuteIncrement: 30,
+      dateFormat: "Y-m-d H:i",
+      minDate: "<%= I18n.l(Rails.configuration.x.festival_start, format: :datetime2) %>",
+      maxDate: "<%= I18n.l(Rails.configuration.x.festival_end, format: :datetime2) %>",
+    });
+  });
+</script>
+
 <div class="form-group">
-  <%= f.label :name, t(:"form.name.label"), class:"control-label col-sm-4"%>
+  <%= f.label :name, class:"control-label col-sm-4"%>
   <div class="col-sm-8">
     <%= f.text_field :name, class: 'form-control' %>
     <small id="nameHelp" class="form-text text-muted"><%=t(:"form.name.help")%></small>
@@ -9,7 +22,7 @@
 </div>
 
 <div class="form-group">
-  <%= f.label :shortname, t(:"form.shortname.label"), class:"control-label col-sm-4"%>
+  <%= f.label :shortname, class:"control-label col-sm-4"%>
   <div class="col-sm-8">
     <%= f.text_field :shortname, class: 'form-control' %>
     <small id="shortnameHelp" class="form-text text-muted"><%=t(:"form.shortname.help")%></small>
@@ -18,7 +31,7 @@
 
 
   <div class="form-group">
-    <%= f.label :email, t("form.email.label"),class:"control-label col-sm-4" %>
+    <%= f.label :email, class:"control-label col-sm-4" %>
     <div class="col-sm-8">
     <% if action_name == "new" or action_name == "create" %>
       <%= f.text_field :email, class: 'form-control' %>      
@@ -33,7 +46,7 @@
   </div>
 
 <div class="form-group">
-  <%= f.label :phonenumber, t("form.phonenumber.label"), class:"control-label col-sm-4" %>
+  <%= f.label :phonenumber, class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.text_field :phonenumber, class: 'form-control' %>
     <small id="phonenumberHelp" class="form-text text-muted"><%=t("form.phonenumber.help")%></small>
@@ -41,16 +54,15 @@
 </div>
 
 <div class="form-group">
-    <%= f.label :is_friend, t("form.is_friend.label"), class:"control-label col-sm-4" %>
+    <%= f.label :is_friend, class:"control-label col-sm-4" %>
     <div class="col-sm-8">
       <% if action_name == "new" or action_name == "create" %>
         <div class="checkDiv"><%= f.check_box :is_friend%></div>
       <% else %>
-        <div class="form_row">
-          <%= radio_button("registration", "is_friend", value="1") %> Yes
-          <%= radio_button("registration", "is_friend", value="0") %> No
-          <%= radio_button("registration", "is_friend", "", checked: true) %> As Before
-        </div>
+      <div class="form-row">
+        <%= f.select(:is_friend, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
+      </div>
+
       <% end %>
       <small id="isMemberHelp" class="form-text text-muted"><%=t("form.is_friend.help")%></small>
   </div>
@@ -64,7 +76,7 @@
     <% if action_name == "new" or action_name == "create" %>
       <div class="col-sm-4">
         <div class="form-group">
-          <%= f.label :german, t("form.languages.german"), class:"control-label col-sm-4" %>
+          <%= f.label :german, class:"control-label col-sm-4" %>
           <div class="col-sm-1 checkDiv">
             <%= f.check_box :german%>
           </div>
@@ -72,7 +84,7 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <%= f.label :english, t("form.languages.english"), class:"control-label col-sm-4" %>
+          <%= f.label :english, class:"control-label col-sm-4" %>
             <div class="col-sm-1 checkDiv">
               <%= f.check_box :english%>
             </div>
@@ -80,113 +92,58 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group">
-          <%= f.label :french, t("form.languages.french"), class:"control-label col-sm-4" %>
+          <%= f.label :french, class:"control-label col-sm-4" %>
           <div class="col-sm-1 checkDiv">
             <%= f.check_box :french%>
           </div>
         </div>
       </div>
-     <small id="languagesHelp" class="form-text text-muted"><%=t("form.languages.help")%></small>
-     <% else %>
-          <div class="col-sm-4">
-            <%= f.label :german, t("form.languages.german"), class:"control-label col-sm-4" %>
-            <%
-=begin%>
- <%= f.select(:german, options_for_select([["As before", ""], ["Yes", "1"], ["No", "0"]])) %> 
-<%
-=end%>
-            <%= f.select(:german, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
-          </div>
-          <div class="col-sm-4">
-            <%= f.label :english, t("form.languages.english"), class:"control-label col-sm-4" %>
-            <%= f.select(:english, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
-          </div>
-          <div class="col-sm-4">
-            <%= f.label :french, t("form.languages.french"), class:"control-label col-sm-4" %>
-            <%= f.select(:french, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
-          </div>
-      <% end %>
+      <small id="languagesHelp" class="form-text text-muted"><%=t("form.languages.help")%></small>
+    <% else %>
+      <div class="col-sm-4">
+        <%= f.label :german, class:"control-label col-sm-4" %>
+        <%= f.select(:german, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :english, class:"control-label col-sm-4" %>
+        <%= f.select(:english, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :french, class:"control-label col-sm-4" %>
+        <%= f.select(:french, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
+      </div>
+      <small id="languagesHelpEdit" class="form-text text-muted"><%=t("form.languages.help-edit")%></small>
+    <% end %>
   </div>
 </div>
 
-<%
-=begin%>
- <div class="form-group">
-  <label class="control-label col-sm-4" for="languages">
-    <%= t("form.languages.label") %>
-  </label>
-  <div id="languages" class="col-sm-8">
-    <div class="col-sm-4">
-      <div class="form-group">
-        <%= f.label :german, t("form.languages.german"), class:"control-label col-sm-4" %>
-        <div class="col-sm-1 checkDiv">
-          <%= f.check_box :german%>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="form-group">
-        <%= f.label :english, t("form.languages.english"), class:"control-label col-sm-4" %>
-        <div class="col-sm-1 checkDiv">
-          <%= f.check_box :english%>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <div class="form-group">
-        <%= f.label :french, t("form.languages.french"), class:"control-label col-sm-4" %>
-        <div class="col-sm-1 checkDiv">
-          <%= f.check_box :french%>
-        </div>
-      </div>
-    </div>
-  <small id="languagesHelp" class="form-text text-muted"><%=t("form.languages.help")%></small>
-  </div>
-</div> 
-<%
-=end%>
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    flatpickr('.flatpickr-input', {
-//       allowInput: true,
-      enableTime: true,
-      time_24hr: true,
-      minuteIncrement: 30,
-      dateFormat: "Y-m-d H:i",
-      minDate: "<%= I18n.l(Rails.configuration.x.festival_start, format: :blub) %>",
-      maxDate: "<%= I18n.l(Rails.configuration.x.festival_end, format: :blub) %>",
-    });
-  });
-</script>
-
 <div class="form-group">
-  <%= f.label :start, t(:"form.start.label"), class:"control-label col-sm-4"%>
+  <%= f.label :start, class:"control-label col-sm-4"%>
   <div class="col-sm-8">
     <%= f.text_field :start, class: 'form-control flatpickr-input'%>
-    <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(Rails.configuration.x.festival_start, format: :short_datetime))%></small>
+    <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(Rails.configuration.x.festival_start, format: :datetime1))%></small>
   </div>
 </div>
 
 <div class="form-group">
-  <%= f.label :end, t(:"form.end.label"), class:"control-label col-sm-4"%>
+  <%= f.label :end, class:"control-label col-sm-4"%>
   <div class="col-sm-8">
     <%= f.text_field :end, class: 'form-control flatpickr-input'%>
-    <small id="endHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(Rails.configuration.x.festival_end, format: :short_datetime))%></small>
+    <small id="endHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(Rails.configuration.x.festival_end, format: :datetime1))%></small>
   </div>
 </div>
 
 <% if false %>
 <div class="form-group">
-  <%= f.label :start, t("form.start.label"), class:"control-label col-sm-4" %>
+  <%= f.label :start, class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.datetime_select(:start, class: 'form-control', order: [:day, :month, :hour], discard_minute: true, prompt: {day: 'Choose day', month: 'Choose month', hour: "Choose hour"}) %><br>
-    <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(Rails.configuration.x.festival_start, format: :short_datetime))%></small>
+    <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(Rails.configuration.x.festival_start, format: :datetime1))%></small>
   </div>
 </div>
 
 <div class="form-group">
-  <%= f.label :end, t("form.end.label"), class:"control-label col-sm-4" %>
+  <%= f.label :end, class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.datetime_select(:end, class: 'form-control', order: [:day, :month, :hour], discard_minute: true, prompt: {day: 'Choose day', month: 'Choose month', hour: "Choose hour"}) %><br>
     <small id="endHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(Rails.configuration.x.festival_end, format: :short_datetime))%></small>
@@ -196,7 +153,7 @@
 
 
 <div class="form-group">
-  <%= f.label :comment, t("form.comment.label"), class:"control-label col-sm-4" %>
+  <%= f.label :comment, class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <%= f.text_field :comment, class: 'form-control'  %>
     <small id="commentHelp" class="form-text text-muted"><%=t("form.comment.help")%></small>
@@ -204,7 +161,7 @@
 </div>
 
 <div class="form-group">
-  <%= f.label :contact_persons_email, t("form.contact_persons_email.label"), class:"control-label col-sm-4" %>
+  <%= f.label :contact_persons_email, class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <div class="form-control-static"><%= @registration.contact_persons_email %></div>
     <small id="contactPersonHelp" class="form-text text-muted"><%=t("form.contact_persons_email.help")%></small>
@@ -212,7 +169,7 @@
 </div>
 
 <div class="form-group">
-  <%= f.label :city, t("form.city.label"), class:"control-label col-sm-4" %>
+  <%= f.label :city, class:"control-label col-sm-4" %>
   <div class="col-sm-8">
     <div class="form-control-static"><%= @registration.city %></div>
     <small id="cityHelp" class="form-text text-muted"><%=t("form.city.help")%></small>
