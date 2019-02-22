@@ -46,9 +46,24 @@ en_customize:
 ## Configuration
 You need to generate equivalents for all files in config/environments/keys/development in config/environments/keys/production, EXCEPT the private.pem. This is the private key, which should NOT be on the server in production.
  
-* The public key for assymetric encryption public.pem
+* The public key for asymmetric encryption in public.pem
+  Generate a private key "private.pem" on your private computer: 
+  ```
+  Generate openssl genrsa -des3 -out private.pem 2048
+  ```
+  Generate a public key based on that private key:
+  ```
+  openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+  ```
+  Move the public key onto the server into the directory ```/congig/production```
+  Keep the private key on your private computer to use it later for the download with [Fuse Shift Tools](https://github.com/magicjascha/fuse_shift_tools) 
 
-* The key for the symmetric encryption symkey.txt
+  
+* You need a 256-bit-key for the symmteric encryption in ```/config/production/symkey.txt```. E.g. you could generate it with:
+  ```
+  openssl enc -aes-256-cbc -k [secret] -P -md sha1
+  ```
+  where [secret] is some random word, for generating a random key. Don't mind the salt and initilization vector. Just put the key into the txt-file.
 
 * The http-authentication-login for normal users http_auth_users.csv
 

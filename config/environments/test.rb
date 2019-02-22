@@ -1,8 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.x.pem = File.read('config/keys/development/public.pem')
-  config.x.symkey = IO.readlines("config/keys/development/symkey.txt").map{|line| line.chomp("\n").split("=")}.select{|x| x[0]=="key"}[0][1]
-  
+  config.x.symkey = File.read("config/keys/development/symkey.txt")
   
   #config.x.auth_users contains users {{'Saarbruecken', 'pw1'},{'Bochum', 'pw2'}, {'Ulm', 'pw3'}}
   csv_text_http_auth_users = File.read('config/keys/development/http_auth_users.csv')

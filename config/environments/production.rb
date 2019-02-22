@@ -2,7 +2,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   
   config.x.pem = File.read('config/keys/production/public.pem')
-  config.x.symkey = IO.readlines("config/keys/production/symkey.txt").map{|line| line.chomp("\n").split("=")}.select{|x| x[0]=="key"}[0][1]
+  config.x.symkey = File.read("config/keys/production/symkey.txt")
   
   
   #config.x.auth_users contains users {{'Saarbruecken', 'pw1'},{'Bochum', 'pw2'}, {'Ulm', 'pw3'}}
