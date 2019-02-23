@@ -51,9 +51,6 @@ en:
       headline: "Login"
       body: "Type your email-address"
     contact_person_create_success: "Check your email-account to confirm your email-address."
-    new:
-      headline: "Register"
-      above_form: "Availability of your city-group's helper for shifts at the festival"
     warning:
       javascript_missing:
         headline: "Javascript missing?"
@@ -66,6 +63,9 @@ en:
           
           We strongly recommend that you do that. Otherwise it will be tedious to edit, but possible. If you want to go on like this confirm your email-adress by klicking %{link}.
         link_text: "HERE"
+    new:
+      headline: "Register"
+      above_form: "Availability of your city-group's helper for shifts at the festival"
     confirm:
       headline: "You confirmed your registration"
       body: "The registration process is finished. We will write you an email, if and which shifts you got."
@@ -179,6 +179,8 @@ en:
       below_data: "The concerned person doesn't get an email. You will have to forward this email yourself."
   
   flash: #When an action is successful (for example after submitting) these messages are added to the top of the next page.
+    contact_person_deleted: | 
+      The contact person you tried to access was deleted. Please register again.
     create_success: | 
       You registered %{name} for the festival. We sent both of you an email with the data. %{name} has to use the confirm link to complete the registration.
     update_success: |

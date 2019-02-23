@@ -36,7 +36,7 @@
         <div class="logo hidden-xs hidden-sm hidden-md">
           <%= image_tag("rubymonstas.png", :alt => "rubymonstas logo", :width => 120, :height => 120)%>
         </div>
-      <% if session[:contact_person]%>
+      <% if confirmed_contact_person? %>
        <div class="row alert info-box info-box-size alert-danger text-center">
           <%= render 'shared/associated_registrations' %>
         </div>

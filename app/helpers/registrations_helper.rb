@@ -2,6 +2,19 @@ require 'digest'
 
 module RegistrationsHelper
   
+  def confirmed_contact_person?
+    if session[:contact_person]
+      contact_person = ContactPerson.find_by(hashed_email: digest(session[:contact_person]))
+      if contact_person
+        contact_person.confirmed
+      else 
+        false
+      end
+    else
+      false
+    end
+  end
+  
   def associated_registrations
     @contact_person = ContactPerson.find_by(hashed_email: digest(session[:contact_person]))
     @contact_person.registrations

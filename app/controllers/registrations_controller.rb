@@ -194,7 +194,7 @@ class RegistrationsController < ApplicationController
       
     
     def check_contact_person
-      redirect_to login_path unless session[:contact_person] and ContactPerson.find_by(hashed_email: digest(session[:contact_person])).confirmed
+      redirect_to login_path unless confirmed_contact_person?
     end
     
     def displayed_data(id)

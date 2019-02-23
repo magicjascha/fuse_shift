@@ -43,14 +43,23 @@ class ContactPersonsController < ApplicationController
   
   def warning
     @contact_person = ContactPerson.find_by(hashed_email: params[:hashed_email])
+    if @contact_person == nil
+      flash[:danger] = simple_format(I18n.t("flash.contact_person_deleted"))
+      redirect_to login_path
+    end
   end
   
   def confirm
     @contact_person = ContactPerson.find_by(hashed_email: params[:hashed_email])
-    @contact_person.confirmed = true
-    @contact_person.save(validate: false)
-    flash[:danger] = simple_format(I18n.t("flash.contact_person_confirm"))
-    redirect_to root_url
+    if @contact_person == nil
+      flash[:danger] = simple_format(I18n.t("flash.contact_person_deleted"))
+      redirect_to login_path
+    else
+      @contact_person.confirmed = true
+      @contact_person.save(validate: false)
+      flash[:danger] = simple_format(I18n.t("flash.contact_person_confirm"))
+      redirect_to root_url
+    end
   end
   
   private
