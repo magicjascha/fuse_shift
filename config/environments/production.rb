@@ -108,4 +108,14 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.action_mailer.default_url_options = { host: "fuse-shift.herokuapp.com" }
+  config.action_mailer.smtp_settings = {
+    address:              'elektropost.org',
+    port:                 587,
+    domain:               'elektropost.org',
+    user_name:            ENV["MAILUSER"],
+    password:             ENV["MAILPASSW"],
+    authentication:       :plain,
+    enable_starttls_auto: true
+  }
 end
