@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'contact_persons#delete'
   get 'contact_persons/:hashed_email/confirm', to: 'contact_persons#confirm', as: 'contact_person_confirm'
   get '/clean_browser', to: 'contact_persons#clean_browser'
-
+  get '/contact_persons/:hashed_email/warning', to: 'contact_persons#warning', as: 'contact_person_warning'
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

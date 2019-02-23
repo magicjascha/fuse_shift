@@ -47,9 +47,25 @@ en:
     info_link2_text: "voluptate"
     
   views:
+    contact_person_new:
+      headline: "Login"
+      body: "Type your email-address"
+    contact_person_create_success: "Check your email-account to confirm your email-address."
     new:
       headline: "Register"
       above_form: "Availability of your city-group's helper for shifts at the festival"
+    warning:
+      javascript_missing:
+        headline: "Javascript missing?"
+        body_html: |
+          You were not redirected because your javascript is not working.
+          
+          If you want a comfortable experience editing registrations, you needs
+          1. Your Javascript
+          2. You can't delete your browser-memory until the deadline. 
+          
+          We strongly recommend that you do that. Otherwise it will be tedious to edit, but possible. If you want to go on like this confirm your email-adress by klicking %{link}.
+        link_text: "HERE"
     confirm:
       headline: "You confirmed your registration"
       body: "The registration process is finished. We will write you an email, if and which shifts you got."
@@ -106,6 +122,12 @@ en:
         
         Klick this %{confirm_link} to confirm your email_address. Then you can delete this email.
       confirm_link_text: "Link"
+    contact_person_confirm_txt: |
+        You signed up as contact person for the festival. 
+        
+        Klick this link to confirm your email_address: %{confirm_link}
+        
+        Then you can delete this email.
     registration_contact_person:
       subject: "You registered somone with ID %{id} for the festival"
       above_data_html: |
@@ -163,9 +185,6 @@ en:
       You updated. We sent you an email with the data. You have to forward it yourself to the person.
     contact_person_confirm: | 
       You confirmed your email-address.
-
-      Editing previous registrations will become confusing for you, if you delete your browser-memory in between. We strongly advise you to keep it until the festival.
-
       You can now start to enter registrations.
       
   time:

@@ -41,6 +41,10 @@ class ContactPersonsController < ApplicationController
 #     redirect_to login_path
 #   end
   
+  def warning
+    @contact_person = ContactPerson.find_by(hashed_email: params[:hashed_email])
+  end
+  
   def confirm
     @contact_person = ContactPerson.find_by(hashed_email: params[:hashed_email])
     @contact_person.confirmed = true

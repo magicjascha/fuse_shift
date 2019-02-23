@@ -14,7 +14,7 @@ class ContactPersonMailerTest < ActionMailer::TestCase
     assert_equal [contact_persons_email], email.to
     assert_equal I18n.t("mail.contact_person_confirm.subject"), email.subject
     #check email-body for confirm-link
-    assert_match("#{root_url}contact_persons/#{@contact_person.hashed_email}/confirm", email.html_part.body.decoded)
+    assert_match("#{root_url}contact_persons/#{@contact_person.hashed_email}/warning", email.html_part.body.decoded)
   end
   
 end

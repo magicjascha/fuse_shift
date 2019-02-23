@@ -1,0 +1,20 @@
+<script>
+  $( document ).ready(function() {
+      function getValue() {
+        var retVal = prompt("If you delete your browser-memory (or your browser does that itself, when closing) editing your registrations will be very tedious. We strongly recommend that you keep the memory, until the deadline.\n\nIf you understood that type 'I know': ");
+        if (retVal != "I know") {
+           getValue();
+        }
+        else {
+          window.location.href = <%= contact_person_confirm_url(@contact_person).to_json.html_safe %>;
+          }
+      }
+      getValue()
+  });
+</script>
+
+
+<h1><%= t("views.warning.javascript_missing.headline") %></h1>
+<div class="text-left">
+<p><%= simple_format(t("views.warning.javascript_missing.body_html", link: link_to(t("views.warning.javascript_missing.link_text"), contact_person_confirm_url(@contact_person)))) %></p>
+</div>

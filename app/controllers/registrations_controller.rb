@@ -26,9 +26,6 @@ class RegistrationsController < ApplicationController
     else
       scope = scope.all
     end
-    puts "flag".red
-    p params
-#     scope = params[:confirmed] ? scope.where(confirmed: true) : scope.all
     render json: scope.as_json
   end
   
