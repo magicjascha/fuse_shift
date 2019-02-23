@@ -1,6 +1,6 @@
 # FuseShift
 
-This app was constructed for data-collection with high security needs. 
+This app was constructed for data-collection with high security needs.
 
 ## Encryption
 The data submitted by the users is saved assymmetrically encrypted on the server. Since only the public key resides on the server, it can only be decrypted after downloading it to a private computer, where the private key resides.
@@ -9,7 +9,7 @@ To enable the users to look at submitted data nevertheless, a symmetrically encr
 
 ## Who submits what?
 
-There are users "contact people" which can submit several people's data-sets "registrations". They need to login in order to do so. This happens in two steps: 
+There are users "contact people" which can submit several people's data-sets "registrations". They need to login in order to do so. This happens in two steps:
 1. with an http-authentication-login
 2. simply typing in their email-adress without any further password-authentication. The email-adress needs to be confirmed at the first login.
 
@@ -32,7 +32,7 @@ After the contact person/user submits a registration, the contact person, as wel
 ## Customization
 Almost all text can be altered. This concerns the text of the info-box and headlines as well as all labels and helptexts of the input-fields.
 
-- Make a file in config/locales/en_customize.yml 
+- Make a file in config/locales/en_customize.yml
   It will not be touched by updates (as opposed to en.yml)
 - Search for the text you want to replace in config/locales/en.yml, look up the associated hierarchy of labels below the first level "en:" (which is replaced by "en_customize:" in this file).
 - Reproduce the label-hierarchy here as given in the example below. This example would replace the headline of the new registrations page "Register" with "This is a new headline".
@@ -45,20 +45,20 @@ en_customize:
 
 ## Configuration
 You need to generate equivalents for all files in config/environments/keys/development in config/environments/keys/production, EXCEPT the private.pem. This is the private key, which should NOT be on the server in production.
- 
+
 * The public key for asymmetric encryption in public.pem
-  Generate a private key "private.pem" on your private computer: 
+  Generate a private key "private.pem" on your private computer:
   ```
-  Generate openssl genrsa -des3 -out private.pem 2048
+  openssl genrsa -des3 -out private.pem 2048
   ```
   Generate a public key based on that private key:
   ```
   openssl rsa -in private.pem -outform PEM -pubout -out public.pem
   ```
   Move the public key onto the server into the directory ```/congig/production```
-  Keep the private key on your private computer to use it later for the download with [Fuse Shift Tools](https://github.com/magicjascha/fuse_shift_tools) 
+  Keep the private key on your private computer to use it later for the download with [Fuse Shift Tools](https://github.com/magicjascha/fuse_shift_tools)
 
-  
+
 * You need a 256-bit-key for the symmteric encryption in ```/config/production/symkey.txt```. E.g. you could generate it with:
   ```
   openssl enc -aes-256-cbc -k [secret] -P -md sha1
