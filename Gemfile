@@ -42,7 +42,7 @@ gem 'minitest-rails-capybara'#test
 gem 'aes'#symmetric encryption
 gem 'flatpickr_rails'#jquery-datepicker
 gem 'colorize'#terminal-output colors for debugging
-
+gem 'pg'
 
 #security fixes
 # gem "rack", ">= 2.0.6"
