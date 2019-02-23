@@ -11,7 +11,7 @@ class RegistrationsController < ApplicationController
   end
   
   before_action :check_contact_person, except: [:confirm, :index]
-  #before_action :auth_admin, only: :index
+  before_action :auth_admin, only: :index
      
   def index
     scope = Registration
