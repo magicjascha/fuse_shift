@@ -20,11 +20,19 @@ As the app collects data for putting up a shift plan,the datafields for each reg
 - Contact person's city is filled automatically by the http-authentication-username
 - Contact Person's email is filled automatically by the the user's login
 
-There is an additional confirmation process associated with the property "shift_confirmed" in the model of registration. The registered people should receive links after their shifts were calculated on a private computer outside this app. With these links they can either confirm or cancel their shift. The links are...
+### Shift_confirmed: an additional confirmation process
+There is an additional confirmation process associated with the attribute "shift_confirmed" in the model of registration. You have to send the registered people links, after their shifts were calculated on a private computer outside this app. With these links they can either confirm or cancel their shift:
+```
 [URL]/registrations/[hashed_email]/shift_confirm_yes (confirm, saves 1 in shift_confirmed)
 [URL]/registrations/[hashed_email]/shift_confirm_no (cancel, saves 0 in shift_confirmed)
-... where [hashed_email] is the 256-bit SHA (SHA2 family) of the email-adress. In ruby it would be calculated with Digest::SHA2.hexdigest(email).
+```
+... where [hashed_email] is the 256-bit SHA (SHA2 family) of the email-adress. If installed, you can calculate it with ruby:
 
+In the terminal put   ```irb  ``` for opening the ruby console and then
+```
+require 'digest'
+Digest::SHA2.hexdigest('mail@mail.net').
+```
 
 ## Email-Confirmations
 After the contact person/user submits a registration, the contact person, as well as the registered person obtain emails with the submitted data. The registered person needs to confirm their email-adress.
@@ -44,7 +52,17 @@ en_customize:
 ```
 
 ## Configuration
-You need to generate equivalents for all files in config/environments/keys/development in config/environments/keys/production, EXCEPT the private.pem. This is the private key, which should NOT be on the server in production.
+###In the production.rb
+
+You need to configure the mail-server, with which the app sends emails. This concerns the lines:
+  ```
+  config.action_mailer.default_url_options
+  config.action_mailer.smtp_settings
+  ```
+* You need to adjust the way the config-data is read (environment variables for Heroku or files?)
+
+###config-data
+You need to put equivalents for all files in config/environments/keys/development into environment variables (or however you configure the production.rb), EXCEPT the private.pem. This is the private key, which should NOT be on the server in production.
 
 * The public key for asymmetric encryption in public.pem
   Generate a private key "private.pem" on your private computer:
@@ -69,9 +87,19 @@ You need to generate equivalents for all files in config/environments/keys/devel
 
   * The different logins are separated by line.
   * Username and password are separated by a comma.
-  * Password needs to be hashed with bcrypt BCrypt::Password.create('password')
   * Only use UTF-8 valid characters.
+  * Password needs to be hashed with bcrypt 
+    If ruby is installed:
+      ```
+      gem install bcrypt
+      irb
+      ```
+      Then in the ruby console:
+      ```
+      require 'bcrypt'
+      BCrypt::Password.create('password')
+      ```
 
 * Proceed analogous with the http-authentication-login for the admin http_auth_admin.csv
 
-* Specifics for the app: website title, deadline, festival start and end data
+* Specifics for the app: website title, deadline, festival start and end in config
