@@ -30,3 +30,6 @@
 #Ignore production config
 /config/keys/production/*
 
+/vendor/*
+/00_*
+/01_*/*
