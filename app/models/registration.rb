@@ -29,17 +29,17 @@ class Registration < ApplicationRecord
   validates(:end, presence: true, :if => proc { |r| r.end_changed? })
 #   validate :email_not_used_before
 # start should be after festival-start
-  validates_datetime(:start, :on_or_before => lambda { Rails.configuration.x.festival_end },
-                             :on_or_after => lambda { Rails.configuration.x.festival_start },
-                             :if => proc { |r| r.start_changed? && r.start!=""})
-  #end should be after festival-start
-  validates_datetime(:end, :on_or_after => lambda { Rails.configuration.x.festival_start },
-                           :on_or_before => lambda { Rails.configuration.x.festival_end}, 
-                           :if => proc { |r| r.end_changed? && r.end!=""})
-# start should be before end
-  validates_datetime( :start, :before => :end, 
-                              :if => proc { |r| r.start_changed? and r.end_changed? },
-                              :unless => proc {|r| r.end=="" || r.start==""})
+#   validates_datetime(:start, :on_or_before => lambda { Rails.configuration.x.festival_end },
+#                              :on_or_after => lambda { Rails.configuration.x.festival_start },
+#                              :if => proc { |r| r.start_changed? && r.start!=""})
+#   #end should be after festival-start
+#   validates_datetime(:end, :on_or_after => lambda { Rails.configuration.x.festival_start },
+#                            :on_or_before => lambda { Rails.configuration.x.festival_end}, 
+#                            :if => proc { |r| r.end_changed? && r.end!=""})
+# # start should be before end
+#   validates_datetime( :start, :before => :end, 
+#                               :if => proc { |r| r.start_changed? and r.end_changed? },
+#                               :unless => proc {|r| r.end=="" || r.start==""})
   
   def change_hashed_email_error_to_email
     if errors.messages[:hashed_email]!=[]
