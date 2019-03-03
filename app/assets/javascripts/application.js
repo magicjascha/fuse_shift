@@ -14,7 +14,10 @@
 //= require bootstrap
 //= require rails-ujs
 //= require_tree .
-//= require flatpickr
+//= require moment
+//= require bootstrap-datetimepicker
+
+
 
 //delete localstorage with button Delete Browser Memory
 $(document).ready(function() {

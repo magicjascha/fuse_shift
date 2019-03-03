@@ -12,10 +12,12 @@
  *
  *= require_tree .
  *= require_self
- *= require flatpickr
  */
+
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'bootstrap-datetimepicker';
 
 body {
     background-color: #cc0000;

@@ -35,14 +35,16 @@ gem 'bootstrap-sass', '~> 3.3.7'
 # gem 'capistrano-rails', group: :development
 
 #my app
+gem 'momentjs-rails'#for bootstrap-datetimepicker
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'validates_timeliness', '~> 5.0.0.alpha3'#datetime-validation
 gem 'jquery-rails'#javascript jquery
 # gem 'jquery-cookie-rails'
 gem 'minitest-rails-capybara'#test
 gem 'aes'#symmetric encryption
-gem 'flatpickr_rails'#jquery-datepicker
 gem 'colorize'#terminal-output colors for debugging
 gem 'pg'
+
 
 #security fixes
 # gem "rack", ">= 2.0.6"

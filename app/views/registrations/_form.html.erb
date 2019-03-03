@@ -1,14 +1,15 @@
 <%= render 'shared/error_messages' %>
-
 <script type="text/javascript">
-  $(document).ready(function(){
-    flatpickr('.flatpickr-input', {
-      enableTime: true,
-      time_24hr: true,
-      minuteIncrement: 30,
-      dateFormat: "Y-m-d H:i",
-      minDate: "<%= I18n.l(Rails.configuration.x.festival_start, format: :datetime2) %>",
-      maxDate: "<%= I18n.l(Rails.configuration.x.festival_end, format: :datetime2) %>",
+  $(document).ready(function(){  
+    $(function () {
+      $('.bs-datetimepicker').datetimepicker({
+        sideBySide: true,
+        stepping: 30,
+        format: "YYYY-MM-DD HH:mm",
+        minDate: "<%= I18n.l(Rails.configuration.x.festival_start, format: :datetime2) %>",
+        maxDate: "<%= I18n.l(Rails.configuration.x.festival_end, format: :datetime2) %>",
+        });
+      $('.bs-datetimepicker').val('');
     });
   });
 </script>
@@ -120,7 +121,7 @@
 <div class="form-group">
   <%= f.label :start, class:"control-label col-sm-4"%>
   <div class="col-sm-8">
-    <%= f.text_field :start, class: 'form-control flatpickr-input'%>
+    <%= f.text_field :start, class: 'form-control bs-datetimepicker'%>
     <small id="startHelp" class="form-text text-muted"><%=t("form.start.help", festival_start: l(Rails.configuration.x.festival_start, format: :datetime1))%></small>
   </div>
 </div>
@@ -128,7 +129,7 @@
 <div class="form-group">
   <%= f.label :end, class:"control-label col-sm-4"%>
   <div class="col-sm-8">
-    <%= f.text_field :end, class: 'form-control flatpickr-input'%>
+    <%= f.text_field :end, class: 'form-control bs-datetimepicker'%>
     <small id="endHelp" class="form-text text-muted"><%=t("form.end.help", festival_end: l(Rails.configuration.x.festival_end, format: :datetime1))%></small>
   </div>
 </div>
