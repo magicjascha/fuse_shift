@@ -216,24 +216,14 @@ en:
         end: "Departure"
         comment: "Comment"
     errors:
+      custom:
+        before_end: "must to be before %{end_label}"
+        not_in_festival_time: "must be within festival time"
       models:
         registration:
           attributes:
-            start:
-              on_or_before: "must be before %{restriction} (festival end)"
-              on_or_after: "must be after %{restriction} (festival start)"
-              invalid_datetime: "is invalid"
-              before: "must be before last shift"
-            end:
-              on_or_after: "must be after %{restriction} (festival start)"
-              on_or_before: "must be before %{restriction} (festival end)"
-              invalid_datetime: "is invalid"
             email:
               uniqueness: "was already registered. You can delete or edit the old registration."
-              
-  validates_timeliness:
-    error_value_formats:
-      datetime: '%d. %B %Y, %H:%M'
       
   time:
     formats:
