@@ -5,8 +5,8 @@
     //local-storage for this registration not present
     if (!!encrypted_data == false){
       function getValue() {
-        var retVal = prompt("Your browser doesn't remember the (encrypted) data for this registration.\n\nIf you created the registration from another computer (or browser), consider to return there for changing it. If you update now we delete the browser-memory for this registration, which will make editing more confusing for you.\n\nTo identify a registration without browser-memory, look up the ID in your old emails. You can re-enter the name for getting a better overview\n\nIf you understand the consequences of updating this dataset with this browser, type 'I understand' : ");
-        if (retVal != "I understand") {
+        var retVal = prompt(<%= I18n.t("views.edit.browser_deleted_js_prompt").to_json.html_safe %>);
+        if (retVal != <%= I18n.t("views.edit.browser_deleted_js_prompt_answer").to_json.html_safe %>) {
            getValue();
         }
       }
@@ -33,7 +33,7 @@
           //If memory loss of localstorgae was last time, give an alert, make background-placeholder "as before" for fields
           if (registration.memory_loss == "last time"){
             localStorage.removeItem(hashed_email);
-            alert("Last time you changed this registration from another computer (or browser). Your browser-memory for this registration is deleted.", 'Explanation');
+            alert(<%= I18n.t("views.edit.updated_in_other_browser_js_alert").to_json.html_safe %>, 'Explanation');
             $("[type='text']").attr("placeholder", "as before");
             $('*[name="registration[email]"]').text("[as before]");
             $("#memory_loss").val("before last time") //update localstorage about memory-loss information via hidden formfields, if submitted

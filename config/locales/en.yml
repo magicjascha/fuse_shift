@@ -52,6 +52,11 @@ en:
       body: "Type your email-address"
     contact_person_create_success: "Check your email-account to confirm your email-address."
     warning:
+      js_prompt: |
+        If you delete your browser-memory (or your browser does that itself, when closing) editing your registrations will be very tedious. We strongly recommend that you keep the memory, until the deadline.
+        
+        If you understood that type 'I know':  
+      js_prompt_answer: "I know"
       javascript_missing:
         headline: "Javascript missing?"
         body_html: |
@@ -70,6 +75,16 @@ en:
       headline: "You confirmed your registration"
       body: "The registration process is finished. We will write you an email, if and which shifts you got."
     edit:
+      browser_deleted_js_prompt: |
+        Your browser doesn't remember the (encrypted) data for this registration.
+      
+        If you created the registration from another computer (or browser), consider to return there for changing it. If you update now we delete the browser-memory for this registration, which will make editing more confusing for you.
+      
+        To identify a registration without browser-memory, look up the ID in your old emails. You can re-enter the name for getting a better overview
+      
+        If you understand the consequences of updating this dataset with this browser, type 'I understand' : 
+      browser_deleted_js_prompt_answer: "I understand"
+      updated_in_other_browser_js_alert: "Last time you used another browser to update this registration, which is where the most accurate memory of it is now. Each time you switch browser for updating the same registration (so if you push the update button now) your local memory is set back to zero."  
       headline: "Edit registration with ID %{id}"
       above_form: ""
     deleted: 

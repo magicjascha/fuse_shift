@@ -1,8 +1,8 @@
 <script>
   $( document ).ready(function() {
       function getValue() {
-        var retVal = prompt("If you delete your browser-memory (or your browser does that itself, when closing) editing your registrations will be very tedious. We strongly recommend that you keep the memory, until the deadline.\n\nIf you understood that type 'I know': ");
-        if (retVal != "I know") {
+        var retVal = prompt( <%= I18n.t("views.warning.js_prompt").to_json.html_safe %> );
+        if (retVal != <%= I18n.t("views.warning.js_prompt_answer").to_json.html_safe %>) {
            getValue();
         }
         else {
