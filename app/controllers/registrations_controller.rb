@@ -65,8 +65,10 @@ class RegistrationsController < ApplicationController
       flash[:success] = ActionController::Base.helpers.simple_format(t("flash.create_success", name: @registration.name))
       @data = displayed_data(@saved_registration.id) #contains params displayed in emails and saved to localstorage
       #send emails with plain data
-      RegistrationMailer.registration_confirm(@registration, @data).deliver_now
-      RegistrationMailer.registration_contact_person(@registration, @data).deliver_now
+      email_data = @data.dup
+      email_data.delete(:changed_on)
+      RegistrationMailer.registration_confirm(@registration, email_data).deliver_now
+      RegistrationMailer.registration_contact_person(@registration, email_data).deliver_now
       #save symmetrically encrypted data to the localstorage 
       @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
       @hashed_email = digest(@data[:email])
@@ -94,13 +96,15 @@ class RegistrationsController < ApplicationController
       @registration = Registration.find_by(hashed_email: params[:hashed_email])
       @registration.assign_attributes(params_encrypt(present_attributes))
       @registration.save(validate: false)
-      #send email with @data to contact_person, need memory_loss-info for format
+      #send email with email_data to contact_person, need memory_loss-info for format
       @data = displayed_data(@registration.id)
-      RegistrationMailer.updated_to_contact_person(@data, !params["memory_loss"].blank?).deliver_now
+      email_data = @data.dup
+      email_data.delete(:changed_on)
+      RegistrationMailer.updated_to_contact_person(email_data, !params["memory_loss"].blank?).deliver_now
       flash[:success] = ActionController::Base.helpers.simple_format(t("flash.update.success_memoryloss"))
       #send email with @data to registree if no memory loss (=email address gone) occurred
       if params["memory_loss"].blank?
-        RegistrationMailer.updated_to_registree(@data).deliver_now 
+        RegistrationMailer.updated_to_registree(email_data).deliver_now 
         flash[:success] = ActionController::Base.helpers.simple_format(t("flash.update.success"))
       end
       #add browser-memory-loss-info to data and save symmetrically encrypted to the localstorage
