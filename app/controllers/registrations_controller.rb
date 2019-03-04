@@ -63,7 +63,7 @@ class RegistrationsController < ApplicationController
       @saved_registration = Registration.new(params_encrypt(add_hashed_email(registration_params)))
       @saved_registration.save(validate: false)
       #success message in flash with link to new registration
-      flash[:danger] = ActionController::Base.helpers.simple_format(t("flash.create_success", name: @registration.name))
+      flash[:success] = ActionController::Base.helpers.simple_format(t("flash.create_success", name: @registration.name))
       @data = displayed_data(@saved_registration.id) #contains params displayed in emails and saved to localstorage
       #send emails with plain data
       RegistrationMailer.registration_confirm(@registration, @data).deliver_now
@@ -95,14 +95,19 @@ class RegistrationsController < ApplicationController
       @registration = Registration.find_by(hashed_email: params[:hashed_email])
       @registration.assign_attributes(params_encrypt(present_attributes))
       @registration.save(validate: false)
-      #send email with @data, need memory_loss-info for format
+      #send email with @data to contact_person, need memory_loss-info for format
       @data = displayed_data(@registration.id)
       RegistrationMailer.updated_to_contact_person(@data, !params["memory_loss"].blank?).deliver_now
+      flash[:success] = ActionController::Base.helpers.simple_format(t("flash.update.success_memoryloss"))
+      #send email with @data to registree if no memory loss (=email address gone) occurred
+      if params["memory_loss"].blank?
+        RegistrationMailer.updated_to_registree(@data).deliver_now 
+        flash[:success] = ActionController::Base.helpers.simple_format(t("flash.update.success"))
+      end
       #add browser-memory-loss-info to data and save symmetrically encrypted to the localstorage
       @data["memory_loss"] = "before last time" if !params["memory_loss"].blank?
       @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
       @hashed_email = params[:hashed_email]
-      flash[:danger] = ActionController::Base.helpers.simple_format(t("flash.update_success"))
       render:'localstorage_save' #forwards to edit
     else 
       @registration.hashed_email = params[:hashed_email]
@@ -123,7 +128,7 @@ class RegistrationsController < ApplicationController
   
   def delete
     @registration = Registration.find_by(hashed_email: params[:hashed_email])
-    flash[:danger] = "You successfully deleted the registration of #{replace_with_name(@registration.id)} ID #{@registration.id}."
+    flash[:success] = ActionController::Base.helpers.simple_format(t("flash.delete.success", id: @registration.id))
     @registration.destroy
     session[params[:hashed_email]]=nil
     redirect_back(fallback_location: root_path)

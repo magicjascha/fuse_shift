@@ -21,4 +21,9 @@ class RegistrationMailer < ApplicationMailer
     mail(to: @data[:contact_persons_email], subject: I18n.t("mail.updated_to_contact_person.subject",id: @data[:id]))
   end
   
+  def updated_to_registree(data)
+    @data = data
+    mail(to: @data[:email], subject: I18n.t("mail.updated_to_registree.subject"))
+  end
+  
 end

@@ -1,6 +1,8 @@
-<%= t("mail.edit_contact_person.above_data", name: @data[:id]) %>
+<% if @memory_loss %>
+  <%= t("mail.updated_to_contact_person.body_memoryloss", id: @data[:id]) %>
+<% else %>
+  <%= t("mail.updated_to_contact_person.body", name: @data[:name]) %>  
+<% end %>
 <% @data.each do |key, value| %>
     <%= t("activerecord.attributes.registration.#{key}") %>: <%= better_read(value) %>
 <% end %>
-
-<%= t("mail.edit_contact_person.below_data") %>

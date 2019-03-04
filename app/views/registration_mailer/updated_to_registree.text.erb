@@ -1,0 +1,6 @@
+<%= t("mail.updated_to_registree.above_data") %>
+<% @data.each do |key, value| %>
+    <%= t("activerecord.attributes.registration.#{key}") %>: <%= better_read(value) %>
+<% end %>
+
+<%= t("mail.updated_to_registree.below_data") %>

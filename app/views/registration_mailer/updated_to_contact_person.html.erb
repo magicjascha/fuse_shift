@@ -4,8 +4,11 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <p> <%= simple_format(t("mail.updated_to_contact_person.above_data", id: @data[:id])) %> </p>
+    <% if @memory_loss %>
+      <p> <%= simple_format(t("mail.updated_to_contact_person.body_memoryloss", id: @data[:id])) %> </p>
+    <% else %>
+      <p> <%= simple_format(t("mail.updated_to_contact_person.body", name: @data[:name])) %> </p>   
+    <% end %>
     <p><%= render '/shared/registration_data_table' %> </p>
-    <p> <%= t("mail.updated_to_contact_person.below_data") %> </p>
   </body>
 </html>

@@ -24,11 +24,6 @@ module RegistrationsHelper
     Registration.find_by(hashed_email: params[:hashed_email])
   end
   
-  def replace_with_name(id)
-    hashed_email = Registration.find_by(id: id).hashed_email
-    !!session[hashed_email] ? session[hashed_email]["name"] : ""
-  end
-  
   #change formats of registration values in mails and views
   def better_read(value)
     if value.respond_to?(:strftime)

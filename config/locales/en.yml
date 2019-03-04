@@ -172,22 +172,36 @@ en:
         You were registered with the data...
     updated_to_contact_person:
       subject: "You changed the registration with ID %{id}"
+      body: |
+        Hi,
+        
+        you changed the registration of %{name}. %{name} also got an email with the data.
+      body_memoryloss: |
+        Hi,
+        
+        you changed the registration with ID %{id}. The registered person doesn't get an email. You will have to forward this email yourself.
+    updated_to_registree:
+      subject: "Your registration data for the festival was changed"
       above_data: |
         Hi,
         
-        you changed the registration with ID %{id}. Changed data (if empty as before)...
-      below_data: "The concerned person doesn't get an email. You will have to forward this email yourself."
-  
+        Your registration data for the festival was changed by your contact person. Get in touch with them if something's wrong with your data.
+      below_data: ""
   flash: #When an action is successful (for example after submitting) these messages are added to the top of the next page.
-    contact_person_deleted: | 
+    contact_person_deleted: |
       The contact person you tried to access was deleted. Please register again.
-    create_success: | 
+    create_success: |
       You registered %{name} for the festival. We sent both of you an email with the data. %{name} has to use the confirm link to complete the registration.
-    update_success: |
-      You updated. We sent you an email with the data. You have to forward it yourself to the person.
-    contact_person_confirm: | 
+    update:
+      success: |
+        You updated. You and the person you registered both got an email with the updated registration.
+      success_memoryloss: |
+        You updated. We sent you an email with the data. You have to forward it yourself to the person.
+    contact_person_confirm: |
       You confirmed your email-address.
       You can now start to enter registrations.
+    delete:
+      success: "You successfully deleted the registration with ID %{id}."
       
   time:
     formats:
@@ -215,6 +229,7 @@ en:
         start: "Arrival"
         end: "Departure"
         comment: "Comment"
+        changed_on: "Changed on"
     errors:
       custom:
         before_end: "must to be before %{end_label}"
