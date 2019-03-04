@@ -1,7 +1,6 @@
 require 'json'
 require 'aes'
 require 'colorize'
-# require 'bcrypt'
 
 class RegistrationsController < ApplicationController
   if Rails.env.test? || Rails.env.development?

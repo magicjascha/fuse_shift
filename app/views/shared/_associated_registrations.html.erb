@@ -7,7 +7,6 @@
       let encrypted_data = localStorage.getItem(hashed_email);
       all_local_registrations[hashed_email] = JSON.parse(encrypted_data);
       });
-    console.log("load from localStorage");
     //server-request: send hash and decrypt registrations inside
     $.ajax({
       url: '/decrypt',
@@ -18,17 +17,13 @@
       data: {"encrypted_registrations": all_local_registrations},
       dataType:'json',
       success: function (data, textStatus, jqXHR) {
-        console.log("completed");
         $.each(data, function(index,registration) {
-          console.log(registration)
           if (registration.length > 0){//if this record wasn't cleared from local storage'
-            console.log("table", registration[1].name, "memory_loss", registration[1].memory_loss);
           //fill in tds in the list
             element = document.querySelectorAll("[data-hashed_email='"+registration[0]+"']");
             element[0].innerHTML = registration[1]["name"];   
             }
           else {
-            console.log("memory loss for this record")}
         });
       }
     });
