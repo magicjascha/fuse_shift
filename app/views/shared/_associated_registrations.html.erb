@@ -39,11 +39,11 @@
 <div class="table-wrapper">
 <table class="text-center table-hover">
   <tr>
-    <th><div title="If the registration-data was deleted from your browser, you can you can look it up in your emails with this ID">ID</div></th>
-    <th><div title="Name is not showing if the data in your browser was deleted">Name</div></th>
-    <th><div title="Did the registered person confirm the link in the email they got?">Confirmed</div></th>
-    <th><div title="Check the data and optionally edit">Edit</div></th>
-    <th><div title="Use delete if you typed the wrong email-address">Delete</div></th>
+   <th><div title=<%= t("views.registrations_table.tooltips.id").to_json.html_safe %>>ID</div></th>
+    <th><div title=<%= t("views.registrations_table.tooltips.name").to_json.html_safe %>><%= t("activerecord.attributes.registration.name") %></div></th>
+    <th><div title=<%= t("views.registrations_table.tooltips.confirmed").to_json.html_safe %>>Confirmed</div></th>
+    <th><div title=<%= t("views.registrations_table.tooltips.edit").to_json.html_safe %>>Edit</div></th>
+    <th><div title=<%= t("views.registrations_table.tooltips.delete").to_json.html_safe %>>Delete</div></th>
   </tr>
 <% associated_registrations.each do |r| %>
   <tr>
@@ -51,7 +51,7 @@
     <td data-hashed_email=<%=r.hashed_email%> ></td>
     <td><%= better_read(r.confirmed) %></td>
     <td><%= link_to registration_path(r) do %><i class="glyphicon glyphicon-edit"></i><% end %></td>
-    <td><%= link_to(registration_path(r), method: :delete, data:{confirm: "Are you sure that you want to delete this registration?"}) do %><i class="glyphicon glyphicon-trash"></i><% end %></td>
+    <td><%= link_to(registration_path(r), method: :delete, data:{confirm: t("views.registrations_table.delete_registration_confirm")}) do %><i class="glyphicon glyphicon-trash"></i><% end %></td>
   </tr>
 <% end %>
 </table>

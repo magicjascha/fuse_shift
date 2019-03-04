@@ -47,6 +47,14 @@ en:
     info_link2_text: "voluptate"
     
   views:
+    registrations_table:
+      delete_registration_confirm: "Are you sure that you want to delete this registration?"
+      tooltips:
+        id: "If the registration-data was deleted from your browser, you can you can look it up in your emails with this ID"
+        name: "Name is not showing if the data in your browser was deleted"
+        confirmed: "Did the registered person confirm the link in the email they got?"
+        edit: "Check the data and optionally edit"
+        delete: "Use delete if you typed the wrong email-address"
     contact_person_new:
       headline: "Login"
       body: "Type your email-address"
