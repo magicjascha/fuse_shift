@@ -9,7 +9,8 @@
         minDate: "<%= I18n.l(Rails.configuration.x.festival_start, format: :datetime2) %>",
         maxDate: "<%= I18n.l(Rails.configuration.x.festival_end, format: :datetime2) %>",
         });
-      $('.bs-datetimepicker').val('');
+      $("[name='registration[start]']").val(<%= @registration.start.to_json.html_safe %>);
+      $("[name='registration[end]']").val(<%= @registration.end.to_json.html_safe %>);
     });
   });
 </script>
