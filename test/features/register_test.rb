@@ -72,7 +72,7 @@ feature "Register" do
     #wait for the page to load
     #check if we're on the edit page
     assert_equal "/registrations/#{registration.hashed_email}", current_path
-    page.assert_selector('h1', text: "Edit registration with ID")
+    page.assert_selector('h1', text: "Edit registration")
     #check if the edit-form is filled in
     assert_equal find_field('Name').value, registration.name
   end

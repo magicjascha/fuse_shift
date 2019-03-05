@@ -12,13 +12,13 @@ class RegistrationMailer < ApplicationMailer
   def registration_contact_person(registration, data)
     @data = data
     @registration = registration
-    mail(to: @data[:contact_persons_email], subject: I18n.t("mail.registration_contact_person.subject", id: @data[:id]))
+    mail(to: @data[:contact_persons_email], subject: I18n.t("mail.registration_contact_person.subject", hashidstart: @data[:hashid][0..3]))
   end
   
   def updated_to_contact_person(data, memory_loss)
     @memory_loss = memory_loss
     @data = data
-    mail(to: @data[:contact_persons_email], subject: I18n.t("mail.updated_to_contact_person.subject",id: @data[:id]))
+    mail(to: @data[:contact_persons_email], subject: I18n.t("mail.updated_to_contact_person.subject", hashidstart: @data[:hashid][0..3]))
   end
   
   def updated_to_registree(data)

@@ -52,6 +52,12 @@ class ActiveSupport::TestCase
   
   def get_input_hash(registration)
     data = registration.attributes.symbolize_keys().select{|key,value| ![:hashed_email, :contact_person_id, :confirmed, :shift_confirmed, :created_at, :updated_at].include?(key)}
+    data
   end
   
+  def get_displayed_data(registration)
+    data = registration.attributes.symbolize_keys().select{|key,value| ![:hashed_email, :contact_person_id, :confirmed, :shift_confirmed, :created_at, :updated_at, :id].include?(key)}
+    data[:hashid] = digest(registration.email)
+    data
+  end
 end

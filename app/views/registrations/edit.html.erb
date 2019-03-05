@@ -69,7 +69,8 @@
   });
 </script>
 
-<h1><%= t("views.edit.headline", id: @registration.id)%></h1>
+<h1><%= t("views.edit.headline")%></h1>
+<p><strong><%= t("activerecord.attributes.registration.hashid") %>:</strong> <%= @registration.hashed_email %></p>
 <p><%=t("views.edit.above_form")%></p>      
 <%= form_for(@registration, url: "/registrations/#{@registration.hashed_email}", method: :put, html: {class: 'form-horizontal', autocomplete: "off"}) do |f| %>
   <%= render 'form', :f => f %>
