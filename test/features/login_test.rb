@@ -29,7 +29,6 @@ feature "Login" do
     #check display of assiociated records
     page.must_have_content("You registered #{registrations_count} people")
     page.assert_selector('td', text: digest("person#{before_sequence.to_i+1}@mail.de")[0..3])#display 4 first letters of emailhash as id
-    page.assert_selector('td', text: "#{registrations_count}")#record id in tabledata
   end
   
   scenario "unconfirmed email doesn't log in" do

@@ -1,7 +1,7 @@
 <% if @memory_loss %>
   <%= t("mail.updated_to_contact_person.body_memoryloss", hashid: @data[:hashid]) %>
 <% else %>
-  <%= t("mail.updated_to_contact_person.body", name: @data[:name]) %>  
+  <%= t("mail.updated_to_contact_person.body", name: @data[:shortname]) %>  
 <% end %>
 <% @data.each do |key, value| %>
     <%= t("activerecord.attributes.registration.#{key}") %>: <%= better_read(value) %>

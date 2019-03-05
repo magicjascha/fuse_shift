@@ -62,7 +62,7 @@ class RegistrationsController < ApplicationController
       @saved_registration = Registration.new(params_encrypt(add_hashed_email(registration_params)))
       @saved_registration.save(validate: false)
       #success message in flash with link to new registration
-      flash[:success] = ActionController::Base.helpers.simple_format(t("flash.create_success", name: @registration.name))
+      flash[:success] = ActionController::Base.helpers.simple_format(t("flash.create_success", name: @registration.shortname))
       @data = displayed_data(@saved_registration.id) #contains params displayed in emails and saved to localstorage
       #send emails with plain data
       email_data = @data.dup

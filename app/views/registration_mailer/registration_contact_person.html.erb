@@ -4,8 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <p><%= simple_format(t("mail.registration_contact_person.above_data_html", name: @registration.name)) %></p>
+    <p><%= simple_format(t("mail.registration_contact_person.above_data_html", name: @registration.shortname)) %></p>
     <p><%= render '/shared/registration_data_table' %> </p>
-    <p><%= simple_format(t("mail.registration_contact_person.below_data_html", name: @registration.name, edit_link: link_to(t("mail.registration_contact_person.edit_link_text"), registration_url(@registration)), root_link: link_to(t("mail.registration_contact_person.root_link_text"), root_url))) %></p>
+    <p><%= simple_format(t("mail.registration_contact_person.below_data_html", name: @registration.shortname, edit_link: link_to(t("mail.registration_contact_person.edit_link_text"), registration_url(@registration)), root_link: link_to(t("mail.registration_contact_person.root_link_text"), root_url))) %></p>
   </body>
 </html>

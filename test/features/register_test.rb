@@ -23,7 +23,7 @@ feature "Register" do
     page.execute_script("$('#registration_start').val('#{registration.start}')")
     page.execute_script("$('#registration_end').val('#{registration.end}')")
     click_button 'Submit'
-    page.must_have_content "You registered #{registration.name} for the festival"
+    page.must_have_content "You registered #{registration.shortname} for the festival"
     page.must_have_content("You registered 1 person")
   end
   

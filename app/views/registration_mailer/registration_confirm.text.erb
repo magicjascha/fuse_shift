@@ -1,4 +1,4 @@
-<%= t("mail.registration_confirm.above_data_txt", name: @registration.name, confirm_link: registration_confirm_url(@registration)) %>
+<%= t("mail.registration_confirm.above_data_txt", name: @registration.shortname, confirm_link: registration_confirm_url(@registration)) %>
 <% @data.each do |key, value| %>
     <%= t("activerecord.attributes.registration.#{key}") %>: <%= better_read(value) %>
 <% end %>
