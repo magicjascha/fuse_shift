@@ -110,9 +110,9 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = eval(ENV["MAILERURL"])
   config.action_mailer.smtp_settings = {
-    address:              'elektropost.org',
+    address:              'mail.systemli.org',
     port:                 587,
-    domain:               'elektropost.org',
+    domain:               'systemli.org',
     user_name:            ENV["MAILUSER"],
     password:             ENV["MAILPASSW"],
     authentication:       :plain,
