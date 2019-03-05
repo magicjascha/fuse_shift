@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RegistrationMailerTest < ActionMailer::TestCase
   include Rails.application.routes.url_helpers
-  
+
   test "confirm-email after registration" do
     #get data into @registration
     @registration = build(:registration)
@@ -13,7 +13,8 @@ class RegistrationMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
     #Test the email content
-    assert_equal ["no-reply@festival-registration.de"], email.from
+    # assert_equal ["no-reply@festival-registration.de"], email.from
+    assert_equal [ENV["MAILUSER"]], email.from
     assert_equal [@registration.email], email.to
     assert_equal 'Confirm your registration for the festival', email.subject
     assert_match(registration_confirm_url(@registration), email.html_part.body.decoded)
@@ -26,10 +27,10 @@ class RegistrationMailerTest < ActionMailer::TestCase
         else
           assert_match("<td>#{@data.values[i]}</td>", email.html_part.body.decoded)
         end
-      end      
+      end
     end
   end
-  
+
   test "registration-email to contact_person" do
     #get data into @registration
     @registration = build(:registration)
@@ -41,7 +42,8 @@ class RegistrationMailerTest < ActionMailer::TestCase
       email.deliver_now
     end
     #Test the email content
-    assert_equal ["no-reply@festival-registration.de"], email.from
+    # assert_equal ["no-reply@festival-registration.de"], email.from
+    assert_equal [ENV["MAILUSER"]], email.from
     assert_equal [@registration.contact_persons_email], email.to
     assert_equal "You registered somone with ID #{@registration.hashed_email[0..3]}.. for the festival", email.subject
     assert_match(registration_url(@registration), email.html_part.body.decoded)
@@ -55,7 +57,7 @@ class RegistrationMailerTest < ActionMailer::TestCase
         else
           assert_match("<td>#{@data.values[i]}</td>", email.html_part.body.decoded)
         end
-      end      
+      end
     end
-  end  
+  end
 end

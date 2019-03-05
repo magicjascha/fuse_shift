@@ -94,6 +94,7 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+  config.logger = Logger.new('/dev/null')
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
@@ -110,9 +111,9 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = eval(ENV["MAILERURL"])
   config.action_mailer.smtp_settings = {
-    address:              'elektropost.org',
+    address:              'mail.systemli.org',
     port:                 587,
-    domain:               'elektropost.org',
+    domain:               'systemli.org',
     user_name:            ENV["MAILUSER"],
     password:             ENV["MAILPASSW"],
     authentication:       :plain,
