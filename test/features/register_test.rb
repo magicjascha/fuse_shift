@@ -19,6 +19,7 @@ feature "Register" do
     page.must_have_content("You registered 0 people")
     fill_in 'Name', with: registration.name
     fill_in 'Email', with: registration.email
+    fill_in 'Shortname', with: registration.shortname
     page.execute_script("$('#registration_start').val('#{registration.start}')")
     page.execute_script("$('#registration_end').val('#{registration.end}')")
     click_button 'Submit'
@@ -30,6 +31,7 @@ feature "Register" do
     registration = build(:registration_input)
     page.must_have_content("You registered 0 people")
     fill_in 'Email', with: registration.email
+    fill_in 'Shortname', with: registration.shortname
     page.execute_script("$('#registration_start').val('#{registration.start}')")
     page.execute_script("$('#registration_end').val('#{registration.end}')")
     click_button 'Submit'
@@ -39,22 +41,22 @@ feature "Register" do
   
   scenario "local storage fills names of associated records" do
     registrations_count = 10#must be bigger 1, session overflow when bigger 5
-    names = []
+    shortnames = []
     registrations_count.times do 
       click_link 'New Registration'
       registration = build(:registration_input, :sequence)
-      names.push(registration.name)
+      shortnames.push(registration.shortname)
       find('input#registration_email.form-control', wait: 5)
       fill_in 'Name', with: registration.name
       fill_in 'Email', with: registration.email
+      fill_in 'Shortname', with: registration.shortname
       page.execute_script("$('#registration_start').val('#{registration.start}')")
       page.execute_script("$('#registration_end').val('#{registration.end}')")
       click_button 'Submit'
       find('div#editpage_email.form-control-static', wait: 5)
     end
     page.must_have_content("You registered #{registrations_count} people")
-    page.assert_selector('td', text: "#{names[0]}")
-    page.assert_selector('td', text: "#{names[registrations_count-1]}")#name from factory-sequence in tabledata
+    page.assert_selector('td', text: shortnames[0])
 #     save_and_open_page
 #     save_and_open_screenshot
   end
@@ -63,6 +65,7 @@ feature "Register" do
     #make a registration
     registration = build(:registration)
     fill_in 'Name', with: registration.name
+    fill_in 'Shortname', with: registration.shortname
     fill_in 'Email', with: registration.email
     page.execute_script("$('#registration_start').val('#{registration.start}')")
     page.execute_script("$('#registration_end').val('#{registration.end}')")

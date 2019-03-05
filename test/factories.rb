@@ -14,12 +14,12 @@ FactoryBot.define do
   factory :registration_input, class: Registration do |f|
     #required fields
     f.name { "Lisa" }
+    f.shortname {"kurz"}
     f.email { "lisa@mail.de" }
     f.start { "2018-06-21 16:00" }#year,month,day,hour,minute
     f.end { "2018-07-05 08:00" }
     
     f.trait :all_fields do
-      shortname {"kurz"}
       comment { "Das ist ein Kommentar" }
       english { true }
       french { false }

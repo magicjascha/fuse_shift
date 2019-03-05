@@ -21,7 +21,7 @@
           if (registration.length > 0){//if this record wasn't cleared from local storage
           //fill in tds in the list
             element = document.querySelectorAll("[data-hashed_email='"+registration[0]+"']");
-            element[0].innerHTML = registration[1]["name"];   
+            element[0].innerHTML = registration[1]["shortname"];   
             }
         });
       }
@@ -30,18 +30,19 @@
 </script>
 
 <h4>You registered <%= pluralize(associated_registrations.length, "person") %>:</h4>
+<div class="table-responsive">
 <div class="table-wrapper">
 <table class="text-center table-hover">
   <tr>
    <th><div title=<%= t("views.registrations_table.tooltips.idstart").to_json.html_safe %>>IDstart</div></th>
-    <th><div title=<%= t("views.registrations_table.tooltips.name").to_json.html_safe %>><%= t("activerecord.attributes.registration.name") %></div></th>
+    <th><div title=<%= t("views.registrations_table.tooltips.shortname").to_json.html_safe %>><%= t("activerecord.attributes.registration.shortname") %></div></th>
     <th><div title=<%= t("views.registrations_table.tooltips.confirmed").to_json.html_safe %>>Confirmed</div></th>
     <th><div title=<%= t("views.registrations_table.tooltips.edit").to_json.html_safe %>>Edit</div></th>
     <th><div title=<%= t("views.registrations_table.tooltips.delete").to_json.html_safe %>>Delete</div></th>
   </tr>
 <% associated_registrations.each do |r| %>
   <tr>
-    <td><%= r.hashed_email[0..3] %></td>
+    <td ><%= r.hashed_email[0..3] %></td>
     <td data-hashed_email=<%=r.hashed_email%> ></td>
     <td><%= better_read(r.confirmed) %></td>
     <td><%= link_to registration_path(r) do %><i class="glyphicon glyphicon-edit"></i><% end %></td>
@@ -49,4 +50,5 @@
   </tr>
 <% end %>
 </table>
+</div>
 </div>
