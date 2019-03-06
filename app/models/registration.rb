@@ -12,6 +12,7 @@ class Registration < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   belongs_to :contact_person
 
+
   #VALIDATIONS only when non-nil attributes will be validated.
   
 

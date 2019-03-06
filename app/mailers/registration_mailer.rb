@@ -1,7 +1,7 @@
 class RegistrationMailer < ApplicationMailer
   add_template_helper(RegistrationsHelper)
 
-  default from: ENV["MAILUSER"]
+  default from: Rails.configuration.x.send_mails_from
 
   def registration_confirm(registration, data)
     @data = data

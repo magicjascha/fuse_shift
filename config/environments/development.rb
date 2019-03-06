@@ -20,6 +20,7 @@ Rails.application.configure do
   config.x.festival_end = DateTime.parse(config_data_hash["Festival End"])
   config.x.deadline = DateTime.parse(config_data_hash["Deadline"])
   config.x.admin_email = config_data_hash["Admin Email"]
+  config.x.send_mails_from = "festival@mail.de"
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

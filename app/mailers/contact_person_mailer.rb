@@ -1,5 +1,5 @@
 class ContactPersonMailer < ApplicationMailer
-  default from: ENV["MAILUSER"]
+  default from: Rails.configuration.x.send_mails_from
 
   def confirm(contact_person, contact_persons_email)
     @contact_person = contact_person

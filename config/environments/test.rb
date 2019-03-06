@@ -17,6 +17,7 @@ Rails.application.configure do
   config.x.festival_end = DateTime.parse(config_data_hash["Festival End"])
   config.x.deadline = DateTime.parse(config_data_hash["Deadline"])
   config.x.admin_email = config_data_hash["Admin Email"]
+  config.x.send_mails_from = "festival@mail.de"
   
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that

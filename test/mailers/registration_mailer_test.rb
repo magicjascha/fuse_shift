@@ -14,7 +14,7 @@ class RegistrationMailerTest < ActionMailer::TestCase
     end
     #Test the email content
     # assert_equal ["no-reply@festival-registration.de"], email.from
-    assert_equal [ENV["MAILUSER"]], email.from
+    assert_equal [Rails.configuration.x.send_mails_from], email.from
     assert_equal [@registration.email], email.to
     assert_equal 'Confirm your registration for the festival', email.subject
     assert_match(registration_confirm_url(@registration), email.html_part.body.decoded)
@@ -43,7 +43,7 @@ class RegistrationMailerTest < ActionMailer::TestCase
     end
     #Test the email content
     # assert_equal ["no-reply@festival-registration.de"], email.from
-    assert_equal [ENV["MAILUSER"]], email.from
+    assert_equal [Rails.configuration.x.send_mails_from], email.from
     assert_equal [@registration.contact_persons_email], email.to
     assert_equal "You registered somone with ID #{@registration.hashed_email[0..3]}.. for the festival", email.subject
     assert_match(registration_url(@registration), email.html_part.body.decoded)
