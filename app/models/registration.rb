@@ -65,12 +65,12 @@ class Registration < ApplicationRecord
   end
   
   def valid_end_date_format
-     message = I18n.t("activerecord.errors.custom.invalid_date_format", exampledate: I18n.l(DateTime.now, format: :datetime1))
+     message = I18n.t("activerecord.errors.custom.invalid_date_format", exampledate: I18n.l(DateTime.now, format: :datetime2))
     errors.add(:end, message) if invalid_date_format?(self[:end])
   end
   
   def valid_start_date_format
-     message = I18n.t("activerecord.errors.custom.invalid_date_format", exampledate: I18n.l(DateTime.now, format: :datetime1))
+     message = I18n.t("activerecord.errors.custom.invalid_date_format", exampledate: I18n.l(DateTime.now, format: :datetime2))
     errors.add(:start, message) if invalid_date_format?(self[:start])
   end
   
