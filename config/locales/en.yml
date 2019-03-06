@@ -257,6 +257,7 @@ en:
       custom:
         before_end: "must to be before %{end_label}"
         not_in_festival_time: "must be within festival time"
+        invalid_date_format: "must be formated like %{exampledate}"
       models:
         registration:
           attributes:
@@ -267,3 +268,4 @@ en:
     formats:
       datetime1: '%d. %B %Y, %H:%M'
       datetime2: '%Y-%m-%d %H:%M'
+      datetime2_regex: '\A\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}\z'

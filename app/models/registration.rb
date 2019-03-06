@@ -27,10 +27,13 @@ class Registration < ApplicationRecord
   validates :email, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, if: proc { |r| r.email_changed? && r.email.present?}
   ##DATE validations
   validates(:start, presence: true, :if => proc { |r| r.start_changed? })
-  validates(:end, presence: true, :if => proc { |r| r.end_changed? })
-  validate :start_date_before_end_date, :if => proc { |r| r.start_changed? and r.end_changed?}
-  validate :end_date_in_festival_time, :if => proc { |r| r.end_changed? }
+  validate :valid_start_date_format, :if => proc { |r| r.end_changed? }
   validate :start_date_in_festival_time, :if => proc { |r| r.start_changed? }
+  validate :start_date_before_end_date, :if => proc { |r| r.start_changed? and r.end_changed?}
+  validates(:end, presence: true, :if => proc { |r| r.end_changed? })
+  validate :valid_end_date_format, :if => proc { |r| r.end_changed? }
+  validate :end_date_in_festival_time, :if => proc { |r| r.end_changed? }
+
   
   def change_hashed_email_error_to_email
     if errors.messages[:hashed_email]!=[]
@@ -40,34 +43,55 @@ class Registration < ApplicationRecord
   end
   
   def start_date_before_end_date
-    if self[:start].present? and self[:end].present?
-      if (DateTime.parse(self[:start]) > DateTime.parse(self[:end]) or DateTime.parse(self[:start])==DateTime.parse(self[:end]))
+    if valid_date?(self[:start]) and valid_date?(self[:end])
+      startdate = DateTime.parse(self[:start])
+      enddate = DateTime.parse(self[:end])
+      if startdate > enddate or startdate==enddate
         errors.add(:start, I18n.t("activerecord.errors.custom.before_end", end_label: I18n.t("activerecord.attributes.registration.end")))
       end
     end
   end
   
   def start_date_in_festival_time
-    if self[:start].present?
-      if not_in_festival_time(DateTime.parse(self[:start]))
-        errors.add(:start, I18n.t("activerecord.errors.custom.not_in_festival_time"))
-      end
+    if not_in_festival_time(self[:start])
+      errors.add(:start, I18n.t("activerecord.errors.custom.not_in_festival_time"))
     end
   end
   
   def end_date_in_festival_time
-    if self[:end].present?
-      if not_in_festival_time(DateTime.parse(self[:end]))
-        errors.add(:end, I18n.t("activerecord.errors.custom.not_in_festival_time"))
-      end
+    if not_in_festival_time(self[:end])
+      errors.add(:end, I18n.t("activerecord.errors.custom.not_in_festival_time"))
     end
   end
   
-  def not_in_festival_time(date)
-    if date > Rails.configuration.x.festival_end or date < Rails.configuration.x.festival_start
-      true
-    else
-      false
+  def valid_end_date_format
+     message = I18n.t("activerecord.errors.custom.invalid_date_format", exampledate: I18n.l(DateTime.now, format: :datetime1))
+    errors.add(:end, message) if invalid_date_format?(self[:end])
+  end
+  
+  def valid_start_date_format
+     message = I18n.t("activerecord.errors.custom.invalid_date_format", exampledate: I18n.l(DateTime.now, format: :datetime1))
+    errors.add(:start, message) if invalid_date_format?(self[:start])
+  end
+  
+  def not_in_festival_time(dateInput)
+    if valid_date?(dateInput)
+      date = DateTime.parse(dateInput)
+      date > Rails.configuration.x.festival_end or date < Rails.configuration.x.festival_start ? true : false
     end
   end
+  
+  def valid_date?(dateInput)
+    dateInput.present? and !invalid_date_format?(dateInput)
+  end
+  
+  def invalid_date_format?(dateInput)
+    if dateInput.present?
+      regex = /#{I18n.t("time.formats.datetime2_regex")}/ 
+      format_ok = dateInput.match(regex)
+      parseable = DateTime.strptime(dateInput, "%Y-%m-%d %H:%M") rescue false
+      (format_ok and parseable) ? false : true
+    end
+  end
+  
 end
