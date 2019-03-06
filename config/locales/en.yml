@@ -50,8 +50,8 @@ en:
     registrations_table:
       delete_registration_confirm: "Are you sure that you want to delete this registration?"
       tooltips:
-        id: "If the registration-data was deleted from your browser, you can you can look it up in your emails with this ID"
-        name: "Name is not showing if the data in your browser was deleted"
+        idstart: "If the registration-data was deleted from your browser, you have to find the right person by comparing the ID in the email and here in the app. These are only the first 4 letters. In the rare cases where these are equal for two registrations, click edit to find the complete ID."
+        shortname: "Shortname is not showing if the data in your browser was deleted"
         confirmed: "Did the registered person confirm the link in the email they got?"
         edit: "Check the data and optionally edit"
         delete: "Use delete if you typed the wrong email-address"
@@ -93,7 +93,7 @@ en:
         If you understand the consequences of updating this dataset with this browser, type 'I understand' : 
       browser_deleted_js_prompt_answer: "I understand"
       updated_in_other_browser_js_alert: "Last time you used another browser to update this registration, which is where the most accurate memory of it is now. Each time you switch browser for updating the same registration (so if you push the update button now) your local memory is set back to zero."  
-      headline: "Edit registration with ID %{id}"
+      headline: "Edit registration"
       above_form: ""
     deleted: 
       headline: "Deleted"
@@ -152,7 +152,7 @@ en:
         
         Then you can delete this email.
     registration_contact_person:
-      subject: "You registered somone with ID %{id} for the festival"
+      subject: "You registered somone with ID %{hashidstart}.. for the festival"
       above_data_html: |
         Hi,
         
@@ -194,7 +194,7 @@ en:
 
         You were registered with the data...
     updated_to_contact_person:
-      subject: "You changed the registration with ID %{id}"
+      subject: "You changed the registration with ID %{hashidstart}.."
       body: |
         Hi,
         
@@ -202,7 +202,7 @@ en:
       body_memoryloss: |
         Hi,
         
-        you changed the registration with ID %{id}. The registered person doesn't get an email. You will have to forward this email yourself.
+        you changed the registration with ID %{hashid}. The registered person doesn't get an email. You will have to forward this email yourself.
     updated_to_registree:
       subject: "Your registration data for the festival was changed"
       above_data: |
@@ -224,7 +224,7 @@ en:
       You confirmed your email-address.
       You can now start to enter registrations.
     delete:
-      success: "You successfully deleted the registration with ID %{id}."
+      success: "You successfully deleted the registration with ID %{hashid}."
       
   time:
     formats:
@@ -240,7 +240,6 @@ en:
         name: "Name"
         email: "Email"
         hashed_email: "Email" #This should be the same as email (determines the email-uniqueness-error-message)
-        id: "ID"
         shortname: "Shortname"
         phonenumber: "Cellphone Number"
         is_friend: "Is it a Friend?"
@@ -253,10 +252,12 @@ en:
         end: "Departure"
         comment: "Comment"
         changed_on: "Changed on"
+        hashid: "ID"
     errors:
       custom:
         before_end: "must to be before %{end_label}"
         not_in_festival_time: "must be within festival time"
+        invalid_date_format: "must be formated like %{exampledate}"
       models:
         registration:
           attributes:
@@ -267,3 +268,4 @@ en:
     formats:
       datetime1: '%d. %B %Y, %H:%M'
       datetime2: '%Y-%m-%d %H:%M'
+      datetime2_regex: '\A\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}\z'

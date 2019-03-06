@@ -31,7 +31,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal input[:email].downcase, confirm_email.to[0]
     #assert that second last email was the email contact_person with the right subject.
     contact_person_email = ActionMailer::Base.deliveries[-1]
-    assert_equal I18n.t("mail.registration_contact_person.subject", id: "1"), contact_person_email.subject
+    assert_equal I18n.t("mail.registration_contact_person.subject", hashidstart: digest(input[:email].downcase)[0..3]), contact_person_email.subject
     assert_equal @contact_persons_email.downcase, contact_person_email.to[0].downcase
   end
   

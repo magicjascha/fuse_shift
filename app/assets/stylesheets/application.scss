@@ -90,8 +90,9 @@ th {
 }
 
 .table-wrapper {
-    display: flex;
+    display: inline-block;
     justify-content: center;
+
 }
 
 @media (min-width: 768px) {

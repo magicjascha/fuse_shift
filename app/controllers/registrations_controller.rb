@@ -62,7 +62,7 @@ class RegistrationsController < ApplicationController
       @saved_registration = Registration.new(params_encrypt(add_hashed_email(registration_params)))
       @saved_registration.save(validate: false)
       #success message in flash with link to new registration
-      flash[:success] = ActionController::Base.helpers.simple_format(t("flash.create_success", name: @registration.name))
+      flash[:success] = ActionController::Base.helpers.simple_format(t("flash.create_success", name: @registration.shortname))
       @data = displayed_data(@saved_registration.id) #contains params displayed in emails and saved to localstorage
       #send emails with plain data
       email_data = @data.dup
@@ -131,7 +131,7 @@ class RegistrationsController < ApplicationController
   
   def delete
     @registration = Registration.find_by(hashed_email: params[:hashed_email])
-    flash[:success] = ActionController::Base.helpers.simple_format(t("flash.delete.success", id: @registration.id))
+    flash[:success] = ActionController::Base.helpers.simple_format(t("flash.delete.success", hashid: @registration.hashed_email))
     @registration.destroy
     session[params[:hashed_email]]=nil
     redirect_back(fallback_location: root_path)
@@ -208,9 +208,10 @@ class RegistrationsController < ApplicationController
     def displayed_data(id)
       #get data from input, since record is encrypted
       data = registration_params
-      #get id and updated_at from record
-      data[:id]=id      
-      data[:changed_on] = Registration.find_by(id: id).updated_at
+      #get hashed_email and updated_at from record
+      reg = Registration.find_by(id: id)
+      data[:hashid]=reg.hashed_email
+      data[:changed_on] = reg.updated_at
       #information about contact_person_id is not relevant for users.
       data.delete(:contact_person_id)
       data

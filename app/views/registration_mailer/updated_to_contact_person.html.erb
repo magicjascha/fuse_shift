@@ -5,9 +5,9 @@
   </head>
   <body>
     <% if @memory_loss %>
-      <p> <%= simple_format(t("mail.updated_to_contact_person.body_memoryloss", id: @data[:id])) %> </p>
+      <p> <%= simple_format(t("mail.updated_to_contact_person.body_memoryloss", hashid: @data[:hashid])) %> </p>
     <% else %>
-      <p> <%= simple_format(t("mail.updated_to_contact_person.body", name: @data[:name])) %> </p>   
+      <p> <%= simple_format(t("mail.updated_to_contact_person.body", name: @data[:shortname])) %> </p>   
     <% end %>
     <p><%= render '/shared/registration_data_table' %> </p>
   </body>

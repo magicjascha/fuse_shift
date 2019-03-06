@@ -11,7 +11,7 @@ class ContactPersonMailerTest < ActionMailer::TestCase
     email = ContactPersonMailer.confirm(@contact_person, contact_persons_email)
     #check email addresses and suject
     #assert_equal ["no-reply@festival-registration.de"], email.from
-    assert_equal [ENV["MAILUSER"]], email.from
+    assert_equal [Rails.configuration.x.send_mails_from], email.from
     assert_equal [contact_persons_email], email.to
     assert_equal I18n.t("mail.contact_person_confirm.subject"), email.subject
     #check email-body for confirm-link

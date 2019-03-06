@@ -7,6 +7,10 @@ feature "Login" do
     registrations_count = 3
 #     build(:registration, :encrypted, contact_person: contact_person).save(validate: false)
 #     build(:registration, :encrypted, email: "bla@bla.de", contact_person: contact_person).save(validate: false)
+    
+    #find the start from the numbers from which emails will be generated person[startnumber+1]@mail.de
+    before_sequence=build(:registration, :sequence, contact_person: contact_person).email[6]
+    
     registrations_count.times do build(:registration, :sequence, :encrypted, contact_person: contact_person).save(validate: false) end
     #
     visit root_path
@@ -24,8 +28,7 @@ feature "Login" do
     page.assert_no_selector('h1', text: 'Login')
     #check display of assiociated records
     page.must_have_content("You registered #{registrations_count} people")
-    page.assert_selector('td', text: "1")
-    page.assert_selector('td', text: "#{registrations_count}")#record id in tabledata
+    page.assert_selector('td', text: digest("person#{before_sequence.to_i+1}@mail.de")[0..3])#display 4 first letters of emailhash as id
   end
   
   scenario "unconfirmed email doesn't log in" do

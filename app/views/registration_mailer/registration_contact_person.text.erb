@@ -1,6 +1,6 @@
-<%= t("mail.registration_contact_person.above_data_txt", name: @registration.name) %>
+<%= t("mail.registration_contact_person.above_data_txt", name: @registration.shortname) %>
 <% @data.each do |key, value| %>
     <%= t("activerecord.attributes.registration.#{key}") %>: <%= better_read(value) %>
 <% end %>
 
-<%= t("mail.registration_contact_person.below_data_txt", name: @registration.name, edit_link: registration_url(@registration), root_link: root_url) %>
+<%= t("mail.registration_contact_person.below_data_txt", name: @registration.shortname, edit_link: registration_url(@registration), root_link: root_url) %>
