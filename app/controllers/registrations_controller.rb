@@ -25,7 +25,7 @@ class RegistrationsController < ApplicationController
     else
       scope = scope.all
     end
-    scope.order(city: :asc, id: :desc)
+    scope = scope.order(city: :asc, id: :desc)
     render json: scope.as_json
   end
 
