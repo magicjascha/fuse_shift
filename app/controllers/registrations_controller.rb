@@ -4,14 +4,14 @@ require 'colorize'
 
 class RegistrationsController < ApplicationController
   if Rails.env.test? || Rails.env.development?
-    before_action {|controller| session[:city] = "testCity"} 
+    before_action {|controller| session[:city] = "testCity"}
   else
     before_action :authenticate, except: [:confirm, :index]
   end
-  
+
   before_action :check_contact_person, except: [:confirm, :index]
   before_action :auth_admin, only: :index
-     
+
   def index
     scope = Registration
     if params[:confirmed]=="true"
@@ -21,19 +21,20 @@ class RegistrationsController < ApplicationController
     elsif params[:shift_confirmed]=="true"
       scope = scope.where(shift_confirmed: true)
     elsif params[:shift_confirmed]=="false"
-      scope = scope.where(shift_confirmed: [nil,false]) 
+      scope = scope.where(shift_confirmed: [nil,false])
     else
       scope = scope.all
     end
+    scope.order(city: :asc, id: :desc)
     render json: scope.as_json
   end
-  
+
   def new
     @registration = Registration.new
     @registration.city = session[:city]
     @registration.contact_persons_email = session[:contact_person]
   end
-  
+
   #decrypts symmterically encrypted data in localstorage
   def decrypt
     #decrypt_params[:encrypted_registrations] is an array of records from the localstorage, that should be decrypted. Structured like this: [[hashed_email_1, data_hash_1],[hashed_email_2, data_hash_2],...]
@@ -53,7 +54,7 @@ class RegistrationsController < ApplicationController
     end
     render json: response
   end
-  
+
   def create #add hashed_email, validate, save encrypted data without validation
     #create registration for validation
     @registration = Registration.new(add_hashed_email(registration_params))
@@ -69,7 +70,7 @@ class RegistrationsController < ApplicationController
       email_data.delete(:changed_on)
       RegistrationMailer.registration_confirm(@registration, email_data).deliver_now
       RegistrationMailer.registration_contact_person(@registration, email_data).deliver_now
-      #save symmetrically encrypted data to the localstorage 
+      #save symmetrically encrypted data to the localstorage
       @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
       @hashed_email = digest(@data[:email])
       render 'localstorage_save' #forwards to edit
@@ -77,11 +78,11 @@ class RegistrationsController < ApplicationController
       render 'new'
     end
   end
-  
+
   def edit #identify record by hashed_email, display an otherwise empty record in the view.
     if accessed_registration == nil
       render 'deleted'
-    else 
+    else
       id = Registration.find_by(hashed_email: params[:hashed_email]).id
       @registration = Registration.new(id: id, hashed_email: params[:hashed_email])
       @registration.city = session[:city]
@@ -104,7 +105,7 @@ class RegistrationsController < ApplicationController
       flash[:success] = ActionController::Base.helpers.simple_format(t("flash.update.success_memoryloss"))
       #send email with @data to registree if no memory loss (=email address gone) occurred
       if params["memory_loss"].blank?
-        RegistrationMailer.updated_to_registree(email_data).deliver_now 
+        RegistrationMailer.updated_to_registree(email_data).deliver_now
         flash[:success] = ActionController::Base.helpers.simple_format(t("flash.update.success"))
       end
       #add browser-memory-loss-info to data and save symmetrically encrypted to the localstorage
@@ -112,23 +113,23 @@ class RegistrationsController < ApplicationController
       @encrypted_data = AES.encrypt(@data.to_json, Rails.configuration.x.symkey)
       @hashed_email = params[:hashed_email]
       render:'localstorage_save' #forwards to edit
-    else 
+    else
       @registration.hashed_email = params[:hashed_email]
       render 'edit'
     end
   end
-  
+
   def confirm
     if accessed_registration == nil
       render 'deleted'
-    else 
+    else
       @registration = Registration.find_by(hashed_email: params[:hashed_email])
       @registration.confirmed = true
       @registration.save(validate: false, touch: false)
       render 'confirm'
     end
   end
-  
+
   def delete
     @registration = Registration.find_by(hashed_email: params[:hashed_email])
     flash[:success] = ActionController::Base.helpers.simple_format(t("flash.delete.success", hashid: @registration.hashed_email))
@@ -136,7 +137,7 @@ class RegistrationsController < ApplicationController
     session[params[:hashed_email]]=nil
     redirect_back(fallback_location: root_path)
   end
-  
+
   def shift_confirm_yes
     if accessed_registration == nil
       render 'deleted'
@@ -147,7 +148,7 @@ class RegistrationsController < ApplicationController
       render 'shift_confirm_yes'
     end
   end
-  
+
   def shift_confirm_no
     if accessed_registration == nil
       render 'deleted'
@@ -160,11 +161,11 @@ class RegistrationsController < ApplicationController
   end
 
   private
-  
+
     def decrypt_params
       params.permit(encrypted_registrations: {})
     end
-  
+
     def registration_params #permits params, downcases email, adds contact_persons email, city and id
       input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :contact_persons_email, :comment, "start", "end")
       r = input
@@ -174,37 +175,37 @@ class RegistrationsController < ApplicationController
       r[:contact_person_id] = ContactPerson.find_by(hashed_email: digest(session[:contact_person])).id
       r
     end
-    
+
     def add_hashed_email(hash)
       hash.merge!(hashed_email: digest(hash[:email]))
     end
-    
+
     def params_encrypt(params)
       params.to_h.map do |key, value|
         value = encrypt(value.to_s) if encrypt?(key)
         [key, value]
-      end.to_h                     
+      end.to_h
     end
-    
+
     def encrypt?(key)
       !["hashed_email", "confirmed", "contact_person_id"].include?(key)
     end
-    
+
     def encrypt(value)
       Encrypt::Encryptor.new(value, Rails.configuration.x.pem).apply
     end
-    
+
     def auth_admin
       authenticate_or_request_with_http_basic(Rails.configuration.x.website_title) do |username, password|
       Rails.configuration.x.auth_admin.has_key?(username) && BCrypt::Password.new(Rails.configuration.x.auth_admin[username]) == password
       end
     end
-      
-    
+
+
     def check_contact_person
       redirect_to login_path unless confirmed_contact_person?
     end
-    
+
     def displayed_data(id)
       #get data from input, since record is encrypted
       data = registration_params
