@@ -6,10 +6,9 @@ class RegistrationsController < ApplicationController
   if Rails.env.test? || Rails.env.development?
     before_action {|controller| session[:city] = "testCity"}
   else
-    before_action :authenticate, except: [:confirm, :index]
+    before_action :authenticate, except: [:confirm, :index, :shift_confirm_yes, :shift_confirm_no]
   end
-
-  before_action :check_contact_person, except: [:confirm, :index]
+  before_action :check_contact_person, except: [:confirm, :index, :shift_confirm_yes, :shift_confirm_no]
   before_action :auth_admin, only: :index
 
   def index
