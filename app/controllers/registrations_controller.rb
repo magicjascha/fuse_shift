@@ -6,10 +6,10 @@ class RegistrationsController < ApplicationController
   if Rails.env.test? || Rails.env.development?
     before_action {|controller| session[:city] = "testCity"}
   else
-    before_action :authenticate, except: [:confirm, :index, :shift_confirm_yes, :shift_confirm_no]
+    before_action :authenticate, except: [:confirm, :index, :shift_confirm_yes, :shift_confirm_no, :shift_confirm_reset]
     # before_action :authenticate, except: [:confirm, :index]
   end
-  before_action :check_contact_person, except: [:confirm, :index, :shift_confirm_yes, :shift_confirm_no]
+  before_action :check_contact_person, except: [:confirm, :index, :shift_confirm_yes, :shift_confirm_no, :shift_confirm_reset]
   before_action :auth_admin, only: :index
 
   def index
@@ -157,6 +157,17 @@ class RegistrationsController < ApplicationController
       @registration.shift_confirmed = false
       @registration.save(validate: false, touch: false)
       render 'shift_confirm_no'
+    end
+  end
+
+  def shift_confirm_reset
+    if accessed_registration == nil
+      render 'deleted'
+    else
+      @registration = Registration.find_by(hashed_email: params[:hashed_email])
+      @registration.shift_confirmed = nil
+      @registration.save(validate: false, touch: false)
+      render 'shift_confirm_reset'
     end
   end
 
