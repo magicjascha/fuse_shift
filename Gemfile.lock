@@ -171,7 +171,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.3)
-    puma (3.12.1)
+    puma (3.12.2)
     rack (2.0.7)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -279,7 +279,7 @@ DEPENDENCIES
   minitest-reporters
   momentjs-rails
   pg
-  puma (~> 3.7)
+  puma (~> 3.12)
   rails (>= 5.2.2.1)
   rails-controller-testing
   sass-rails (~> 5.0)
