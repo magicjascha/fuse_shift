@@ -1,6 +1,6 @@
 <%= render 'shared/error_messages' %>
 <script type="text/javascript">
-  $(document).ready(function(){  
+  $(document).ready(function(){
     $(function () {
       $('.bs-datetimepicker').datetimepicker({
         sideBySide: true,
@@ -36,11 +36,11 @@
     <%= f.label :email, class:"control-label col-sm-4" %>
     <div class="col-sm-8">
     <% if action_name == "new" or action_name == "create" %>
-      <%= f.text_field :email, class: 'form-control' %>      
+      <%= f.text_field :email, class: 'form-control' %>
       <small id="emailHelp" class="form-text text-muted"><%=t("form.email.help")%></small>
     <% else %>
       <div id="editpage_email" name='registration[email]' type="text" class="form-control-static"></div>
-      <%= f.hidden_field :email %>   
+      <%= f.hidden_field :email %>
       <input type="hidden" id="memory_loss" name="memory_loss" />
       <small id="emailHelp" class="form-text text-muted"><%=t("form.email.help-edit")%></small>
     <% end %>
@@ -67,6 +67,21 @@
 
       <% end %>
       <small id="isMemberHelp" class="form-text text-muted"><%=t("form.is_friend.help")%></small>
+  </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :palapa, class:"control-label col-sm-4" %>
+    <div class="col-sm-8">
+      <% if action_name == "new" or action_name == "create" %>
+        <div class="checkDiv"><%= f.check_box :is_palapa%></div>
+      <% else %>
+      <div class="form-row">
+        <%= f.select(:is_palapa, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
+      </div>
+
+      <% end %>
+      <small id="isPalapaHelp" class="form-text text-muted"><%=t("form.is_palapa.help")%></small>
   </div>
 </div>
 
@@ -120,6 +135,36 @@
 </div>
 
 <div class="form-group">
+    <%= f.label :Aufbau_Builtup, class:"control-label col-sm-4" %>
+    <div class="col-sm-8">
+      <% if action_name == "new" or action_name == "create" %>
+        <div class="checkDiv"><%= f.check_box :is_construction%></div>
+      <% else %>
+      <div class="form-row">
+        <%= f.select(:is_construction, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
+      </div>
+
+      <% end %>
+      <small id="isConstructionHelp" class="form-text text-muted"><%=t("form.is_construction.help")%></small>
+  </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :Abbau_Breakdown, class:"control-label col-sm-4" %>
+    <div class="col-sm-8">
+      <% if action_name == "new" or action_name == "create" %>
+        <div class="checkDiv"><%= f.check_box :is_breakdown%></div>
+      <% else %>
+      <div class="form-row">
+        <%= f.select(:is_breakdown, options_for_select({ "Yes" => "1", "No" => "0", "As before" => "" }, "")) %>
+      </div>
+
+      <% end %>
+      <small id="isBreakdownHelp" class="form-text text-muted"><%=t("form.is_breakdown.help")%></small>
+  </div>
+</div>
+
+<div class="form-group">
   <%= f.label :start, class:"control-label col-sm-4"%>
   <div class="col-sm-8">
     <%= f.text_field :start, class: 'form-control bs-datetimepicker'%>
@@ -161,7 +206,7 @@
 </div>
 
 <div class="form-group">
-  <div class="col-sm-offset-4 col-sm-8"> 
+  <div class="col-sm-offset-4 col-sm-8">
     <%= f.submit t("form.submit.#{action_name}") %>
   </div>
 </div>

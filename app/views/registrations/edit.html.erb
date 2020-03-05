@@ -41,10 +41,10 @@
           //No memory-loss or memory loss before last time.
           else {
             //If memory loss of localstorage was before last time, make background-placeholder "as before" for inputs which don't have updated information
-            if (registration.memory_loss == "before last time") {             
+            if (registration.memory_loss == "before last time") {
               $("[type='text']").attr("placeholder", "as before");
               $('*[name="registration[email]"]').text("[as before]");
-              $("#memory_loss").val("before last time") 
+              $("#memory_loss").val("before last time")
               }
             //fill form with localstorage-memory
             $("[name='registration[name]']").val(registration.name);
@@ -53,7 +53,10 @@
             if (registration.email){
               $('*[name="registration[email]"]').text(registration.email);
             }
-            $("[name='registration[is_friend]']").val(registration.is_friend);  
+            $("[name='registration[is_friend]']").val(registration.is_friend);
+            $("[name='registration[is_palapa]']").val(registration.is_palapa);
+            $("[name='registration[is_construction]']").val(registration.is_construction);
+            $("[name='registration[is_breakdown]']").val(registration.is_breakdown);
             $("[name='registration[german]']").val(registration.german);
             $("[name='registration[english]']").val(registration.english);
             $("[name='registration[french]']").val(registration.french);
@@ -65,13 +68,13 @@
           }
         }
       });
-    }    
+    }
   });
 </script>
 
 <h1><%= t("views.edit.headline")%></h1>
 <p style="overflow-wrap: break-word;"><strong><%= t("activerecord.attributes.registration.hashid") %>:</strong> <%= @registration.hashed_email %></p>
-<p><%=t("views.edit.above_form")%></p>      
+<p><%=t("views.edit.above_form")%></p>
 <%= form_for(@registration, url: "/registrations/#{@registration.hashed_email}", method: :put, html: {class: 'form-horizontal', autocomplete: "off"}) do |f| %>
   <%= render 'form', :f => f %>
-<% end %> 
+<% end %>

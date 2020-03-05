@@ -34,8 +34,8 @@ en:
   sidebar:
     #info block will not be displayed if info_html is an empty string ""
     info_html: |
-      Lorem ipsum dolor sit amet, consectetur 
-      
+      Lorem ipsum dolor sit amet, consectetur
+
       adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.
 
       %{info_link1}
@@ -45,7 +45,7 @@ en:
     info_link1_text: "Example Link"
     info_link2: "https://www.example.com"
     info_link2_text: "voluptate"
-    
+
   views:
     registrations_table:
       delete_registration_confirm: "Are you sure that you want to delete this registration?"
@@ -62,18 +62,18 @@ en:
     warning:
       js_prompt: |
         If you delete your browser-memory (or your browser does that itself, when closing) editing your registrations will be very tedious. We strongly recommend that you keep the memory, until the deadline.
-        
-        If you understood that type 'I know':  
+
+        If you understood that type 'I know':
       js_prompt_answer: "I know"
       javascript_missing:
         headline: "Javascript missing?"
         body_html: |
           You were not redirected because your javascript is not working.
-          
+
           If you want a comfortable experience editing registrations, you needs
           1. Your Javascript
-          2. You can't delete your browser-memory until the deadline. 
-          
+          2. You can't delete your browser-memory until the deadline.
+
           We strongly recommend that you do that. Otherwise it will be tedious to edit, but possible. If you want to go on like this confirm your email-adress by klicking %{link}.
         link_text: "HERE"
     new:
@@ -85,27 +85,27 @@ en:
     edit:
       browser_deleted_js_prompt: |
         Your browser doesn't remember the (encrypted) data for this registration.
-      
+
         If you created the registration from another computer (or browser), consider to return there for changing it. If you update now we delete the browser-memory for this registration, which will make editing more confusing for you.
-      
+
         To identify a registration without browser-memory, look up the ID in your old emails. You can re-enter the name for getting a better overview
-      
-        If you understand the consequences of updating this dataset with this browser, type 'I understand' : 
+
+        If you understand the consequences of updating this dataset with this browser, type 'I understand' :
       browser_deleted_js_prompt_answer: "I understand"
-      updated_in_other_browser_js_alert: "Last time you used another browser to update this registration, which is where the most accurate memory of it is now. Each time you switch browser for updating the same registration (so if you push the update button now) your local memory is set back to zero."  
+      updated_in_other_browser_js_alert: "Last time you used another browser to update this registration, which is where the most accurate memory of it is now. Each time you switch browser for updating the same registration (so if you push the update button now) your local memory is set back to zero."
       headline: "Edit registration"
       above_form: ""
-    deleted: 
+    deleted:
       headline: "Deleted"
       text: "The registration you tried to access was deleted."
     shift_confirm_no:
       headline: "You canceled your shift"
       body: "This means you won't come to the festival. If you did a mistake and wanted to confirm you can correct that by clicking the other link in your email"
-    shift_confirm_yes: 
+    shift_confirm_yes:
       headline: "You confirmed your shift"
       body: "If you did a mistake and wanted to cancel your shift you can correct that by clicking the other link in your email."
 
-  form:      
+  form:
     name:
       help: "The name of the person, you want to register"
     shortname:
@@ -117,6 +117,12 @@ en:
       help: ""
     is_friend:
       help: "...which means not a member"
+    is_palapa:
+      help: "...has done palapa before, or other stage work experience"
+    is_construction:
+      help: "...wants to work on Aufbau/Construction Weekend - make sure arrival time fits!"
+    is_breakdown:
+      help: "...wants to work on Mo/Tue AFTER on breakdown - make sure departure time fits!"
     languages:
       label: "Languages"
       help: "Languages person speaks"
@@ -140,54 +146,54 @@ en:
   mail:
     contact_person_confirm:
       subject: "You signed up as contact person for the festival"
-      text: | 
-        You signed up as contact person for the festival. 
-        
+      text: |
+        You signed up as contact person for the festival.
+
         Klick this %{confirm_link} to confirm your email_address. Then you can delete this email.
       confirm_link_text: "Link"
     contact_person_confirm_txt: |
-        You signed up as contact person for the festival. 
-        
+        You signed up as contact person for the festival.
+
         Klick this link to confirm your email_address: %{confirm_link}
-        
+
         Then you can delete this email.
     registration_contact_person:
       subject: "You registered somone with ID %{hashidstart}.. for the festival"
       above_data_html: |
         Hi,
-        
+
         You registered %{name} for the festival with the data ...
       below_data_html: |
         You can edit it %{edit_link}.
-        
+
         %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the %{root_link}
-        
+
         If you want to add another registration, repeat the %{root_link}.
       edit_link_text: "here"
       root_link_text: "registration process"
       above_data_txt: |
         Hi,
-        
+
         You registered %{name} for the festival with the data ...
       below_data_txt: |
         You can edit it with the link ...
         %{edit_link}
-        
+
         %{name} will also get an email to confirm the email-address. If they don't do that, their registration will not be valid. If they didn't get an email, you probably made a typo. In this case repeat the registrations process with this link ...
         %{root_link}
     registration_confirm:
       subject: "Confirm your registration for the festival"
       above_data_html: |
         Hi %{name},
-        
+
         You started your registration for the festival. Please confirm your registration with this %{confirm_link} to finish. If you don't do that you are not registered.
-        
+
         You were registered with the data..."
       below_data: "If something is wrong with your data, please inform your contact person to change it."
       confirm_link_text: "link"
       above_data_txt: |
         Hi %{name},
-        
+
         You started your registration for the festival. Please confirm your registration with this link ...
         %{confirm_link}
         ...to finish. If you don't do that you are not registered.
@@ -197,17 +203,17 @@ en:
       subject: "You changed the registration with ID %{hashidstart}.."
       body: |
         Hi,
-        
+
         you changed the registration of %{name}. %{name} also got an email with the data.
       body_memoryloss: |
         Hi,
-        
+
         you changed the registration with ID %{hashid}. The registered person doesn't get an email. You will have to forward this email yourself.
     updated_to_registree:
       subject: "Your registration data for the festival was changed"
       above_data: |
         Hi,
-        
+
         Your registration data for the festival was changed by your contact person. Get in touch with them if something's wrong with your data.
       below_data: ""
   flash: #When an action is successful (for example after submitting) these messages are added to the top of the next page.
@@ -225,13 +231,13 @@ en:
       You can now start to enter registrations.
     delete:
       success: "You successfully deleted the registration with ID %{hashid}."
-      
+
   time:
     formats:
       datetime1: '%d. %B %Y, %H:%M'
       datetime2: '%Y-%m-%d %H:%M'
-  
-# affects labels in the form, emails and error messages.  
+
+# affects labels in the form, emails and error messages.
   activerecord:
     attributes:
       contact_person:
@@ -263,7 +269,7 @@ en:
           attributes:
             email:
               uniqueness: "was already registered. You can delete or edit the old registration."
-      
+
   time:
     formats:
       datetime1: '%d. %B %Y, %H:%M'
