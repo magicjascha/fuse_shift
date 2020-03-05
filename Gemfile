@@ -40,7 +40,7 @@ gem 'momentjs-rails'#for bootstrap-datetimepicker
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'jquery-rails'#javascript jquery
 # gem 'jquery-cookie-rails'
-gem 'minitest-rails-capybara'#test
+# gem 'minitest-rails-capybara'#test
 gem 'aes'#symmetric encryption
 gem 'colorize'#terminal-output colors for debugging
 gem 'pg'
