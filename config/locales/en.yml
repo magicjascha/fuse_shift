@@ -116,7 +116,7 @@ en:
     phonenumber:
       help: ""
     is_friend:
-      help: "...which means not a member"
+      help: "...which means not a member of group"
     is_palapa:
       help: "...has done palapa before, or other stage work experience"
     is_construction:
