@@ -1,5 +1,5 @@
 class RegistrationMailer < ApplicationMailer
-  add_template_helper(RegistrationsHelper)
+  helper RegistrationsHelper
 
   default from: Rails.configuration.x.send_mails_from
 
