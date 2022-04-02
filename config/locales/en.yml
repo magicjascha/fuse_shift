@@ -120,9 +120,13 @@ en:
     is_palapa:
       help: "...has done palapa before, or other stage work experience"
     is_construction:
-      help: "...wants to work on Aufbau/Construction Weekend - make sure arrival time fits!"
+      help: "...wants to work on Aufbau/Construction Weekend - make sure arrival+departure time fits the whole slot!"
     is_breakdown:
-      help: "...wants to work on Mo/Tue AFTER on breakdown - make sure departure time fits!"
+      help: "...wants to work on Mo/Tue AFTER on breakdown - make sure arrival+departure time fits the whole slot!"
+    experience:
+      label: "Experience"
+      help: "experience in working with LZ"
+      help-edit: ""
     languages:
       label: "Languages"
       help: "Languages person speaks"
