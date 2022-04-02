@@ -71,6 +71,55 @@
 </div>
 
 <div class="form-group">
+  <label class="control-label col-sm-4" for="languages">
+    <%= t("form.experience.label") %>
+  </label>
+  <div id="languages" class="col-sm-8">
+    <% if action_name == "new" or action_name == "create" %>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <%= f.label :did_work, class:"control-label col-sm-4" %>
+          <div class="col-sm-1 checkDiv">
+            <%= f.check_box :did_work%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <%= f.label :did_orga, class:"control-label col-sm-4" %>
+          <div class="col-sm-1 checkDiv">
+            <%= f.check_box :did_work%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <%= f.label :wants_orga, class:"control-label col-sm-4" %>
+          <div class="col-sm-1 checkDiv">
+            <%= f.check_box :wants_orga%>
+          </div>
+        </div>
+      </div>
+      <small id="experienceHelp" class="form-text text-muted"><%=t("form.experience.help")%></small>
+    <% else %>
+      <div class="col-sm-4">
+        <%= f.label :did_work, class:"control-label col-sm-4" %>
+        <%= f.select(:did_work, options_for_select({ "Yes" => "1", "No" => "0"}, "")) %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :did_orga, class:"control-label col-sm-4" %>
+        <%= f.select(:did_orga, options_for_select({ "Yes" => "1", "No" => "0"}, "")) %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :wants_orga, class:"control-label col-sm-4" %>
+        <%= f.select(:wants_orga, options_for_select({ "Yes" => "1", "No" => "0"}, "")) %>
+      </div>
+      <small id="experienceHelpEdit" class="form-text text-muted"><%=t("form.experience.help")%></small>
+    <% end %>
+  </div>
+</div>
+
+<div class="form-group">
     <%= f.label :palapa, class:"control-label col-sm-4" %>
     <div class="col-sm-8">
       <% if action_name == "new" or action_name == "create" %>

@@ -178,7 +178,7 @@ class RegistrationsController < ApplicationController
     end
 
     def registration_params #permits params, downcases email, adds contact_persons email, city and id
-      input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :is_palapa, :is_construction, :is_breakdown,:contact_persons_email, :comment, "start", "end")
+      input = params.require(:registration).permit(:name, :shortname, :email, :phonenumber, :german, :english, :french, :city, :is_friend, :is_palapa, :is_construction, :is_breakdown, :did_work, :did_orga, :wants_orga, :contact_persons_email, :comment, "start", "end")
       r = input
       r[:contact_persons_email] = session[:contact_person]
       r[:city] = session[:city]
