@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_02_110036) do
+ActiveRecord::Schema.define(version: 2022_04_02_115905) do
 
   create_table "contact_people", force: :cascade do |t|
     t.string "hashed_email"
@@ -46,6 +46,11 @@ ActiveRecord::Schema.define(version: 2022_04_02_110036) do
     t.string "did_work"
     t.string "did_orga"
     t.string "wants_orga"
+    t.string "has_secu"
+    t.string "has_secu_registered"
+    t.string "wants_guard"
+    t.string "real_forename"
+    t.string "real_lastname"
     t.index ["contact_person_id"], name: "index_registrations_on_contact_person_id"
     t.index ["hashed_email"], name: "index_registrations_on_hashed_email", unique: true
   end

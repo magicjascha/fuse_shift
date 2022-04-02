@@ -127,6 +127,16 @@ en:
       label: "Experience"
       help: "experience in working with LZ"
       help-edit: ""
+    secu:
+      label: "34a Schein und Ordner"
+      help: "this is about potential Clear Name transmission as needed for guard positions and 34a schein"
+      help-name: "Real First + Last Name here please. It can be shown to Ordnungsamt on some point."
+      help-secu: "34a Schein?"
+
+
+      help-secu-reg: "34a Schein registriert?"
+      help-guard: "Als Ordner mit Klarnamen arbeiten?"
+      help-edit: "ACHTUNG: Klarnamen angeben!"
     languages:
       label: "Languages"
       help: "Languages person speaks"

@@ -120,6 +120,65 @@
 </div>
 
 <div class="form-group">
+  <label class="control-label col-sm-4" for="languages">
+    <%= t("form.secu.label") %>
+  </label>
+  <div id="languages" class="col-sm-8">
+    <% if action_name == "new" or action_name == "create" %>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <%= f.label :has_secu, class:"control-label col-sm-4" %>
+          <div class="col-sm-1 checkDiv">
+            <%= f.check_box :has_secu%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <%= f.label :has_secu_registered, class:"control-label col-sm-4" %>
+          <div class="col-sm-1 checkDiv">
+            <%= f.check_box :has_secu_registered%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <%= f.label :wants_guard, class:"control-label col-sm-4" %>
+          <div class="col-sm-1 checkDiv">
+            <%= f.check_box :wants_guard%>
+          </div>
+        </div>
+      </div>
+      <small id="secuHelp" class="form-text text-muted"><%=t("form.secu.help")%></small>
+    <% else %>
+      <div class="col-sm-4">
+        <%= f.label :has_secu, class:"control-label col-sm-4" %>
+        <%= f.select(:has_secu, options_for_select({ "Yes" => "1", "No" => "0"}, "")) %>
+        <small id="secuHelpEdit" class="form-text text-muted"><%=t("form.secu.help-secu")%></small>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :has_secu_registered, class:"control-label col-sm-4" %>
+        <%= f.select(:has_secu_registered, options_for_select({ "Yes" => "1", "No" => "0"}, "")) %>
+        <small id="secuHelpEdit" class="form-text text-muted"><%=t("form.secu.help-secu-reg")%></small>
+      </div>
+      <div class="col-sm-4">
+        <%= f.label :wants_guard, class:"control-label col-sm-4" %>
+        <%= f.select(:wants_guard, options_for_select({ "Yes" => "1", "No" => "0"}, "")) %>
+        <small id="secuHelpEdit" class="form-text text-muted"><%=t("form.secu.help-guard")%></small>
+      </div>
+    <% end %>
+    <div class="col-sm-8">
+      <%= f.text_field :real_forename, class: 'form-control' %>
+      <small id="nameHelp" class="form-text text-muted"><%=t(:"form.secu.help-name")%></small>
+    </div>
+    <div class="col-sm-8">
+      <%= f.text_field :real_lastname, class: 'form-control' %>
+      <small id="nameHelp" class="form-text text-muted"><%=t(:"form.secu.help-name")%></small>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
     <%= f.label :palapa, class:"control-label col-sm-4" %>
     <div class="col-sm-8">
       <% if action_name == "new" or action_name == "create" %>
